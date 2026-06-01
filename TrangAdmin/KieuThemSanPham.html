@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Thêm Sản Phẩm</title>
+<style>
+    * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+body, html {
+    height: 100%;
+    background-color: #f5f5f5;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.container {
+    text-align: center;
+    
+    /* NEW: khung bao quanh nội dung */
+    background: #fff;
+    padding: 40px 60px;
+    border-radius: 14px;
+    border: 2px solid #e0e0e0;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.1);
+}
+
+h1 {
+    margin-bottom: 40px;
+    font-size: 2.5rem;
+    color: #333;
+}
+
+.buttons {
+    display: flex;
+    justify-content: space-between;
+    gap: 50px;
+}
+
+.btn {
+    padding: 15px 30px;
+    font-size: 1.2rem;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.3s;
+    color: white;
+}
+
+.btn-xedap {
+    background-color: #28a745;
+}
+
+.btn-xedap:hover {
+    background-color: #218838;
+}
+
+.btn-phukien {
+    background-color: #007bff;
+}
+
+.btn-phukien:hover {
+    background-color: #0069d9;
+}
+
+/* responsive cho màn nhỏ */
+@media(max-width: 500px) {
+    .buttons {
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .container {
+        padding: 30px; /* giảm padding để vừa màn */
+    }
+}
+
+</style>
+</head>
+<body>
+    <div class="container">
+        <h1>Thêm sản phẩm</h1>
+        <div class="buttons">
+            <button class="btn btn-xedap">Xe đạp</button>
+            <button class="btn btn-phukien">Phụ kiện</button>
+        </div>
+    </div>
+</body>
+</html>

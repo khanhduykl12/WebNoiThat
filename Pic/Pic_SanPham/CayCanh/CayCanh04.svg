@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="600" viewBox="0 0 800 600">
+<rect width="800" height="600" fill="#F5F0EB"/>
+<rect x="280" y="380" width="240" height="160" rx="20" fill="#C4956A"/>
+<rect x="300" y="400" width="200" height="120" rx="15" fill="#8B6347"/>
+<circle cx="400" cy="300" r="100" fill="#5A8F5A"/>
+<circle cx="340" cy="260" r="60" fill="#6BAF6B"/>
+<circle cx="460" cy="270" r="55" fill="#4A7F4A"/>
+<circle cx="400" cy="220" r="50" fill="#6BAF6B"/>
+<circle cx="350" cy="320" r="45" fill="#4A7F4A"/>
+<circle cx="450" cy="310" r="50" fill="#5A8F5A"/>
+<rect x="385" y="350" width="30" height="60" rx="5" fill="#8B6347"/>
+<text x="400" y="580" font-family="Segoe UI,Arial" font-size="28" fill="#5C3D2E" text-anchor="middle" font-weight="bold">CÂY CẢNH TRANG TRÍ</text>
+<text x="400" y="615" font-family="Segoe UI,Arial" font-size="18" fill="#8B6347" text-anchor="middle">Xanh Mát Tự Nhiên</text>
+</svg>

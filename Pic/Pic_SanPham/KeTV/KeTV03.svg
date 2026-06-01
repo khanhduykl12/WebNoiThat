@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="600" viewBox="0 0 800 600">
+<rect width="800" height="600" fill="#F5F0EB"/>
+<rect x="100" y="200" width="600" height="300" rx="15" fill="#E8E0D8"/>
+<rect x="120" y="220" width="260" height="180" rx="10" fill="#D4C8BC"/>
+<rect x="420" y="220" width="260" height="180" rx="10" fill="#D4C8BC"/>
+<rect x="120" y="420" width="560" height="60" rx="8" fill="#C4956A"/>
+<rect x="100" y="500" width="30" height="60" rx="5" fill="#8B6347"/>
+<rect x="670" y="500" width="30" height="60" rx="5" fill="#8B6347"/>
+<text x="400" y="570" font-family="Segoe UI,Arial" font-size="28" fill="#5C3D2E" text-anchor="middle" font-weight="bold">KỆ TV</text>
+<text x="400" y="600" font-family="Segoe UI,Arial" font-size="18" fill="#8B6347" text-anchor="middle">Nội Thất Phòng Khách</text>
+</svg>

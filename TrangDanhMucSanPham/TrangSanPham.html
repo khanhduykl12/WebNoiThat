@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trang Sản Phẩm</title>
+    <link rel="stylesheet" href="../CSS/all.min.css">
+    <link rel="stylesheet" href="../CSS/bootstrap.min.css">
+    <link rel="stylesheet" href="CssTrangSanPham.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <script src="../JS/all.min.js"></script>
+    <script src="../JS/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <header class="site-header">
+        <div class="container header-inner">
+            <div>
+                <a href="../TrangChu/TrangChu.html" class="logoMenu"><img src="../Pic/Pic_LogoShop/logoNoiThatXin.png" alt="NoiThatXinh" style="max-width:200px;height:auto;"></a>
+            </div>
+
+            <nav class="main-nav">
+                <a href="../TrangChu/TrangChu.html">Trang chủ</a>
+
+                <div class="dropdown">
+                    <a href="TrangSanPham.html" class="dropbtn">Danh mục ▾</a>
+                    <div class="dropdown-content">
+                        <ul class="menu">
+                            <li><a href="TrangSanPham.html?phong=phong-khach">Phòng khách</a></li>
+                            <li><a href="TrangSanPham.html?phong=phong-ngu">Phòng ngủ</a></li>
+                            <li><a href="TrangSanPham.html?phong=phong-bep">Phòng bếp</a></li>
+                            <li><a href="TrangSanPham.html?phong=phong-tam">Phòng tắm</a></li>
+                            <li><a href="TrangSanPham.html?phong=ngoai-troi">Ngoài trời</a></li>
+                            <li><a href="TrangSanPham.html?ma_danh_muc=sofa">Sofa</a></li>
+                            <li><a href="TrangSanPham.html?ma_danh_muc=giuong">Giường</a></li>
+                            <li><a href="TrangSanPham.html?ma_danh_muc=ban">Bàn</a></li>
+                            <li><a href="TrangSanPham.html?ma_danh_muc=ghe">Ghế</a></li>
+                            <li><a href="TrangSanPham.html?ma_danh_muc=tu">Tủ</a></li>
+                            <li><a href="TrangSanPham.html?ma_danh_muc=den">Đèn</a></li>
+                            <li><a href="TrangSanPham.html?ma_danh_muc=trang-tri">Trang trí</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="dropdown">
+                    <a href="TrangSanPham.html?phong=phong-khach" class="dropbtn">Phòng khách ▾</a>
+                    <div class="dropdown-content">
+                        <ul class="menu">
+                            <li><a href="TrangSanPham.html?phong=phong-khach">Xem tất cả</a></li>
+                            <li><a href="TrangSanPham.html?phong=phong-khach&ma_danh_muc=sofa">Sofa</a></li>
+                            <li><a href="TrangSanPham.html?phong=phong-khach&ma_danh_muc=ban">Bàn</a></li>
+                            <li><a href="TrangSanPham.html?phong=phong-khach&ma_danh_muc=ghe">Ghế</a></li>
+                            <li><a href="TrangSanPham.html?phong=phong-khach&ma_danh_muc=tu">Tủ</a></li>
+                            <li><a href="TrangSanPham.html?phong=phong-khach&ma_danh_muc=trang-tri">Trang trí</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="dropdown">
+                    <a href="TrangSanPham.html?phong=phong-ngu" class="dropbtn">Phòng ngủ ▾</a>
+                    <div class="dropdown-content">
+                        <ul class="menu">
+                            <li><a href="TrangSanPham.html?phong=phong-ngu">Xem tất cả</a></li>
+                            <li><a href="TrangSanPham.html?phong=phong-ngu&ma_danh_muc=giuong">Giường</a></li>
+                            <li><a href="TrangSanPham.html?phong=phong-ngu&ma_danh_muc=tuda">Tủ đầu giường</a></li>
+                            <li><a href="TrangSanPham.html?phong=phong-ngu&ma_danh_muc=ban">Bàn</a></li>
+                            <li><a href="TrangSanPham.html?phong=phong-ngu&ma_danh_muc=ghe">Ghế</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="dropdown">
+                    <a href="TrangSanPham.html?phong=phong-bep" class="dropbtn">Phòng bếp ▾</a>
+                    <div class="dropdown-content">
+                        <ul class="menu">
+                            <li><a href="TrangSanPham.html?phong=phong-bep">Xem tất cả</a></li>
+                            <li><a href="TrangSanPham.html?phong=phong-bep&ma_danh_muc=ban">Bàn ăn</a></li>
+                            <li><a href="TrangSanPham.html?phong=phong-bep&ma_danh_muc=ghe">Ghế ăn</a></li>
+                            <li><a href="TrangSanPham.html?phong=phong-bep&ma_danh_muc=tu">Tủ bếp</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <a href="../TrangGioiThieu/TrangGioiThieu.html">Giới thiệu</a>
+                <a href="../TrangLienHe/TrangLienHe.html">Liên hệ</a>
+            </nav>
+
+            <div class="d-flex align-items-center gap-3">
+                <a href="../TrangThanhToan/GioHang.html" class="btn border">
+                    <i class="bi bi-cart3 text-white"></i>
+                    <span class="badge" id="cartBadge">0</span>
+                </a>
+                <span id="authSection">
+                    <a href="../Login/DangNhap.html">
+                        <button type="button" class="btn btn-success">Đăng nhập</button>
+                    </a>
+                </span>
+            </div>
+        </div>
+    </header>
+
+    <!--------------PHẦN MAIN--------------->
+    <main class="container">
+        <!--Phần Logo Thương hiệu-->
+        <div class="row BrandsLogo">
+            <h5>THƯƠNG HIỆU</h5>
+            <div class="brand-container">
+                <a href="#"><img src="../Pic/Pic_LogoThuongHieu/LogoFascino.jpg" alt="NoiThatViet" class="brand-logo"></a>
+                <a href="#"><img src="../Pic/Pic_LogoThuongHieu/LogoDtFly.jpg" alt="GiaDinhNhapKhau" class="brand-logo"></a>
+                <a href="#"><img src="../Pic/Pic_LogoThuongHieu/LogoHector.jpg" alt="NhapKhauViet" class="brand-logo"></a>
+            </div>
+        </div>
+
+        <div class="filter-container">
+            <div class="filter-header">
+                <label>Chọn theo tiêu chí:</label>
+                <div class="filter-buttons">
+                    <button class="filter-btn" data-filter="price">Lọc Theo Giá ▾</button>
+                    <button class="filter-btn" data-filter="category">Danh Mục ▾</button>
+                    <button class="filter-btn" data-filter="room">Phòng ▾</button>
+                    <button class="filter-btn" data-filter="style">Phong cách ▾</button>
+                </div>
+            </div>
+
+            <!-- Filter Dropdowns -->
+            <div class="filter-dropdown" id="price" aria-hidden="true">
+                <div class="options">
+                    <button onclick="p=new URLSearchParams(window.location.search); p.set('gia_min','0'); p.set('gia_max','1000000'); p.delete('ma_danh_muc'); p.delete('phong'); window.location.search=p.toString(); closeAllDropdowns();">Dưới 1 triệu</button>
+                    <button onclick="p=new URLSearchParams(window.location.search); p.set('gia_min','1000000'); p.set('gia_max','5000000'); p.delete('ma_danh_muc'); p.delete('phong'); window.location.search=p.toString(); closeAllDropdowns();">Từ 1 - 5 triệu</button>
+                    <button onclick="p=new URLSearchParams(window.location.search); p.set('gia_min','5000000'); p.set('gia_max','10000000'); p.delete('ma_danh_muc'); p.delete('phong'); window.location.search=p.toString(); closeAllDropdowns();">Từ 5 - 10 triệu</button>
+                    <button onclick="p=new URLSearchParams(window.location.search); p.set('gia_min','10000000'); p.set('gia_max','20000000'); p.delete('ma_danh_muc'); p.delete('phong'); window.location.search=p.toString(); closeAllDropdowns();">Từ 10 - 20 triệu</button>
+                    <button onclick="p=new URLSearchParams(window.location.search); p.set('gia_min','20000000'); p.delete('gia_max'); p.delete('ma_danh_muc'); p.delete('phong'); window.location.search=p.toString(); closeAllDropdowns();">Trên 20 triệu</button>
+                </div>
+            </div>
+
+            <div class="filter-dropdown" id="category" aria-hidden="true">
+                <div class="options">
+                    <button onclick="p=new URLSearchParams(window.location.search); p.set('ma_danh_muc','sofa'); p.delete('phong'); window.location.search=p.toString(); closeAllDropdowns();">Sofa</button>
+                    <button onclick="p=new URLSearchParams(window.location.search); p.set('ma_danh_muc','giuong'); p.delete('phong'); window.location.search=p.toString(); closeAllDropdowns();">Giường</button>
+                    <button onclick="p=new URLSearchParams(window.location.search); p.set('ma_danh_muc','ban'); p.delete('phong'); window.location.search=p.toString(); closeAllDropdowns();">Bàn</button>
+                    <button onclick="p=new URLSearchParams(window.location.search); p.set('ma_danh_muc','ghe'); p.delete('phong'); window.location.search=p.toString(); closeAllDropdowns();">Ghế</button>
+                    <button onclick="p=new URLSearchParams(window.location.search); p.set('ma_danh_muc','tu'); p.delete('phong'); window.location.search=p.toString(); closeAllDropdowns();">Tủ</button>
+                    <button onclick="p=new URLSearchParams(window.location.search); p.set('ma_danh_muc','den'); p.delete('phong'); window.location.search=p.toString(); closeAllDropdowns();">Đèn</button>
+                    <button onclick="p=new URLSearchParams(window.location.search); p.set('ma_danh_muc','trang-tri'); p.delete('phong'); window.location.search=p.toString(); closeAllDropdowns();">Trang trí</button>
+                    <button onclick="p=new URLSearchParams(window.location.search); p.set('ma_danh_muc','ke'); p.delete('phong'); window.location.search=p.toString(); closeAllDropdowns();">Kệ</button>
+                    <button onclick="p=new URLSearchParams(window.location.search); p.set('ma_danh_muc','guong'); p.delete('phong'); window.location.search=p.toString(); closeAllDropdowns();">Gương</button>
+                    <button onclick="p=new URLSearchParams(window.location.search); p.set('ma_danh_muc','tham'); p.delete('phong'); window.location.search=p.toString(); closeAllDropdowns();">Thảm</button>
+                </div>
+            </div>
+
+            <div class="filter-dropdown" id="room" aria-hidden="true">
+                <div class="options">
+                    <button onclick="p=new URLSearchParams(window.location.search); p.set('phong','phong-khach'); p.delete('ma_danh_muc'); window.location.search=p.toString(); closeAllDropdowns();">Phòng khách</button>
+                    <button onclick="p=new URLSearchParams(window.location.search); p.set('phong','phong-ngu'); p.delete('ma_danh_muc'); window.location.search=p.toString(); closeAllDropdowns();">Phòng ngủ</button>
+                    <button onclick="p=new URLSearchParams(window.location.search); p.set('phong','phong-bep'); p.delete('ma_danh_muc'); window.location.search=p.toString(); closeAllDropdowns();">Phòng bếp</button>
+                    <button onclick="p=new URLSearchParams(window.location.search); p.set('phong','phong-tam'); p.delete('ma_danh_muc'); window.location.search=p.toString(); closeAllDropdowns();">Phòng tắm</button>
+                    <button onclick="p=new URLSearchParams(window.location.search); p.set('phong','ngoai-troi'); p.delete('ma_danh_muc'); window.location.search=p.toString(); closeAllDropdowns();">Ngoài trời</button>
+                    <button onclick="p=new URLSearchParams(window.location.search); p.set('phong','phong-lam-viec'); p.delete('ma_danh_muc'); window.location.search=p.toString(); closeAllDropdowns();">Phòng làm việc</button>
+                </div>
+            </div>
+
+            <div class="filter-dropdown" id="style" aria-hidden="true">
+                <div class="options">
+                    <button onclick="p=new URLSearchParams(window.location.search); p.delete('phong'); p.delete('ma_danh_muc'); p.delete('gia_min'); p.delete('gia_max'); window.location.search=p.toString(); closeAllDropdowns();">Xóa bộ lọc</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="product d-flex flex-wrap" id="productGrid"></div>
+        <div id="paginationControls" class="d-flex justify-content-center mt-4 gap-2"></div>
+
+    </main>
+    <!------------------------------------------------------------------------------------------------------>
+    <footer>
+        <div class="row mt-5 pb-5">
+            <div class="col-4 text-center">
+                <div class="row">
+                        <h4 class="fw-bold">Thông tin liên hệ</h4>
+                        <p><span class="fw-bold">Hotline:  </span> 0909 123456  <br>
+                        <span class="fw-bold">Email: </span>noithatxinh@gmail.com <br>
+                          </p>
+                        <h5 class="fw-bold">Phương thức thanh toán</h5>
+                        <div class="row mb-3">
+                            <div >
+                                <a href="#"><img src="../Pic/Pic_PThucThanhToan/LogoMomo.jpg" id="img_DoiTac" alt="payoo"></a>
+                                <a href="#"><img src="../Pic/Pic_PThucThanhToan/LogoVisa.jpg" id="img_DoiTac" alt="momo"></a>
+                                <a href="#"><img src="../Pic/Pic_PThucThanhToan/LogoZaloPay.jpg" id="img_DoiTac" alt="zaloPay"></a>
+                                <a href="#"><img src="../Pic/Pic_PThucThanhToan/LogoVNPay.jpg" id="img_DoiTac" alt="vnPay"></a>
+                            </div>
+                        </div>
+
+                        <h5 class="fw-bold">Kết Nối Với Chúng Tôi</h5>
+                        <div class="row ">
+                            <div>
+                                <a href="#"><img src="../Pic/Pic_LogoLKetNoi/LogoFacebook.jpg" id="img_DoiTac" alt="LogoFacebook"></a>
+                                <a href="#"><img src="../Pic/Pic_LogoLKetNoi/LogoTwitter.jpg" id="img_DoiTac" alt="LogoTwitter"></a>
+                                <a href="#"><img src="../Pic/Pic_LogoLKetNoi/LogoTiktok.jpg" id="img_DoiTac" alt="LogoTiktok"></a>
+                                <a href="#"><img src="../Pic/Pic_LogoLKetNoi/LogoYoutube.jpg" id="img_DoiTac" alt="LogoYoutube"></a>
+                            </div>
+                        </div>
+                    </div>
+            </div>
+            <div class="col-4 text-center">
+                <div class="row">
+                     <h4 class="fw-bold">Thông tin và chính sách</h4>
+                    <div class=" mt-2 ThongTin">
+                        <p><a href="#" class="text-decoration-none">Hướng Dẫn Mua Hàng</a></p>
+                        <p><a href="#" class="text-decoration-none">Chính Sách Giao Hàng</a></p>
+                        <p><a href="#" class="text-decoration-none">Chính Sách Bảo Hành</a></p>
+                        <p><a href="#" class="text-decoration-none">Chính Sách Bảo Mật</a></p>
+                        <p><a href="#" class="text-decoration-none">Chính Sách Đổi Trả Hàng</a></p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-4 text-center">
+                <div class="row">
+                    <h4 class="fw-bold">Đối tác</h4>
+                    <div class="mt-2 ThongTin">
+                        <p><a href="#" class="text-decoration-none">CH1: 140 Lê Trọng Tấn, Phường Tây Thạnh, Quận Tân Phú, TP.HCM.</a></p>
+                        <p><a href="#" class="text-decoration-none">CH2: 93 Tân Kỳ Tân Quý, Phường Tân Sơn Nhì, TP.HCM.</a></p>
+                        <p><a href="#" class="text-decoration-none">CH3: 31 Chế Lan Viên, Phường Tây Thạnh, TP.HCM.</a></p>
+                    </div>
+                </div>
+               
+            </div>
+        </div>
+   
+        
+        <div id="backTop">
+        <i class="bi bi-caret-up-fill"></i>
+        </div>
+    </footer>
+    
+    <!--------------Javascript-------------------->   
+    <script>
+    (function(){
+        const buttons = document.querySelectorAll('.filter-btn');
+        const dropdowns = document.querySelectorAll('.filter-dropdown');
+        let openId = null;
+
+        function closeAll() {
+            dropdowns.forEach(d => {
+            d.classList.remove('active');
+      d.setAttribute('aria-hidden','true');
+    });
+    buttons.forEach(b => b.classList.remove('active'));
+    openId = null;
+    }
+
+    buttons.forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      const id = btn.getAttribute('data-filter');
+      const target = document.getElementById(id);
+
+      if (openId === id) {
+        closeAll();
+        return;
+      }
+
+      closeAll();
+
+      const rect = btn.getBoundingClientRect();
+      const containerRect = document.querySelector('.filter-container').getBoundingClientRect();
+      let left = rect.left - containerRect.left;
+      const dropWidth = 560;
+      if (left + dropWidth > containerRect.width) {
+        left = Math.max(0, containerRect.width - dropWidth - 10);
+      }
+
+      target.style.left = left + 'px';
+      target.classList.add('active');
+      target.setAttribute('aria-hidden','false');
+      btn.classList.add('active');
+      openId = id;
+
+      e.stopPropagation();
+        });
+    });
+
+    document.addEventListener('click', (e) => {
+    if (e.target.closest('.filter-dropdown') || e.target.closest('.filter-btn')) return;
+    closeAll();
+    });
+
+    document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') closeAll();
+    });
+
+    window.addEventListener('resize', closeAll);
+
+    window.closeAllDropdowns = closeAll;
+    })();
+    </script>
+    <script>
+        $(document).ready(function(){
+            $(window).scroll(function(){
+                if($(this).scrollTop() > 100){  
+                    $('#backTop').fadeIn();
+                } else {
+                    $('#backTop').fadeOut();
+                }
+            });
+  
+            $('#backTop').click(function(){
+                $('html, body').animate({
+                    scrollTop: 0
+                }, 300);  
+            });
+        });
+    </script>
+
+    <!--------------Product API Script-------------------->
+    <script>
+        const API_BASE = 'http://localhost:5000/api';
+
+        function formatPrice(num) {
+            if (num === null || num === undefined || isNaN(num)) return '0 đ';
+            return num.toLocaleString('vi-VN') + ' đ';
+        }
+
+        // Map phong slug -> database MaPhong ID
+        const PHONG_MAP = {
+            'phong-khach': 1,
+            'phong-ngu': 2,
+            'phong-bep': 3,
+            'phong-tam': 4,
+            'ngoai-troi': 5,
+            'phong-lam-viec': 6,
+        };
+        // Map category slug -> database MaDanhMuc ID
+        const CATEGORY_MAP = {
+            'sofa': 1,
+            'giuong': 2,
+            'ban': 3,
+            'ghe': 4,
+            'tu': 5,
+            'den': 6,
+            'trang-tri': 7,
+            'ke': 8,
+            'guong': 9,
+            'tham': 10,
+        };
+
+        function getUrlParams() {
+            const params = new URLSearchParams(window.location.search);
+            return {
+                ma_phong: PHONG_MAP[params.get('phong')] || null,
+                ma_danh_muc: CATEGORY_MAP[params.get('ma_danh_muc')] || null,
+                keyword: params.get('keyword'),
+                noi_bat: params.get('noi_bat') ? 1 : null,
+                ban_chay: params.get('ban_chay') ? 1 : null,
+                khuyen_mai: params.get('khuyen_mai') ? 1 : null,
+                gia_min: params.get('gia_min') ? parseInt(params.get('gia_min')) : null,
+                gia_max: params.get('gia_max') ? parseInt(params.get('gia_max')) : null,
+            };
+        }
+
+        function buildQueryString(page, perPage = 12, filters = {}) {
+            const queryParams = new URLSearchParams();
+            queryParams.append('page', page);
+            queryParams.append('per_page', perPage);
+            
+            if (filters.ma_danh_muc) {
+                queryParams.append('ma_danh_muc', filters.ma_danh_muc);
+            }
+            if (filters.ma_phong) {
+                queryParams.append('ma_phong', filters.ma_phong);
+            }
+            if (filters.keyword) {
+                queryParams.append('keyword', filters.keyword);
+            }
+            if (filters.noi_bat) {
+                queryParams.append('noi_bat', filters.noi_bat);
+            }
+            if (filters.ban_chay) {
+                queryParams.append('ban_chay', filters.ban_chay);
+            }
+            if (filters.khuyen_mai) {
+                queryParams.append('khuyen_mai', filters.khuyen_mai);
+            }
+            if (filters.gia_min) {
+                queryParams.append('gia_min', filters.gia_min);
+            }
+            if (filters.gia_max) {
+                queryParams.append('gia_max', filters.gia_max);
+            }
+            
+            return queryParams.toString();
+        }
+
+        function renderProductCard(sp) {
+            const imageSrc = sp.HinhAnh && sp.HinhAnh !== 'null' ? sp.HinhAnh : '../Pic/Pic_SanPham/default.svg';
+            const discountBadge = sp.KhuyenMai > 0
+                ? `<div class="discount-badge">Giảm ${sp.KhuyenMai}%</div>`
+                : '';
+            const originalPrice = sp.GiaGoc > sp.GiaBan
+                ? `<span class="product-price-original">${formatPrice(sp.GiaGoc)}</span>`
+                : '';
+
+            return `
+                <a href="../TrangChiTiet/TrangChiTiet.html?id=${sp.MaSP}">
+                    <div class="card">
+                        <div class="card-img-top">
+                            ${discountBadge}
+                            <img src="${imageSrc}" class="img-fluid" onerror="this.src='../Pic/Pic_SanPham/default.svg'" />
+                        </div>
+                        <div class="card-body">
+                            <p class="card-title">${sp.TenSP}</p>
+                            <div class="product-card-prices">
+                                <span class="product-price-current">${formatPrice(sp.GiaBan)}</span>
+                                ${originalPrice}
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            `;
+        }
+
+        function renderPagination(currentPage, totalPages, filters) {
+            const paginationContainer = document.getElementById('paginationControls');
+            if (totalPages <= 1) {
+                paginationContainer.innerHTML = '';
+                return;
+            }
+
+            let html = '';
+            
+            const prevDisabled = currentPage === 1 ? 'disabled' : '';
+            const prevPage = currentPage > 1 ? currentPage - 1 : 1;
+            html += `<button class="btn btn-outline-primary ${prevDisabled}" onclick="loadProducts(${prevPage})">«</button>`;
+
+            const maxButtons = 5;
+            let startPage = Math.max(1, currentPage - Math.floor(maxButtons / 2));
+            let endPage = Math.min(totalPages, startPage + maxButtons - 1);
+            
+            if (endPage - startPage < maxButtons - 1) {
+                startPage = Math.max(1, endPage - maxButtons + 1);
+            }
+
+            if (startPage > 1) {
+                html += `<button class="btn btn-outline-primary" onclick="loadProducts(1)">1</button>`;
+                if (startPage > 2) {
+                    html += `<button class="btn btn-outline-primary" disabled>...</button>`;
+                }
+            }
+
+            for (let i = startPage; i <= endPage; i++) {
+                const active = i === currentPage ? 'active' : '';
+                html += `<button class="btn btn-primary ${active}" onclick="loadProducts(${i})">${i}</button>`;
+            }
+
+            if (endPage < totalPages) {
+                if (endPage < totalPages - 1) {
+                    html += `<button class="btn btn-outline-primary" disabled>...</button>`;
+                }
+                html += `<button class="btn btn-outline-primary" onclick="loadProducts(${totalPages})">${totalPages}</button>`;
+            }
+
+            const nextDisabled = currentPage === totalPages ? 'disabled' : '';
+            const nextPage = currentPage < totalPages ? currentPage + 1 : totalPages;
+            html += `<button class="btn btn-outline-primary ${nextDisabled}" onclick="loadProducts(${nextPage})">»</button>`;
+
+            paginationContainer.innerHTML = html;
+        }
+
+        // ========================================================
+        // DEFAULT PRODUCTS (fallback when API unavailable)
+        // ========================================================
+        const DEFAULT_PRODUCTS = [
+            { MaSP: 1, TenSP: 'Sofa Vải Nhung 3 Chỗ Xanh Navy', GiaBan: 8500000, GiaGoc: 9500000, KhuyenMai: 10, HinhAnh: '../Pic/Pic_SanPham/Sofa/Sofa01.jpg' },
+            { MaSP: 2, TenSP: 'Sofa Da Cao Cấp 3 Chỗ Nâu Sáng', GiaBan: 13500000, GiaGoc: 15000000, KhuyenMai: 10, HinhAnh: '../Pic/Pic_SanPham/Sofa/Sofa02.jpg' },
+            { MaSP: 3, TenSP: 'Sofa Giường Gấp Được - Màu Xám', GiaBan: 6200000, GiaGoc: 7000000, KhuyenMai: 11, HinhAnh: '../Pic/Pic_SanPham/Sofa/SofaGiuong.jpg' },
+            { MaSP: 5, TenSP: 'Bàn Trà Gỗ Tự Nhiên Hình Oval', GiaBan: 2800000, GiaGoc: 3200000, KhuyenMai: 12, HinhAnh: '../Pic/Pic_SanPham/BanTra/BanTra01.jpg' },
+            { MaSP: 8, TenSP: 'Thảm Trải Sàn 200x300cm - Xám', GiaBan: 2100000, GiaGoc: 2500000, KhuyenMai: 16, HinhAnh: '../Pic/Pic_SanPham/Tham/Tham01.jpg' },
+            { MaSP: 10, TenSP: 'Gối Tựa Lưng Sofa Hình Tròn', GiaBan: 280000, GiaGoc: 350000, KhuyenMai: 20, HinhAnh: '../Pic/Pic_SanPham/Goi/Goi01.jpg' },
+            { MaSP: 11, TenSP: 'Giường Ngủ Đôi Khung Gỗ Sồi', GiaBan: 15900000, GiaGoc: 18000000, KhuyenMai: 11, HinhAnh: '../Pic/Pic_SanPham/Giuong/Giuong01.jpg' },
+            { MaSP: 15, TenSP: 'Ga Giường Cotton 100% King Size', GiaBan: 950000, GiaGoc: 1200000, KhuyenMai: 20, HinhAnh: '../Pic/Pic_SanPham/GaGiuong/Ga01.jpg' },
+            { MaSP: 17, TenSP: 'Đèn Bàn Ngủ LED Cảm Ứng', GiaBan: 520000, GiaGoc: 650000, KhuyenMai: 20, HinhAnh: '../Pic/Pic_SanPham/Den/Den01.jpg' },
+            { MaSP: 18, TenSP: 'Bàn Ăn Gỗ Tự Nhiên 6 Chỗ', GiaBan: 10500000, GiaGoc: 12000000, KhuyenMai: 12, HinhAnh: '../Pic/Pic_SanPham/BanAn/BanAn01.jpg' },
+            { MaSP: 20, TenSP: 'Bàn Làm Việc Có Ngăn Kéo', GiaBan: 3900000, GiaGoc: 4500000, KhuyenMai: 13, HinhAnh: '../Pic/Pic_SanPham/BanLamViec/BLViec01.jpg' },
+            { MaSP: 21, TenSP: 'Ghế Văn Phòng Lưng Lưới Mesh', GiaBan: 2700000, GiaGoc: 3200000, KhuyenMai: 15, HinhAnh: '../Pic/Pic_SanPham/GheVanPhong/GVP01.jpg' },
+            { MaSP: 23, TenSP: 'Tranh Canvas Phong Cảnh 3 Mảnh', GiaBan: 680000, GiaGoc: 850000, KhuyenMai: 20, HinhAnh: '../Pic/Pic_SanPham/Tranh/Tranh01.jpg' },
+            { MaSP: 24, TenSP: 'Bình Hoa Gốm Trắng Hiện Đại', GiaBan: 450000, GiaGoc: 580000, KhuyenMai: 22, HinhAnh: '../Pic/Pic_SanPham/BinhHoa/BinhHoa01.jpg' },
+            { MaSP: 25, TenSP: 'Cây Giả Trang Trí Xương Rồng Mix', GiaBan: 350000, GiaGoc: 420000, KhuyenMai: 16, HinhAnh: '../Pic/Pic_SanPham/CayCanh/Cay01.jpg' },
+        ];
+
+        async function loadProducts(page = 1, filters = null) {
+            const productGrid = document.getElementById('productGrid');
+            const paginationContainer = document.getElementById('paginationControls');
+
+            productGrid.innerHTML = `
+                <div class="w-100 text-center py-5">
+                    <div class="spinner-border text-primary" role="status">
+                        <span class="visually-hidden">Đang tải...</span>
+                    </div>
+                    <p class="mt-2">Đang tải sản phẩm...</p>
+                </div>
+            `;
+            paginationContainer.innerHTML = '';
+
+            if (!filters) {
+                filters = getUrlParams();
+            }
+
+            let products = DEFAULT_PRODUCTS;
+            let totalPages = 1;
+
+            try {
+                const queryString = buildQueryString(page, 12, filters);
+                const response = await fetch(`${API_BASE}/products/?${queryString}`);
+
+                if (response.ok) {
+                    const data = await response.json();
+                    if (data.success && data.data && data.data.length > 0) {
+                        products = data.data;
+                        totalPages = data.pages || 1;
+                    }
+                }
+            } catch (error) {
+                console.warn('API unavailable, using default products:', error);
+            }
+
+            if (products.length === 0) {
+                productGrid.innerHTML = `
+                    <div class="w-100 text-center py-5">
+                        <i class="bi bi-inbox" style="font-size: 4rem; color: #ccc;"></i>
+                        <p class="mt-3 text-muted">Không tìm thấy sản phẩm nào</p>
+                    </div>
+                `;
+                return;
+            }
+
+            productGrid.innerHTML = products.map(sp => renderProductCard(sp)).join('');
+
+            if (totalPages > 1) {
+                renderPagination(page, totalPages, filters);
+            }
+        }
+
+        function updateCartBadge() {
+            const cart = JSON.parse(localStorage.getItem('cart') || '[]');
+            const badge = document.getElementById('cartBadge');
+            if (badge) badge.textContent = cart.reduce((s, i) => s + (i.SoLuong || 1), 0);
+        }
+
+        function updateAuthState() {
+            const token = localStorage.getItem('access_token');
+            const userStr = localStorage.getItem('user');
+            const authSection = document.getElementById('authSection');
+            if (!authSection) return;
+            if (token && userStr) {
+                try {
+                    const user = JSON.parse(userStr);
+                    authSection.innerHTML = `<div class="d-flex align-items-center gap-2"><span class="text-white small">Xin chào, ${user.HoTen || user.TenDangNhap}</span><button class="btn btn-outline-light btn-sm" onclick="logout()">Đăng xuất</button></div>`;
+                } catch (e) {
+                    authSection.innerHTML = `<a href="../Login/DangNhap.html"><button class="btn btn-success">Đăng nhập</button></a>`;
+                }
+            }
+        }
+
+        function logout() {
+            localStorage.removeItem('access_token');
+            localStorage.removeItem('refresh_token');
+            localStorage.removeItem('user');
+            updateAuthState();
+            updateCartBadge();
+        }
+        window.logout = logout;
+
+        document.addEventListener('DOMContentLoaded', function() {
+            updateAuthState();
+            updateCartBadge();
+            const filters = getUrlParams();
+            loadProducts(1, filters);
+        });
+    </script>
+</body>
+</html>

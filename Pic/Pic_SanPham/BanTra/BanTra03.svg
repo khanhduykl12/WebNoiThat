@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="600" viewBox="0 0 800 600">
+<rect width="800" height="600" fill="#F0E6D8"/>
+<ellipse cx="400" cy="300" rx="320" ry="140" fill="#C4956A"/>
+<ellipse cx="400" cy="290" rx="300" ry="120" fill="#D4A574"/>
+<rect x="370" y="400" width="60" height="140" rx="10" fill="#8B6347"/>
+<rect x="310" y="500" width="180" height="20" rx="8" fill="#6B4C3B"/>
+<text x="400" y="560" font-family="Segoe UI,Arial" font-size="30" fill="#5C3D2E" text-anchor="middle" font-weight="bold">BÀN TRÀ GỖ</text>
+<text x="400" y="595" font-family="Segoe UI,Arial" font-size="18" fill="#8B6347" text-anchor="middle">Phòng Khách Hiện Đại</text>
+</svg>

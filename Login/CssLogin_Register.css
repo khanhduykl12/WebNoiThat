@@ -1,0 +1,333 @@
+* {
+  box-sizing: border-box;
+}
+:root {
+  --primary: #0d2b5d;
+  --accent: #e91e63;
+  --text: #333;
+  --muted: #666;
+  --bg: #f7f8fa;
+  --white: #fff;
+  --shadow: 0 8px 16px rgba(0, 0, 0, 0.12);
+}
+body {
+  background-size: cover;
+  background-position: center;
+  min-height: 100vh;
+  padding: 20px 0;
+}
+/*--------------------------------PHẦN HEADER--------------------------------*/
+.site-header {
+    background: #1E4D36;
+    color: var(--white);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    box-shadow: var(--shadow);
+}
+
+.header-inner {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 12px 0;
+}
+
+.logoMenu img{
+    width: 200px;
+}
+
+/* Nav */
+.main-nav {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    margin-left: 12px;
+}
+.main-nav > a, .dropbtn {
+    color: #fff;
+    text-decoration: none;
+    padding: 8px 10px;
+    border-radius: 8px;
+}
+.main-nav > a:hover, .dropbtn:hover {
+    background: rgba(255,255,255,.1);
+}
+
+.dropdown {
+    position: relative;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: #1E4D36;
+    min-width: 190px;
+    box-shadow: var(--shadow);
+    z-index: 10;
+    text-align: left;
+    border-radius: 10px;
+    overflow: visible;
+}
+
+.dropdown-content a {
+    color: white;
+    padding: 10px 12px;
+    display: block;
+    text-decoration: none;
+}
+
+.dropdown-content a:hover {
+    background: white;
+    color: black;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+/*Phần menu bên trong của Dropdown*/
+.menu {
+    list-style: none;
+    margin-top: 30px;
+    padding: 0;
+    position: relative;
+}
+.menu li{
+    transition: 0.2s;
+
+}
+.submenu {
+    display: none;
+    position: absolute;
+    top: 0%;
+    left: 100%;
+    background-color: #1E4D36;
+    color: white;
+    min-width: 800px;
+    padding: 10px;
+    border-radius: 6px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+    z-index: 100;
+   height: 500px;
+       
+}
+.submenu a{
+     color: white;
+}
+.submenu li{
+    border-bottom: 1px solid white;
+}
+.menu li:hover > .submenu{
+   
+    display: block;
+}
+
+/* Search box (phải) */
+.search-box {
+    margin-left: auto;
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+.search-box input {
+    padding: 8px 10px;
+    border: none;
+    border-radius: 10px;
+    width: 210px;
+}
+
+.search-box button {
+        padding: 9px 14px;
+        border: 1px solid white;
+        border-radius: 10px;
+        background: #1E4D36;
+        color: #fff;
+        cursor: pointer;
+}
+
+.search-box button:hover {
+    filter: brightness(1.1);
+    background: white;
+    color: #1E4D36;
+         
+}
+.login button{
+    background: green;
+    padding: 9px 14px;
+    border: none;
+    border-radius: 10px;
+    color: #fff;
+    cursor: pointer;
+ 
+}
+/*---------------------------PHẦN MAIN--------------------------------------*/
+.wrapper {
+  position: relative;
+  width: 100%;
+  max-width: 480px;
+  background-color: white;
+  border: 2px solid rgba(255, 255, 255, 0.5);
+  border-radius: 20px;
+  backdrop-filter: blur(20px);
+  box-shadow: 0 0 30px rgba(0, 0, 0, 0.9);
+  padding: 40px 35px;
+  margin: 150px;
+}
+
+.wrapper h3 {
+  font-size: 2em;
+  color: #1e4d36;
+  text-align: center;
+  margin-bottom: 30px;
+  font-weight: 600;
+}
+
+.input-box {
+  position: relative;
+  width: 100%;
+  margin-bottom: 25px;
+}
+
+.input-box label {
+  display: block;
+  font-size: 0.9em;
+  color: #162938;
+  font-weight: 500;
+  margin-bottom: 8px;
+}
+
+.input-box .input-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.input-box input,
+.input-box select {
+  width: 100%;
+  height: 45px;
+  background: white;
+  border: 2px solid #e0e0e0;
+  border-radius: 8px;
+  outline: none;
+  padding: 0 40px 0 15px;
+  font-size: 1em;
+  color: #162938;
+  transition: all 0.3s ease;
+}
+
+.input-box input:focus,
+.input-box select:focus {
+  border-color: #1e4d36;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.input-box span {
+  position: absolute;
+  right: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 1.1em;
+  color: #1e4d36;
+  pointer-events: none;
+}
+
+.btn-create {
+  width: 100%;
+  height: 50px;
+  background: #1e4d36;
+  border: none;
+  border-radius: 8px;
+  color: white;
+  font-size: 1.1em;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btn-create:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 20px #1e4d36;
+}
+
+.login-link-wrapper {
+  text-align: center;
+  margin-top: 20px;
+  color: #162938;
+}
+
+.login-link-wrapper a {
+  color: #667eea;
+  font-weight: 600;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.login-link-wrapper a:hover {
+  color: #764ba2;
+  text-decoration: underline;
+}
+
+#message-error-reg {
+  color: #dc3545;
+  text-align: center;
+  margin-top: 10px;
+  font-size: 0.9em;
+}
+
+/* Responsive */
+@media (max-width: 576px) {
+  .wrapper {
+    padding: 30px 25px;
+    margin: 10px;
+  }
+
+  .wrapper h3 {
+    font-size: 1.6em;
+    margin-bottom: 20px;
+  }
+}
+
+
+
+
+
+/*--------------------------------PHẦN FOOTER--------------------------------*/
+footer{
+
+    background-color: black;
+    color: white;
+}
+footer .row:first-child{
+    
+    padding-top: 30px;
+}
+.ThongTin > p > a{
+    color: white;
+}
+.ThongTin > p > a:hover{
+    color: red;
+}
+#img_DoiTac{
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+}
+/*Nút cuộn lên đầu trang*/
+#backTop{
+    width:50px ;
+    height: 50px ;
+    background-color: tomato;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    position: fixed;
+    bottom: 40px;
+    right: 20px;
+    cursor: pointer;
+}

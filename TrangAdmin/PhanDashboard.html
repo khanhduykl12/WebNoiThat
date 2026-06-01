@@ -1,0 +1,324 @@
+<!-- File: PhanDashboard.html -->
+<!-- Load vào iframe của TrangAdmin.html -->
+
+<style>
+.loading-overlay {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(255, 255, 255, 0.8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+    border-radius: 8px;
+}
+.spinner {
+    width: 40px; height: 40px;
+    border: 4px solid #f3f3f3;
+    border-top: 4px solid #28a745;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+.error-box {
+    background: #f8d7da;
+    border: 1px solid #f5c6cb;
+    border-radius: 8px;
+    padding: 12px 16px;
+    color: #721c24;
+    font-size: 13px;
+    margin-top: 8px;
+}
+</style>
+
+<h3 class="fw-bold text-success mb-4">
+    <i class="bi bi-bar-chart-fill"></i> Thống Kê Chi Tiết
+</h3>
+
+<!-- Stats -->
+<div class="row g-3 text-center mb-4">
+    <div class="col-md-4">
+        <div class="card shadow-sm border-success">
+            <div class="card-body">
+                <h5 class="text-success fw-bold">Doanh thu hôm nay</h5>
+                <h3 class="fw-bold" id="doanhThuHomNay">--</h3>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card shadow-sm border-primary">
+            <div class="card-body">
+                <h5 class="text-primary fw-bold">Đơn hàng hôm nay</h5>
+                <h3 class="fw-bold" id="donHangHomNay">--</h3>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card shadow-sm border-danger">
+            <div class="card-body">
+                <h5 class="text-danger fw-bold">Khách hàng mới hôm nay</h5>
+                <h3 class="fw-bold" id="khachHangMoi">--</h3>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card shadow-sm border-info">
+            <div class="card-body">
+                <h6 class="text-info fw-bold">Tổng Sản Phẩm</h6>
+                <h4 class="fw-bold" id="tongSanPham">--</h4>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card shadow-sm border-warning">
+            <div class="card-body">
+                <h6 class="text-warning fw-bold">Tổng Khách Hàng</h6>
+                <h4 class="fw-bold" id="tongKhachHang">--</h4>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card shadow-sm border-secondary">
+            <div class="card-body">
+                <h6 class="text-secondary fw-bold">Đơn Chờ Xác Nhận</h6>
+                <h4 class="fw-bold" id="donChoXacNhan">--</h4>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card shadow-sm border-dark">
+            <div class="card-body">
+                <h6 class="text-dark fw-bold">Doanh Thu Năm</h6>
+                <h4 class="fw-bold" id="doanhThuNam">--</h4>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card shadow-sm border-warning">
+            <div class="card-body">
+                <h6 class="text-warning fw-bold"><i class="bi bi-exclamation-triangle-fill"></i> Sản Phẩm Sắp Hết Hàng</h6>
+                <h4 class="fw-bold" id="spSapHetHang">--</h4>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card shadow-sm border-danger">
+            <div class="card-body">
+                <h6 class="text-danger fw-bold"><i class="bi bi-x-circle-fill"></i> Sản Phẩm Hết Hàng</h6>
+                <h4 class="fw-bold" id="spHetHang">--</h4>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Chart -->
+<div class="mt-4">
+    <h4 class="fw-bold text-center mb-4 text-success">Thống kê doanh thu trong 7 ngày gần nhất</h4>
+    <div class="card shadow-sm p-4" style="position: relative; min-height: 300px;">
+        <div id="chartLoading" class="loading-overlay"><div class="spinner"></div></div>
+        <canvas id="doanhThuChart" style="max-height: 300px;"></canvas>
+    </div>
+</div>
+
+<!-- Error display -->
+<div id="errorBox" class="error-box" style="display:none;"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+(function() {
+    var API_BASE = 'http://localhost:5000/api';
+    var chartInstance = null;
+
+    function getAuthHeaders() {
+        return {
+            'Authorization': 'Bearer ' + (localStorage.getItem('access_token') || ''),
+            'Content-Type': 'application/json'
+        };
+    }
+
+    function formatPrice(num) {
+        if (num === null || num === undefined || isNaN(num)) return '0 đ';
+        return new Intl.NumberFormat('vi-VN').format(num) + ' đ';
+    }
+
+    function showError(msg) {
+        var el = document.getElementById('errorBox');
+        if (el) { el.textContent = msg; el.style.display = 'block'; }
+    }
+
+    function setLoading(visible) {
+        var el = document.getElementById('chartLoading');
+        if (el) el.style.display = visible ? 'flex' : 'none';
+    }
+
+    function updateStats(data) {
+        if (!data) { showError('Không nhận được dữ liệu từ server.'); return; }
+        var el;
+        el = document.getElementById('doanhThuHomNay');
+        if (el) el.textContent = formatPrice(data.doanh_thu_hom_nay || 0);
+        el = document.getElementById('donHangHomNay');
+        if (el) el.textContent = data.don_hang_hom_nay || 0;
+        el = document.getElementById('khachHangMoi');
+        if (el) el.textContent = data.khach_hang_moi || 0;
+        el = document.getElementById('tongSanPham');
+        if (el) el.textContent = data.tong_san_pham || 0;
+        el = document.getElementById('tongKhachHang');
+        if (el) el.textContent = data.tong_khach_hang || 0;
+        el = document.getElementById('donChoXacNhan');
+        if (el) el.textContent = data.don_cho_xac_nhan || 0;
+        el = document.getElementById('doanhThuNam');
+        if (el) el.textContent = formatPrice(data.doanh_thu_nam || 0);
+        el = document.getElementById('spSapHetHang');
+        if (el) el.textContent = data.sp_sap_het_hang || 0;
+        el = document.getElementById('spHetHang');
+        if (el) el.textContent = data.sp_het_hang || 0;
+    }
+
+    function initChart() {
+        var ctx = document.getElementById('doanhThuChart');
+        if (!ctx) return;
+        if (chartInstance) { chartInstance.destroy(); chartInstance = null; }
+        chartInstance = new Chart(ctx.getContext('2d'), {
+            type: 'bar',
+            data: {
+                labels: [],
+                datasets: [{
+                    label: 'Doanh thu (VNĐ)',
+                    data: [],
+                    backgroundColor: 'rgba(40, 167, 69, 0.7)',
+                    borderColor: '#28a745',
+                    borderWidth: 2,
+                    borderRadius: 8,
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: true,
+                plugins: {
+                    legend: { display: true, position: 'top' },
+                    tooltip: {
+                        callbacks: {
+                            label: function(ctx) {
+                                return 'Doanh thu: ' + (ctx.parsed.y || 0).toLocaleString('vi-VN') + ' đ';
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: {
+                            callback: function(v) {
+                                if (v >= 1000000) return (v / 1000000).toFixed(1) + 'M';
+                                if (v >= 1000) return (v / 1000).toFixed(0) + 'K';
+                                return v;
+                            }
+                        }
+                    }
+                }
+            }
+        });
+        loadData();
+    }
+
+    function loadData() {
+        // Load stats
+        fetch(API_BASE + '/admin/dashboard/stats', {
+            method: 'GET',
+            headers: getAuthHeaders()
+        })
+        .then(function(r) {
+            if (!r.ok) throw new Error('HTTP ' + r.status);
+            return r.json();
+        })
+        .then(function(res) {
+            if (res.success && res.data) {
+                updateStats(res.data);
+            } else {
+                showError('Server trả dữ liệu không hợp lệ: ' + JSON.stringify(res));
+            }
+        })
+        .catch(function(e) {
+            showError('Lỗi tải stats: ' + e.message + ' — Kiểm tra backend đang chạy ở localhost:5000?');
+        });
+
+        // Load chart
+        fetch(API_BASE + '/admin/dashboard/revenue?days=7', {
+            method: 'GET',
+            headers: getAuthHeaders()
+        })
+        .then(function(r) {
+            setLoading(false);
+            if (!r.ok) throw new Error('HTTP ' + r.status);
+            return r.json();
+        })
+        .then(function(res) {
+            setLoading(false);
+            if (res.success && Array.isArray(res.data) && chartInstance) {
+                var labels = res.data.map(function(d) {
+                    var parts = d.ngay.split('-');
+                    return parts[2] + '/' + parts[1];
+                });
+                var values = res.data.map(function(d) { return d.doanh_thu || 0; });
+                chartInstance.data.labels = labels;
+                chartInstance.data.datasets[0].data = values;
+                chartInstance.update();
+            }
+        })
+        .catch(function(e) {
+            setLoading(false);
+            showError('Lỗi tải biểu đồ: ' + e.message);
+        });
+    }
+
+    function startDashboard() {
+        // Chống double-call: đánh dấu đã chạy rồi thì bỏ qua
+        if (startDashboard._called) return;
+        startDashboard._called = true;
+
+        setLoading(true);
+        if (typeof Chart === 'undefined') {
+            // Load Chart.js tu CDN, retry 1 lan neu loi
+            function tryInitChart() {
+                if (typeof Chart !== 'undefined') {
+                    initChart();
+                } else {
+                    setLoading(false);
+                    var el = document.getElementById('errorBox');
+                    if (el) {
+                        el.textContent = 'Lỗi: Không tải được thư viện Chart.js! Kiểm tra kết nối internet.';
+                        el.style.display = 'block';
+                    }
+                }
+            }
+            var script = document.createElement('script');
+            script.src = 'https://cdn.jsdelivr.net/npm/chart.js';
+            script.onload = function() { initChart(); };
+            script.onerror = function() {
+                // Thu lai lan cuoi
+                var retry = document.createElement('script');
+                retry.src = 'https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js';
+                retry.onload = function() { initChart(); };
+                retry.onerror = function() { tryInitChart(); };
+                document.head.appendChild(retry);
+            };
+            document.head.appendChild(script);
+        } else {
+            initChart();
+        }
+    }
+
+    document.addEventListener('DOMContentLoaded', startDashboard);
+
+    // Expose cho TrangAdmin goi
+    window.startDashboard = startDashboard;
+
+    // Log de debug
+    var token = localStorage.getItem('access_token');
+    console.log('[PhanDashboard] Da load. Token:', token ? 'co' : 'khong');
+    if (!token) showError('Khong co token — chua dang nhap hoac token da het han.');
+})();
+</script>

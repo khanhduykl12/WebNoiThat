@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trang Admin</title>
+    <link rel="stylesheet" href="../CSS/bootstrap.min.css">
+    <link rel="stylesheet" href="CssTrangAdmin.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+</head>
+<body>
+
+    <div class="header-top">
+        <div>GIỜ MỞ CỬA : 08:00 AM - 09:00 PM</div>
+        <div>ĐỊA CHỈ: 140 LÊ TRỌNG TẤN, QUẬN TÂN PHÚ, TP.HCM</div>
+    </div>
+
+    <div class="sidebar text-center">
+        <img src="../Pic/Pic_LogoShop/logoNoiThatXin.png" style="width:200px; border-radius: 50px;">
+        <p class="mt-2 mb-4 fw-semibold">HOTLINE: 028 6270 6275</p>
+
+        <a href="#" class="menu-item active" data-page="PhanDashboard.html">
+            <i class="bi bi-clipboard-data-fill"></i> Dashboard
+        </a>
+
+        <a href="#" class="menu-item" data-page="PhanDonHang.html">
+            <i class="bi bi-bag-dash-fill"></i> Quản lý đơn hàng
+        </a>
+
+        <a href="#" class="menu-item" data-page="PhanKhachHang.html">
+            <i class="bi bi-person-lines-fill"></i> Quản lý khách hàng
+        </a>
+
+        <a href="#" class="menu-item" data-page="PhanSanPham.html">
+            <i class="bi bi-basket3-fill"></i> Quản lý sản phẩm
+        </a>
+    </div>
+
+    <div class="main">
+        <!-- User Box -->
+        <div class="user-box">
+            <div class="d-flex align-items-center gap-2">
+                <i class="bi bi-person-fill"></i>
+                <span id="adminUsername">Admin</span>
+            </div>
+            <button type="button"
+                class="btn btn-link text-danger fw-bold text-decoration-none p-0"
+                id="btnLogout">
+                <i class="bi bi-box-arrow-right"></i> Đăng xuất
+            </button>
+        </div>
+
+        <!-- Content Area -->
+        <div id="content-area">
+            <h3 class="text-center text-secondary mt-5">Chọn menu bên trái để xem nội dung</h3>
+        </div>
+    </div>
+
+    <!-- Modal xác nhận đăng xuất -->
+    <div class="modal fade" id="logoutConfirmModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Xác nhận đăng xuất</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    Bạn có chắc muốn đăng xuất?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" id="confirmLogout">Có</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+    $(document).ready(function() {
+        var API_BASE = 'http://localhost:5000/api';
+        var LOGOUT_PAGE = '../Login/DangNhap.html';
+
+        // ===== LẤY BASE URL — dùng relative path cố định =====
+        var ADMIN_BASE = './';
+
+        // ===== KIỂM TRA ĐĂNG NHẬP =====
+        function checkAuth() {
+            var token = localStorage.getItem('access_token');
+            var userData = localStorage.getItem('user');
+            if (!token) {
+                window.location.href = LOGOUT_PAGE;
+                return false;
+            }
+            if (userData) {
+                try {
+                    var user = JSON.parse(userData);
+                    if (user.VaiTro !== 'admin') {
+                        window.location.href = '../TrangChu/TrangChu.html';
+                        return false;
+                    }
+                    $('#adminUsername').text(user.HoTen || user.TenDangNhap || 'Admin');
+                } catch (e) {
+                    window.location.href = LOGOUT_PAGE;
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        if (!checkAuth()) return;
+
+        // ===== ĐĂNG XUẤT =====
+        $('#btnLogout').click(function() {
+            new bootstrap.Modal(document.getElementById('logoutConfirmModal')).show();
+        });
+
+        $('#confirmLogout').click(function() {
+            localStorage.removeItem('access_token');
+            localStorage.removeItem('refresh_token');
+            localStorage.removeItem('user');
+            bootstrap.Modal.getInstance(document.getElementById('logoutConfirmModal')).hide();
+            window.location.href = LOGOUT_PAGE;
+        });
+
+        // ===== MENU CLICK =====
+        $('.menu-item').click(function(e) {
+            e.preventDefault();
+            $('.menu-item').removeClass('active');
+            $(this).addClass('active');
+            loadPage($(this).data('page'));
+        });
+
+        // ===== LOAD TRANG: AJAX + LOẠI BỎ CONFLICT CSS =====
+        function loadPage(page) {
+            $('#content-area').html(
+                '<div class="text-center mt-5"><div class="spinner-border text-success" role="status"></div><p class="mt-3 text-muted">Đang tải...</p></div>'
+            );
+
+            var url = ADMIN_BASE + page;
+            console.log('[TrangAdmin] loadPage:', page, '→ URL:', url);
+            $.ajax({
+                url: url,
+                method: 'GET',
+                dataType: 'html',
+                success: function(response) {
+                    // Loại bỏ DOCTYPE, html, head, body, style khỏi trang con
+                    // để tránh conflict CSS (đặc biệt .sidebar bị ghi đè)
+                    var clean = response
+                        .replace(/<!DOCTYPE[^>]*>/gi, '')
+                        .replace(/<html[^>]*>/gi, '')
+                        .replace(/<\/html>/gi, '')
+                        .replace(/<head\b[^>]*>[\s\S]*?<\/head>/gi, '')
+                        .replace(/<body[^>]*>/gi, '')
+                        .replace(/<\/body>/gi, '')
+                        .replace(/<style\b[^>]*>[\s\S]*?<\/style>/gi, '');
+
+                    $('#content-area').html(clean);
+
+                    // Chạy script inline
+                    var scripts = $('#content-area script');
+                    scripts.each(function() {
+                        var s = this;
+                        if (s.src && s.src.length > 0) {
+                            // External script: load rồi bỏ qua
+                            $.getScript(s.src).fail(function() {});
+                        } else if (s.textContent && s.textContent.trim()) {
+                            // Inline script: eval trong scope mới
+                            try { eval(s.textContent); } catch(e) { console.error(e); }
+                        }
+                    });
+
+                    // Gọi startDashboard nếu có
+                    if (typeof window.startDashboard === 'function') {
+                        setTimeout(function() { window.startDashboard(); }, 100);
+                    }
+                },
+                error: function(xhr) {
+                    var url = ADMIN_BASE + page;
+                    console.error('[TrangAdmin] 404 at:', url, 'status:', xhr.status);
+                    $('#content-area').html(
+                        '<div class="alert alert-danger mt-4">Lỗi 404: Không tìm thấy trang!<br><small>URL: ' + url + '</small></div>'
+                    );
+                }
+            });
+        }
+
+        // ===== LOAD DASHBOARD MẶC ĐỊNH =====
+        loadPage('PhanDashboard.html');
+    });
+    </script>
+
+</body>
+</html>

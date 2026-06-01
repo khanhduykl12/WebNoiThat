@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="600" viewBox="0 0 800 600">
+<rect width="800" height="600" fill="#F5F0EB"/>
+<rect x="250" y="200" width="300" height="300" rx="20" fill="#8B6347"/>
+<rect x="260" y="210" width="280" height="200" rx="15" fill="#D4A574"/>
+<rect x="270" y="220" width="260" height="180" rx="10" fill="#C4956A"/>
+<rect x="300" y="500" width="30" height="60" rx="8" fill="#6B4C3B"/>
+<rect x="470" y="500" width="30" height="60" rx="8" fill="#6B4C3B"/>
+<rect x="250" y="100" width="40" height="120" rx="15" fill="#8B6347"/>
+<rect x="510" y="100" width="40" height="120" rx="15" fill="#8B6347"/>
+<text x="400" y="590" font-family="Segoe UI,Arial" font-size="28" fill="#5C3D2E" text-anchor="middle" font-weight="bold">GHẾ ĂN ĐỆM</text>
+<text x="400" y="620" font-family="Segoe UI,Arial" font-size="18" fill="#8B6347" text-anchor="middle">Phong Cách Lịch Sự</text>
+</svg>

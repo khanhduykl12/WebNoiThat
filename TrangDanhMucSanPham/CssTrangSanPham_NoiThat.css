@@ -1,0 +1,557 @@
+<!--CssTrangSanPham_NoiThat.css-->
+* {
+  box-sizing: border-box;
+}
+
+:root {
+  --text: #333;
+  --muted: #666;
+  --bg: #f7f8fa;
+  --white: #fff;
+  --shadow: 0 8px 16px rgba(0, 0, 0, 0.12);
+}
+
+body {
+  background-color: #f5f7f9;
+  margin: 0;
+  padding: 0;
+}
+
+/*--------------------------------PHẦN HEADER--------------------------------*/
+/* --- Reset & Chung --- */
+.site-header {
+  font-family: Arial, sans-serif;
+  background-color: #ffffff;
+  border-bottom: 1px solid #e0e0e0;
+  width: 100%;
+}
+.site-header p,
+.site-header ul {
+  margin: 0;
+  padding: 0;
+}
+
+/* --- TẦNG 1: HEADER TOP --- */
+.header-top {
+  background-color: #2b2b2b;
+  display: flex;
+  justify-content: flex-end;
+  gap: 24px;
+  padding: 8px 40px;
+}
+.header-top p {
+  color: #ffffff;
+  font-size: 13px;
+  font-weight: bold;
+}
+
+/* --- TẦNG 2: HEADER MAIN --- */
+.header-main {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1px 40px;
+  background-color: #ffffff;
+}
+
+
+.search-box {
+  display: flex;
+  align-items: center;
+  border: 1px solid #ccc;
+  width: 300px;
+  padding: 8px 12px;
+  border-radius: 5px;
+}
+
+.search-box input {
+  flex: 1;
+  border: none;
+  outline: none;
+}
+
+.search-box button {
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+
+
+.logo-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-grow: 1;
+  text-align: center;
+}
+
+.logoMenu {
+  display: inline-block;
+}
+
+.logoMenu img {
+  height: auto;
+  width: 200px;
+  max-width: 100%;
+  object-fit: contain;
+  mix-blend-mode: multiply;
+}
+
+/* Khối chức năng bên phải */
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  width: 300px;
+  justify-content: flex-end;
+  flex-shrink: 0;
+}
+.btn-login-link {
+  text-decoration: none;
+}
+.btn-login {
+  background: none;
+  border: none;
+  color: #333333;
+  font-size: 14px;
+  cursor: pointer;
+  font-weight: 500;
+}
+.btn-login:hover {
+  text-decoration: underline;
+}
+.btn-cart {
+  color: #333333;
+  font-size: 22px;
+  position: relative;
+  text-decoration: none;
+}
+.btn-cart .badge {
+  position: absolute;
+  top: -5px;
+  right: -10px;
+  background-color: #1e4d36;
+  color: #ffffff;
+  font-size: 10px;
+  padding: 2px 6px;
+  border-radius: 50%;
+}
+
+/* MODAL */
+
+.modal-search-tabs {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.tab-btn {
+  border: none;
+  padding: 10px 20px;
+  background: #eee;
+  cursor: pointer;
+}
+
+.tab-btn.active {
+  background: #000;
+  color: #fff;
+}
+/* Ẩn mặc định các panel tab nội dung */
+.search-tab-panel {
+  display: none;
+}
+
+/* Chỉ hiển thị panel nào có class .active */
+.search-tab-panel.active {
+  display: block;
+}
+
+/* CSS xử lý ẩn/hiện ảnh xem trước */
+#imagePreview {
+  display: none;
+  max-width: 100%;
+  height: auto;
+  margin-top: 10px;
+  border-radius: 8px;
+}
+.image-preview-empty {
+  display: block;
+  padding: 20px;
+  background: #f8f9fa;
+  border: 1px dashed #ccc;
+  text-align: center;
+  color: #6c757d;
+  border-radius: 8px;
+}
+
+.camera-actions {
+  display: flex;
+  gap: 10px;
+}
+/* --- TẦNG 3: MAIN NAVIGATION --- */
+.main-nav {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 30px;
+  padding: 12px 40px;
+  border-top: 1px solid #f0f0f0;
+}
+.main-nav > a,
+.dropbtn {
+  color: #333333;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  padding: 6px 0;
+  display: inline-block;
+}
+.main-nav > a:hover,
+.dropbtn:hover {
+  color: #1e4d36;
+}
+
+/* --- TẦNG 4: BANNER KHUYẾN MÃI DƯỚI CÙNG --- */
+.header-bottom {
+  background-color: #2b2b2b;
+  display: flex;
+  justify-content: center;
+  padding: 10px 40px;
+}
+.header-bottom p {
+  color: #ffffff;
+  font-size: 13px;
+  letter-spacing: 0.5px;
+}
+
+/* --- DROPDOWN & MEGA MENU --- */
+.dropdown {
+  position: relative;
+}
+.dropdown-content {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #ffffff;
+  min-width: 220px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  z-index: 100;
+  border-radius: 4px;
+}
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+.menu {
+  list-style: none;
+}
+.menu li {
+  position: relative;
+}
+.dropdown-content a {
+  color: #333333;
+  padding: 12px 16px;
+  display: block;
+  text-decoration: none;
+  font-size: 14px;
+}
+.dropdown-content a:hover {
+  background-color: #f5f5f5;
+  color: #1e4d36;
+}
+
+/* Mega menu (Submenu bên phải) */
+.submenu {
+  display: none;
+  position: absolute;
+  top: 0;
+  left: 100%;
+  background-color: #ffffff;
+  color: #333333;
+  min-width: 600px;
+  padding: 20px;
+  border-radius: 4px;
+  box-shadow: 4px 4px 12px rgba(0, 0, 0, 0.1);
+  z-index: 101;
+}
+.menu li:hover > .submenu {
+  display: flex;
+}
+.submenu a {
+  color: #666666 !important;
+  padding: 6px 0;
+}
+.submenu a:hover {
+  color: #1e4d36 !important;
+  background: none;
+}
+.submenu h6 {
+  color: #333333;
+  margin-bottom: 10px;
+  font-size: 13px;
+}
+.list-unstyled {
+  list-style: none;
+}
+.header-bottom {
+  background-color: #2b2b2b;
+  gap: 24px;
+  padding: 8px 40px;
+}
+/*--------------------------------PHẦN MAIN--------------------------------*/
+/* --- TỔNG QUAN KHU VỰC HERO BANNER --- */
+.hero-banner-section {
+  width: 100%;
+  position: relative;
+  font-family: "Times New Roman", Times, serif;
+  background-color: #f4ece1;
+}
+
+/* 1. Dải chữ chạy trên cùng banner */
+.banner-ticker-top {
+  background-color: #8c2626;
+  color: #ffffff;
+  font-size: 18px;
+  font-family: Arial, sans-serif;
+  letter-spacing: 2px;
+  padding: 6px 0;
+  overflow: hidden;
+  white-space: nowrap;
+  display: flex;
+}
+
+/* Khối bao bọc 2 dòng chữ để tạo đường chạy */
+.ticker-track {
+  display: flex;
+  width: max-content;
+  animation: marquee 15s linear infinite; 
+}
+
+/* Định dạng cho từng đoạn chữ */
+.ticker-track span {
+  display: inline-block;
+  padding-right: 20px; 
+}
+
+.banner-ticker-top:hover .ticker-track {
+  animation-play-state: paused;
+}
+
+/* Định nghĩa chuyển động chạy từ phải sang trái */
+@keyframes marquee {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  100% {
+    transform: translate3d(
+      -50%,
+      0,
+      0
+    ); 
+  }
+}
+
+/* 2. Ảnh nền background */
+.carousel-item {
+  position: relative;
+  width: 100%;
+  height: 550px;
+  overflow: hidden;
+  background-color: #f4ece1; 
+}
+
+/* Định dạng hình ảnh nền */
+.hero-bg-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center center;
+  display: block;
+  transition: transform 0.6s ease-in-out;
+}
+/* 3.  Khối chữ đè lên chính giữa hình ảnh */
+.hero-caption-overlay {
+  position: absolute;
+  top: 45%;
+  left: 50%;
+  transform: translate(-50%, -50%); 
+  text-align: center;
+  z-index: 5;
+  width: 90%;
+  max-width: 800px;
+  pointer-events: none; 
+}
+
+.hero-caption-overlay * {
+  pointer-events: auto; 
+}
+
+/* Sự kiện Sale */
+.sub-title-event {
+  font-family: Arial, sans-serif;
+  font-size: 14px;
+  letter-spacing: 3px;
+  /* color: #333333; */
+  color: red;
+  margin-bottom: 10px;
+  text-transform: uppercase;
+  font-weight: bold;
+}
+
+/* Tiêu đề chữ to */
+.main-title-sale {
+  font-size: 64px; 
+  /* color: #1a1a1a; */
+  color: red;
+  line-height: 1.1;
+  margin-bottom: 25px;
+  font-weight: normal;
+}
+
+.main-title-sale .thin-text {
+  font-style: italic;
+  font-weight: 300;
+}
+
+/* Nút bấm mua hàng */
+.btn-shop-now {
+  display: inline-block;
+  background-color: #8c2626;
+  color: #ffffff;
+  text-decoration: none;
+  font-family: Arial, sans-serif;
+  font-size: 12px;
+  font-weight: bold;
+  padding: 12px 35px;
+  letter-spacing: 1px;
+  border-radius: 0px; 
+  transition: background-color 0.3s ease;
+}
+
+.btn-shop-now:hover {
+  background-color: #1a1a1a;
+  color: #ffffff;
+}
+
+/* 4. Định dạng lại nút mũi tên của Bootstrap */
+.custom-ctrl {
+  width: 5%;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+#ashleyHeroCarousel:hover .custom-ctrl {
+  opacity: 0.7;
+}
+
+/* Nút chấm tròn chuyển slide */
+.custom-indicators [data-bs-target] {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background-color: #333333;
+  margin: 0 6px;
+}
+
+/* 5. TẦNG BOTTOM: Thanh thông tin ưu đãi dưới banner */
+.banner-footer-info {
+  background-color: #8c2626;
+  color: #ffffff;
+  padding: 15px 40px;
+  font-family: Arial, sans-serif;
+}
+
+.footer-info-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+.brand-sub-logo {
+  font-size: 22px;
+  font-weight: bold;
+  letter-spacing: 0.5px;
+  font-family: "Times New Roman", Times, serif;
+}
+
+.brand-sub-logo .accent-text {
+  font-weight: 300;
+  font-size: 16px;
+  font-style: italic;
+}
+
+.footer-info-text {
+  font-size: 13px;
+  line-height: 1.4;
+  flex: 1;
+  min-width: 300px;
+  margin: 0;
+}
+
+/* --- (RESPONSIVE) --- */
+@media (max-width: 768px) {
+  .main-title-sale {
+    font-size: 36px; /* Co nhỏ chữ lại trên điện thoại để không tràn màn hình */
+  }
+  .hero-bg-img {
+    min-height: 320px;
+  }
+  .footer-info-container {
+    flex-direction: column;
+    text-align: center;
+  }
+  .btn-prequalify {
+    width: 100%;
+    text-align: center;
+  }
+}
+/*------------------------------------------------------------------------------------*/
+
+
+
+
+/*--------------------------------PHẦN FOOTER--------------------------------*/
+footer{
+    background-color: black;
+    color: white;
+}
+
+footer .row:first-child{
+    padding-top: 30px;
+}
+
+.ThongTin > p > a{
+    color: white;
+}
+
+.ThongTin > p > a:hover{
+    color: red;
+}
+
+#img_DoiTac{
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+}
+/*Nút cuộn lên đầu trang*/
+#backTop{
+    width:50px ;
+    height: 50px ;
+    background-color: tomato;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    position: fixed;
+    bottom: 40px;
+    right: 20px;
+    cursor: pointer;
+}

@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="600" viewBox="0 0 800 600">
+<rect width="800" height="600" fill="#F5F0EB"/>
+<rect x="100" y="150" width="600" height="360" rx="20" fill="#E8E0D8"/>
+<rect x="120" y="170" width="560" height="320" rx="15" fill="#F5F5F5"/>
+<rect x="120" y="170" width="560" height="120" rx="15" fill="#F5F5F5"/>
+<rect x="130" y="180" width="540" height="100" rx="10" fill="#F0F8FF"/>
+<rect x="140" y="190" width="80" height="80" rx="10" fill="#E8F0F8"/>
+<rect x="240" y="190" width="80" height="80" rx="10" fill="#E8F0F8"/>
+<rect x="480" y="190" width="80" height="80" rx="10" fill="#E8F0F8"/>
+<rect x="580" y="190" width="80" height="80" rx="10" fill="#E8F0F8"/>
+<text x="400" y="570" font-family="Segoe UI,Arial" font-size="28" fill="#5C3D2E" text-anchor="middle" font-weight="bold">GA GIƯỜNG CAO CẤP</text>
+<text x="400" y="605" font-family="Segoe UI,Arial" font-size="18" fill="#8B6347" text-anchor="middle">Cotton 100% Mềm Mát</text>
+</svg>

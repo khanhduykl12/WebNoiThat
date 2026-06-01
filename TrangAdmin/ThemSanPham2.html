@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<title>Thêm Sản Phẩm</title>
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background: #f4f5f7;
+        padding: 20px;
+    }
+    .container {
+        max-width: 1000px;
+        margin: 0 auto;
+        background: #fff;
+        padding: 25px;
+        border-radius: 12px;
+        box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    h2 {
+        margin-bottom: 20px;
+    }
+    label {
+        font-weight: bold;
+        display: block;
+        margin-top: 10px;
+    }
+    input, select, textarea {
+        width: 100%;
+        padding: 10px;
+        margin-top: 5px;
+        border-radius: 6px;
+        border: 1px solid #ccc;
+    }
+    .row {
+        display: flex;
+        gap: 20px;
+    }
+    .col-6 {
+        width: 50%;
+    }
+    .box {
+        margin-top: 20px;
+        padding: 15px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        background: #fafafa;
+    }
+    .checkbox-item {
+        display: block;
+        margin-top: 5px;
+    }
+    button {
+        margin-top: 20px;
+        padding: 12px 20px;
+        border: none;
+        background: #007bff;
+        color: #fff;
+        font-size: 16px;
+        border-radius: 8px;
+        cursor: pointer;
+    }
+</style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Thêm Sản Phẩm</h2>
+
+    <div class="row">
+        <div class="col-6">
+            <label>Tên sản phẩm</label>
+            <input type="text">
+
+            <label>Giá bán</label>
+            <input type="number">
+
+            <label>Giá khuyến mãi</label>
+            <input type="number">
+
+            <label>Giảm giá (%)</label>
+            <input type="number">
+
+            <label>Thương hiệu</label>
+            <select id="thuongHieu"></select>
+
+            <label>Trạng thái</label>
+            <select>
+                <option>Còn hàng</option>
+                <option>Hết hàng</option>
+            </select>
+        </div>
+
+        <div class="col-6">
+            <label>Ảnh sản phẩm</label>
+            <input type="file">
+
+            <label>Số lượng tồn</label>
+            <input type="number">
+
+            <label>Mô tả 1</label>
+            <input type="text">
+
+            <label>Mô tả 2</label>
+            <input type="text">
+
+            <label>Mô tả 3</label>
+            <input type="text">
+
+            <label>Mô tả 4</label>
+            <input type="text">
+        </div>
+    </div>
+
+    <div class="box">
+        <h3>Danh Mục – Chi Tiết – Loại Sản Phẩm</h3>
+
+        <label>Danh Mục Chính</label>
+        <select id="danhMuc"></select>
+
+        <label>Chi Tiết Danh Mục</label>
+        <select id="chiTietDM"></select>
+
+        <label>Loại Sản Phẩm</label>
+        <select id="loaiSP"></select>
+    </div>
+
+    <div class="box">
+        <h3>Chọn Lọc Sản Phẩm</h3>
+        <div id="chonLocContainer"></div>
+    </div>
+
+    <button>Thêm Sản Phẩm</button>
+</div>
+
+<script>
+// ======================
+//  DỮ LIỆU DATABASE
+// ======================
+
+// THƯƠNG HIỆU
+const thuongHieuData = [
+{ id:1,name:"Hector" },{ id:2,name:"JsXiong" },{ id:3,name:"Max Bike" },{ id:4,name:"Raccoon" },
+{ id:5,name:"Fascino" },{ id:6,name:"Giant" },{ id:7,name:"DTFLY" },{ id:8,name:"Qitong" },
+{ id:9,name:"Thống Nhất" },{ id:10,name:"Shukyo" },{ id:11,name:"Papylus" },
+{ id:12,name:"QT BIKE" },{ id:13,name:"Fornix" },{ id:14,name:"Nesto" },{ id:15,name:"Trinx Bike" }
+];
+
+// DANH MỤC CHÍNH
+const danhMucData = [
+{ id:1,name:"Xe đạp trẻ em" },{ id:2,name:"Xe đạp thể thao" },{ id:3,name:"Xe đạp địa hình" },
+{ id:4,name:"Xe đạp touring" },{ id:5,name:"Xe đạp đua" },{ id:6,name:"Phụ kiện xe đạp" }
+];
+
+// CHI TIẾT DANH MỤC
+const chiTietDanhMucData = [
+{id:1, madm:1, name:"ĐỘ TUỔI"},
+{id:2, madm:1, name:"SIZE TRẺ EM"},
+{id:3, madm:2, name:"CẤU HÌNH"},
+{id:4, madm:2, name:"PHÂN KHÚC GIÁ"},
+{id:5, madm:3, name:"THƯƠNG HIỆU"},
+{id:6, madm:3, name:"CẤU HÌNH"},
+{id:7, madm:3, name:"PHÂN KHÚC GIÁ"},
+{id:8, madm:4, name:"MỨC GIÁ TOURING"},
+{id:9, madm:4, name:"THƯƠNG HIỆU TOURING"},
+{id:10, madm:5, name:"PHÂN KHÚC GIÁ"},
+{id:11, madm:5, name:"THƯƠNG HIỆU ĐUA"},
+];
+
+// LOẠI SẢN PHẨM (TOÀN BỘ)
+const loaiSanPhamData = [
+{ id:1, madm:1, ctdm:1, name:"Xe đạp trẻ em 3 tuổi" },
+{ id:2, madm:1, ctdm:1, name:"Xe đạp trẻ em từ 10-15 tuổi" },
+{ id:3, madm:1, ctdm:1, name:"Xe đạp trẻ em từ 6-11 tuổi" },
+{ id:4, madm:1, ctdm:2, name:"Size 12 inch" },
+{ id:5, madm:1, ctdm:2, name:"Size 14 inch" },
+{ id:6, madm:1, ctdm:2, name:"Size 16 inch" },
+{ id:7, madm:1, ctdm:2, name:"Size 18 inch" },
+{ id:8, madm:1, ctdm:2, name:"Size 20 inch" },
+
+{ id:9, madm:2, ctdm:3, name:"Size 24 inch" },
+{ id:10, madm:2, ctdm:3, name:"Size 26 inch" },
+{ id:11, madm:2, ctdm:3, name:"Size 27.5 inch" },
+{ id:12, madm:2, ctdm:4, name:"Xe Đạp Dưới 3 Triệu" },
+{ id:13, madm:2, ctdm:4, name:"Xe Đạp Từ 3-5 Triệu" },
+{ id:14, madm:2, ctdm:4, name:"Xe Đạp Từ 5-7 Triệu" },
+{ id:15, madm:2, ctdm:4, name:"Xe Đạp Từ 7-10 Triệu" },
+
+{ id:16, madm:3, ctdm:5, name:"Xe Đạp Giant" },
+{ id:17, madm:3, ctdm:5, name:"Xe Đạp Fascino" },
+{ id:18, madm:3, ctdm:5, name:"Xe Đạp Hector" },
+{ id:19, madm:3, ctdm:5, name:"Xe Đạp Papylus" },
+
+{ id:20, madm:3, ctdm:6, name:"Size 24 inch" },
+{ id:21, madm:3, ctdm:6, name:"Size 26 inch" },
+{ id:22, madm:3, ctdm:6, name:"Size 27.5 inch" },
+{ id:23, madm:3, ctdm:6, name:"Size 29 inch" },
+
+{ id:24, madm:3, ctdm:7, name:"Xe đạp dưới 3 triệu" },
+{ id:25, madm:3, ctdm:7, name:"Xe đạp từ 3-5 triệu" },
+{ id:26, madm:3, ctdm:7, name:"Xe đạp từ 5-7 triệu" },
+{ id:27, madm:3, ctdm:7, name:"Xe đạp từ 7-10 triệu" },
+{ id:28, madm:3, ctdm:7, name:"Xe đạp từ 10-15 triệu" },
+{ id:29, madm:3, ctdm:7, name:"Xe đạp từ 15 triệu" },
+
+{ id:30, madm:4, ctdm:8, name:"Xe Đạp Touring Từ 3-10 Triệu" },
+{ id:31, madm:4, ctdm:8, name:"Xe Đạp Touring Từ 10-15 Triệu" },
+{ id:32, madm:4, ctdm:8, name:"Xe Đạp Touring Từ 15-20 Triệu" },
+
+{ id:33, madm:4, ctdm:9, name:"Xe Đạp Touring Giant" },
+{ id:34, madm:4, ctdm:9, name:"Xe Đạp Touring Thống Nhất" },
+{ id:35, madm:4, ctdm:9, name:"Xe Đạp Touring DtFly" },
+{ id:36, madm:4, ctdm:9, name:"Xe Đạp Touring Fascino" },
+{ id:37, madm:4, ctdm:9, name:"Xe Đạp Touring Fornix" },
+
+{ id:38, madm:5, ctdm:10, name:"Xe Đạp Đua Từ 3-7 Triệu" },
+{ id:39, madm:5, ctdm:10, name:"Xe Đạp Đua Từ 7-12 Triệu" },
+{ id:40, madm:5, ctdm:10, name:"Xe Đạp Đua Từ 12-18 Triệu" },
+{ id:41, madm:5, ctdm:10, name:"Xe Đạp Đua Từ 18-25 Triệu" },
+
+{ id:42, madm:5, ctdm:11, name:"Xe Đạp Đua Nesto" },
+{ id:43, madm:5, ctdm:11, name:"Xe Đạp Đua Papylus" },
+{ id:44, madm:5, ctdm:11, name:"Xe Đạp Đua DtFly" },
+{ id:45, madm:5, ctdm:11, name:"Xe Đạp Đua Fascino" }
+];
+
+// CHỌN LỌC SẢN PHẨM
+const chonLocData = [
+{ id:1, name:"Lọc Theo Giá" },
+{ id:2, name:"Danh Mục" },
+{ id:3, name:"Chiều cao phù hợp" },
+{ id:4, name:"Kích Thước Bánh Xe" },
+];
+
+// CHI TIẾT CHỌN LỌC
+const chiTietChonLocData = [
+{ id:1, name:"Dưới 3 Triệu", cl:1 },
+{ id:2, name:"Từ 3-6 Triệu", cl:1 },
+{ id:3, name:"Từ 6-10 Triệu", cl:1 },
+{ id:4, name:"Từ 10-20 Triệu", cl:1 },
+
+{ id:5, name:"Xe Đạp Địa Hình", cl:2 },
+{ id:6, name:"Xe Đạp Đua", cl:2 },
+{ id:7, name:"Xe Đạp Trẻ Em", cl:2 },
+{ id:8, name:"Xe Đạp Thể Thao", cl:2 },
+{ id:9, name:"Xe Đạp Touring", cl:2 },
+
+{ id:10, name:"1m30", cl:3 },
+{ id:11, name:"1m60 Trở Lên", cl:3 },
+{ id:12, name:"1m40 Trở Lên", cl:3 },
+{ id:13, name:"Từ 1m45-1m55", cl:3 },
+{ id:14, name:"Trên 1m55", cl:3 },
+
+{ id:15, name:"12 Inch", cl:4 },
+{ id:16, name:"14 Inch", cl:4 },
+{ id:17, name:"16 Inch", cl:4 },
+{ id:18, name:"18 Inch", cl:4 },
+{ id:19, name:"20 Inch", cl:4 },
+{ id:20, name:"22 Inch", cl:4 },
+{ id:21, name:"24 Inch", cl:4 },
+{ id:22, name:"26 Inch", cl:4 },
+{ id:23, name:"27.5 Inch", cl:4 },
+{ id:24, name:"29 Inch", cl:4 },
+{ id:25, name:"700C", cl:4 },
+];
+
+// =========================
+// Render dữ liệu vào form
+// =========================
+
+function loadThuongHieu() {
+    const select = document.getElementById("thuongHieu");
+    thuongHieuData.forEach(x => {
+        select.innerHTML += `<option value="${x.id}">${x.name}</option>`;
+    });
+}
+
+function loadDanhMuc() {
+    const select = document.getElementById("danhMuc");
+    danhMucData.forEach(x => {
+        select.innerHTML += `<option value="${x.id}">${x.name}</option>`;
+    });
+}
+
+function loadChiTietDM(madm) {
+    const select = document.getElementById("chiTietDM");
+    select.innerHTML = "";
+
+    chiTietDanhMucData
+        .filter(x => x.madm == madm)
+        .forEach(x => {
+            select.innerHTML += `<option value="${x.id}">${x.name}</option>`;
+        });
+
+    loadLoaiSP();
+}
+
+function loadLoaiSP() {
+    const madm = document.getElementById("danhMuc").value;
+    const ctdm = document.getElementById("chiTietDM").value;
+    const select = document.getElementById("loaiSP");
+
+    select.innerHTML = "";
+
+    loaiSanPhamData
+        .filter(x => x.madm == madm && x.ctdm == ctdm)
+        .forEach(x => {
+            select.innerHTML += `<option value="${x.id}">${x.name}</option>`;
+        });
+}
+
+function loadChonLoc() {
+    const box = document.getElementById("chonLocContainer");
+
+    chonLocData.forEach(cl => {
+        box.innerHTML += `
+            <div class="chonloc-group">
+                <h4>${cl.name}</h4>
+                ${chiTietChonLocData
+                    .filter(x => x.cl == cl.id)
+                    .map(x => `
+                        <label class="checkbox-item">
+                            <input type="checkbox" value="${x.id}"> ${x.name}
+                        </label>
+                    `).join("")}
+                <hr>
+            </div>
+        `;
+    });
+}
+
+document.getElementById("danhMuc").addEventListener("change", (e) => {
+    loadChiTietDM(e.target.value);
+});
+
+document.getElementById("chiTietDM").addEventListener("change", () => {
+    loadLoaiSP();
+});
+
+
+// ===========================
+// KHỞI TẠO TẤT CẢ
+// ===========================
+loadThuongHieu();
+loadDanhMuc();
+loadChiTietDM(1); // mặc định load danh mục 1
+loadChonLoc();
+
+</script>
+
+</body>
+</html>

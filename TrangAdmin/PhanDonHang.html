@@ -1,0 +1,770 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quản lý đơn hàng</title>
+    <link rel="stylesheet" href="../CSS/all.min.css">
+    <link rel="stylesheet" href="../CSS/bootstrap.min.css">
+    <link rel="stylesheet" href="CssTrangAdmin.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <script src="../JS/all.min.js"></script>
+    <script src="../JS/bootstrap.bundle.min.js"></script>
+    <style>
+        .status-badge {
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            display: inline-block;
+        }
+        .status-cho_xac_nhan { background-color: #fff3cd; color: #856404; }
+        .status-da_xac_nhan { background-color: #cce5ff; color: #004085; }
+        .status-dang_xu_ly { background-color: #cce5ff; color: #004085; }
+        .status-dang_giao_hang { background-color: #fd7e14; color: #fff; }
+        .status-da_giao_hang { background-color: #d4edda; color: #155724; }
+        .status-da_huy { background-color: #f8d7da; color: #721c24; }
+        .loading-row td { text-align: center; padding: 30px; }
+        .spinner {
+            display: inline-block; width: 30px; height: 30px;
+            border: 3px solid #f3f3f3; border-top: 3px solid #28a745;
+            border-radius: 50%; animation: spin 1s linear infinite;
+        }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        .modal-overlay {
+            position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.5); display: flex; align-items: center;
+            justify-content: center; z-index: 1050; display: none;
+        }
+        .modal-overlay.active { display: flex; }
+        .modal-content {
+            background: white; padding: 24px; border-radius: 12px;
+            max-width: 800px; width: 95%; max-height: 90vh; overflow-y: auto;
+        }
+        .btn-action {
+            padding: 4px 10px; border: none; border-radius: 6px;
+            cursor: pointer; font-size: 12px; font-weight: 500;
+        }
+        .btn-view { background: #0d6efd; color: white; }
+        .btn-view:hover { background: #0b5ed7; }
+        .btn-status { background: #17a2b8; color: white; }
+        .btn-status:hover { background: #138496; }
+        .order-items-table { font-size: 13px; }
+    </style>
+</head>
+<body>
+
+<!-- FILTER BAR -->
+<div class="filter-bar">
+    <form id="filterForm" class="d-flex justify-content-between align-items-center flex-wrap gap-3">
+        <div class="flex-grow-1 search-bar d-flex align-items-center gap-2">
+            <i class="bi bi-search text-secondary"></i>
+            <input type="text" id="searchInput" value="" placeholder="Tìm kiếm mã đơn, tên khách..." class="form-control search-input" />
+        </div>
+        <select id="statusFilter" class="form-select filter-select">
+            <option value="">Tất cả trạng thái</option>
+            <option value="cho_xac_nhan">Chờ xác nhận</option>
+            <option value="da_xac_nhan">Đã xác nhận</option>
+            <option value="dang_xu_ly">Đang xử lý</option>
+            <option value="dang_giao_hang">Đang giao hàng</option>
+            <option value="da_giao_hang">Đã giao hàng</option>
+            <option value="da_huy">Đã hủy</option>
+        </select>
+        <input type="date" id="dateFilter" class="form-control filter-date" value=""/>
+        <button type="button" id="btnFilter" class="btn btn-success fw-bold">Lọc</button>
+        <button type="button" id="btnReset" class="btn btn-secondary fw-bold">Đặt lại</button>
+    </form>
+</div>
+
+<!-- TABLE -->
+<div class="table-container">
+    <h4 class="fw-bold mb-3">Quản lý đơn hàng</h4>
+    <table class="table align-middle text-center">
+        <thead class="table-light">
+            <tr>
+                <th>Mã Đơn</th>
+                <th>Khách hàng</th>
+                <th>Ngày đặt</th>
+                <th>Tổng tiền</th>
+                <th>Thanh toán</th>
+                <th>Trạng thái</th>
+                <th>Hành động</th>
+            </tr>
+        </thead>
+        <tbody id="ordersTableBody">
+            <tr class="loading-row">
+                <td colspan="7">
+                    <div class="spinner"></div>
+                    <p class="mt-2 text-muted">Đang tải dữ liệu...</p>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <div id="paginationContainer" class="d-flex justify-content-center mt-3"></div>
+</div>
+
+<!-- Order Detail Modal -->
+<div id="orderDetailModal" class="modal-overlay">
+    <div class="modal-content">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <h5 class="fw-bold mb-0">Chi tiết đơ hàng <span id="modalOrderCode"></span></h5>
+            <button type="button" class="btn-close" onclick="closeOrderDetail()"></button>
+        </div>
+        <div id="orderDetailContent">
+            <div class="text-center"><div class="spinner"></div><p class="mt-2">Đang tải...</p></div>
+        </div>
+    </div>
+</div>
+
+<script>
+(function() {
+    var API_BASE = 'http://localhost:5000/api';
+    var currentPage = 1;
+
+    function getAuthHeaders() {
+        return {
+            'Authorization': 'Bearer ' + (localStorage.getItem('access_token') || ''),
+            'Content-Type': 'application/json'
+        };
+    }
+
+    function formatPrice(num) {
+        if (num === null || num === undefined || isNaN(num)) return '0 đ';
+        return new Intl.NumberFormat('vi-VN').format(num) + ' đ';
+    }
+
+    function formatDate(dateStr) {
+        if (!dateStr) return '--';
+        var d = new Date(dateStr);
+        return d.toLocaleDateString('vi-VN', { day: '2-digit', month: '2-digit', year: 'numeric' });
+    }
+
+    function getStatusInfo(status) {
+        var map = {
+            'cho_xac_nhan': { text: 'Chờ xác nhận', cls: 'status-cho_xac_nhan' },
+            'da_xac_nhan': { text: 'Đã xác nhận', cls: 'status-da_xac_nhan' },
+            'dang_xu_ly': { text: 'Đang xử lý', cls: 'status-dang_xu_ly' },
+            'dang_giao_hang': { text: 'Đang giao hàng', cls: 'status-dang_giao_hang' },
+            'da_giao_hang': { text: 'Đã giao hàng', cls: 'status-da_giao_hang' },
+            'da_huy': { text: 'Đã hủy', cls: 'status-da_huy' }
+        };
+        var s = map[status] || { text: status || 'Không xác định', cls: '' };
+        return s;
+    }
+
+    function getPaymentInfo(method) {
+        var map = {
+            'cod': 'Tiền mặt (COD)',
+            'vnpay': 'VNPay',
+            'momo': 'MoMo',
+            'zalo': 'ZaloPay'
+        };
+        return map[method] || method || '--';
+    }
+
+    function renderOrders(orders) {
+        var tbody = document.getElementById('ordersTableBody');
+        if (!orders || orders.length === 0) {
+            tbody.innerHTML = '<tr><td colspan="7" class="text-center text-muted py-4"><i class="bi bi-inbox" style="font-size:2rem"></i><p class="mt-2">Không có đơn hàng nào</p></td></tr>';
+            return;
+        }
+        var html = '';
+        orders.forEach(function(order) {
+            var statusInfo = getStatusInfo(order.TrangThaiDonHang);
+            html += '<tr>' +
+                '<td><strong>' + (order.MaDonHangHienThi || order.MaDonHang || '--') + '</strong></td>' +
+                '<td>' + (order.HoTenNguoiNhan || '--') + '<br><small class="text-muted">' + (order.SoDienThoaiNguoiNhan || '') + '</small></td>' +
+                '<td>' + formatDate(order.NgayDat) + '</td>' +
+                '<td class="text-danger fw-bold">' + formatPrice(order.TongTienSauGiam) + '</td>' +
+                '<td><span class="badge bg-secondary">' + getPaymentInfo(order.PhuongThucThanhToan) + '</span><br>' +
+                '<span class="badge ' + (order.TrangThaiThanhToan === 'da_thanh_toan' ? 'bg-success' : 'bg-warning') + '">' +
+                (order.TrangThaiThanhToan === 'da_thanh_toan' ? 'Đã TT' : 'Chưa TT') + '</span></td>' +
+                '<td><span class="status-badge ' + statusInfo.cls + '">' + statusInfo.text + '</span></td>' +
+                '<td>' +
+                '<button class="btn-action btn-view me-1 mb-1" onclick="viewOrderDetail(' + order.MaDonHang + ')"><i class="bi bi-eye"></i> Xem</button> ' +
+                '<button class="btn-action btn-status mb-1" onclick="changeStatus(' + order.MaDonHang + ', \'' + order.TrangThaiDonHang + '\')"><i class="bi bi-arrow-repeat"></i> Cập nhật</button>' +
+                '</td></tr>';
+        });
+        tbody.innerHTML = html;
+    }
+
+    function showLoading() {
+        document.getElementById('ordersTableBody').innerHTML = '<tr class="loading-row"><td colspan="7"><div class="spinner"></div><p class="mt-2 text-muted">Đang tải...</p></td></tr>';
+    }
+
+    function loadOrders(page) {
+        if (page === undefined) page = 1;
+        currentPage = page;
+        showLoading();
+
+        var search = document.getElementById('searchInput').value;
+        var status = document.getElementById('statusFilter').value;
+        var date = document.getElementById('dateFilter').value;
+
+        var params = [];
+        if (search) params.push('search=' + encodeURIComponent(search));
+        if (status) params.push('trang_thai=' + status);
+        if (date) params.push('date=' + date);
+        params.push('page=' + page);
+
+        var url = API_BASE + '/admin/orders/?' + params.join('&');
+
+        fetch(url, { method: 'GET', headers: getAuthHeaders() })
+            .then(function(r) { return r.json(); })
+            .then(function(res) {
+                var orders = Array.isArray(res) ? res : (res.data || []);
+                renderOrders(orders);
+                renderPagination(res);
+            })
+            .catch(function(e) {
+                console.error('Load orders error:', e);
+                document.getElementById('ordersTableBody').innerHTML = '<tr><td colspan="7" class="text-center text-danger py-4"><i class="bi bi-exclamation-triangle" style="font-size:2rem"></i><p class="mt-2">Không thể tải dữ liệu</p></td></tr>';
+            });
+    }
+
+    function renderPagination(res) {
+        var container = document.getElementById('paginationContainer');
+        var total = res.total || 0;
+        var pages = res.pages || 1;
+        if (pages <= 1) { container.innerHTML = ''; return; }
+        var html = '<ul class="pagination">';
+        html += '<li class="page-item ' + (currentPage <= 1 ? 'disabled' : '') + '"><a class="page-link" href="#" onclick="loadOrders(' + (currentPage - 1) + ');return false;">&laquo; Trước</a></li>';
+        for (var i = 1; i <= pages; i++) {
+            html += '<li class="page-item ' + (i === currentPage ? 'active' : '') + '"><a class="page-link" href="#" onclick="loadOrders(' + i + ');return false;">' + i + '</a></li>';
+        }
+        html += '<li class="page-item ' + (currentPage >= pages ? 'disabled' : '') + '"><a class="page-link" href="#" onclick="loadOrders(' + (currentPage + 1) + ');return false;">Sau &raquo;</a></li>';
+        html += '</ul>';
+        container.innerHTML = html;
+    }
+
+    window.viewOrderDetail = function(orderId) {
+        var modal = document.getElementById('orderDetailModal');
+        var content = document.getElementById('orderDetailContent');
+        document.getElementById('modalOrderCode').textContent = '#' + orderId;
+        content.innerHTML = '<div class="text-center"><div class="spinner"></div><p class="mt-2">Đang tải...</p></div>';
+        modal.classList.add('active');
+
+        fetch(API_BASE + '/admin/orders/' + orderId, { method: 'GET', headers: getAuthHeaders() })
+            .then(function(r) { return r.json(); })
+            .then(function(res) {
+                var order = res.data || res;
+                var statusInfo = getStatusInfo(order.TrangThaiDonHang);
+                var chiTiet = order.chi_tiet || order.ChiTietDonHang || [];
+
+                var itemsHtml = '';
+                if (chiTiet.length > 0) {
+                    chiTiet.forEach(function(item) {
+                        itemsHtml += '<tr>' +
+                            '<td><strong>#' + (item.MaSP || '') + '</strong></td>' +
+                            '<td class="text-start">' + (item.TenSP || 'Sản phẩm') + '</td>' +
+                            '<td>' + (item.SoLuong || 1) + '</td>' +
+                            '<td>' + formatPrice(item.DonGia) + '</td>' +
+                            '<td class="text-danger fw-bold">' + formatPrice(item.ThanhTien) + '</td></tr>';
+                    });
+                } else {
+                    itemsHtml = '<tr><td colspan="5" class="text-center text-muted">Không có chi tiết</td></tr>';
+                }
+
+                content.innerHTML = '<div class="row">' +
+                    '<div class="col-md-6 mb-3"><h6><i class="bi bi-person"></i> Người nhận</h6>' +
+                    '<p class="mb-1"><strong>' + (order.HoTenNguoiNhan || '--') + '</strong></p>' +
+                    '<p class="mb-1 text-muted"><i class="bi bi-phone"></i> ' + (order.SoDienThoaiNguoiNhan || '--') + '</p>' +
+                    '<p class="mb-1 text-muted"><i class="bi bi-envelope"></i> ' + (order.EmailNguoiNhan || '--') + '</p>' +
+                    '<p class="mb-1 text-muted"><i class="bi bi-geo-alt"></i> ' + (order.DiaChiGiaoHang || '--') + '</p></div>' +
+                    '<div class="col-md-6 mb-3"><h6><i class="bi bi-info-circle"></i> Thông tin đơn</h6>' +
+                    '<p class="mb-1"><span class="status-badge ' + statusInfo.cls + '">' + statusInfo.text + '</span></p>' +
+                    '<p class="mb-1 text-muted">Ngày đặt: ' + formatDate(order.NgayDat) + '</p>' +
+                    '<p class="mb-1 text-muted">Thanh toán: <span class="badge bg-secondary">' + getPaymentInfo(order.PhuongThucThanhToan) + '</span></p>' +
+                    '<p class="mb-1 text-muted">Thanh toán: <span class="badge ' + (order.TrangThaiThanhToan === 'da_thanh_toan' ? 'bg-success' : 'bg-warning') + '">' +
+                    (order.TrangThaiThanhToan === 'da_thanh_toan' ? 'Đã thanh toán' : 'Chưa thanh toán') + '</span></p></div></div>' +
+                    '<hr><h6>Chi tiết đơn hàng</h6>' +
+                    '<table class="table table-sm order-items-table"><thead><tr><th>Mã SP</th><th>Tên sản phẩm</th><th>SL</th><th>Đơn giá</th><th>Thành tiền</th></tr></thead><tbody>' + itemsHtml + '</tbody></table>' +
+                    '<div class="text-end mt-3">' +
+                    '<p>Tạm tính: <strong>' + formatPrice(order.TongTienTruocGiam) + '</strong></p>' +
+                    '<p>Giảm giá: <strong class="text-success">-' + formatPrice(order.GiamGia) + '</strong></p>' +
+                    '<p>Phí vận chuyển: <strong>' + formatPrice(order.PhiVanChuyen) + '</strong></p>' +
+                    '<h4 class="text-danger">Tổng cộng: ' + formatPrice(order.TongTienSauGiam) + '</h4></div>';
+            })
+            .catch(function(e) {
+                content.innerHTML = '<div class="text-center text-danger"><i class="bi bi-exclamation-triangle" style="font-size:2rem"></i><p class="mt-2">Lỗi tải chi tiết</p></div>';
+            });
+    };
+
+    window.changeStatus = function(orderId, currentStatus) {
+        var statuses = [
+            { value: 'cho_xac_nhan', text: 'Chờ xác nhận' },
+            { value: 'da_xac_nhan', text: 'Đã xác nhận' },
+            { value: 'dang_xu_ly', text: 'Đang xử lý' },
+            { value: 'dang_giao_hang', text: 'Đang giao hàng' },
+            { value: 'da_giao_hang', text: 'Đã giao hàng' },
+            { value: 'da_huy', text: 'Đã hủy' }
+        ];
+        var options = statuses.map(function(s) {
+            return '<option value="' + s.value + '"' + (s.value === currentStatus ? ' selected' : '') + '>' + s.text + '</option>';
+        }).join('');
+
+        var modal = document.getElementById('orderDetailModal');
+        document.getElementById('orderDetailContent').innerHTML = '<h5 class="mb-3">Cập nhật trạng thái đơn hàng #' + orderId + '</h5>' +
+            '<div class="mb-3"><label class="form-label">Trạng thái mới</label>' +
+            '<select id="newStatusSelect" class="form-select">' + options + '</select></div>' +
+            '<div class="d-flex gap-2 justify-content-end">' +
+            '<button class="btn btn-secondary" onclick="closeOrderDetail()">Hủy</button>' +
+            '<button class="btn btn-primary" onclick="submitStatus(' + orderId + ')">Lưu</button></div>';
+        modal.classList.add('active');
+    };
+
+    window.submitStatus = function(orderId) {
+        var newStatus = document.getElementById('newStatusSelect').value;
+        fetch(API_BASE + '/admin/orders/' + orderId + '/status', {
+            method: 'PUT',
+            headers: getAuthHeaders(),
+            body: JSON.stringify({ TrangThaiDonHang: newStatus })
+        })
+        .then(function(r) { return r.json(); })
+        .then(function(res) {
+            if (res.success) {
+                closeOrderDetail();
+                loadOrders(currentPage);
+            } else {
+                alert(res.message || 'Cập nhật thất bại!');
+            }
+        })
+        .catch(function(e) { alert('Lỗi kết nối!'); });
+    };
+
+    window.closeOrderDetail = function() {
+        document.getElementById('orderDetailModal').classList.remove('active');
+    };
+
+    document.getElementById('orderDetailModal').addEventListener('click', function(e) {
+        if (e.target === this) closeOrderDetail();
+    });
+
+    document.getElementById('btnFilter').addEventListener('click', function() { loadOrders(1); });
+    document.getElementById('btnReset').addEventListener('click', function() {
+        document.getElementById('searchInput').value = '';
+        document.getElementById('statusFilter').value = '';
+        document.getElementById('dateFilter').value = '';
+        loadOrders(1);
+    });
+    document.getElementById('searchInput').addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') { e.preventDefault(); loadOrders(1); }
+    });
+
+    document.addEventListener('DOMContentLoaded', function() { loadOrders(1); });
+})();
+</script>
+</body>
+</html>
+        /* Status Badge Colors */
+        .status-badge {
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            display: inline-block;
+        }
+        .status-cho_xac_nhan {
+            background-color: #fff3cd;
+            color: #856404;
+        }
+        .status-da_xac_nhan {
+            background-color: #cce5ff;
+            color: #004085;
+        }
+        .status-dang_xu_ly {
+            background-color: #cce5ff;
+            color: #004085;
+        }
+        .status-dang_giao_hang {
+            background-color: #fd7e14;
+            color: #fff;
+        }
+        .status-da_giao_hang {
+            background-color: #d4edda;
+            color: #155724;
+        }
+        .status-da_huy {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+        /* Loading state */
+        .loading-row td {
+            text-align: center;
+            padding: 30px;
+        }
+        .spinner {
+            display: inline-block;
+            width: 30px;
+            height: 30px;
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #28a745;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        /* Order detail modal */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            display: none;
+        }
+        .modal-overlay.active {
+            display: flex;
+        }
+        .modal-content {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            max-width: 700px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+        .btn-view {
+            background-color: #0d6efd;
+            color: white;
+            border: none;
+            padding: 5px 12px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 12px;
+        }
+        .btn-view:hover {
+            background-color: #0b5ed7;
+        }
+    </style>
+</head>
+<body>
+
+<!-- ===== FILTER BAR ===== -->
+<div class="filter-bar">
+    <form id="filterForm" class="d-flex justify-content-between align-items-center flex-wrap gap-3">
+
+        <!-- SEARCH BAR -->
+        <div class="flex-grow-1 search-bar d-flex align-items-center gap-2">
+            <i class="bi bi-search text-secondary"></i>
+            <input type="text" id="searchInput" value=""
+                   placeholder="Tìm kiếm khách hàng, mã đơn..." class="form-control search-input" />
+        </div>
+
+        <!-- STATUS -->
+        <select id="statusFilter" class="form-select filter-select">
+            <option value="">Tất cả trạng thái</option>
+            <option value="cho_xac_nhan">Chờ xác nhận</option>
+            <option value="da_xac_nhan">Đã xác nhận</option>
+            <option value="dang_xu_ly">Đang xử lý</option>
+            <option value="dang_giao_hang">Đang giao hàng</option>
+            <option value="da_giao_hang">Đã giao hàng</option>
+            <option value="da_huy">Đã hủy</option>
+        </select>
+
+        <!-- DATE -->
+        <input type="date" id="dateFilter" class="form-control filter-date" value=""/>
+
+        <button type="button" id="btnFilter" class="btn btn-success fw-bold">Lọc</button>
+        <button type="button" id="btnReset" class="btn btn-secondary fw-bold">Đặt lại</button>
+    </form>
+</div>
+
+<!-- ===== TABLE ===== -->
+<div class="table-container">
+    <h4 class="fw-bold mb-3">Quản lý đơn hàng</h4>
+
+    <table class="table align-middle text-center">
+        <thead class="table-light">
+            <tr>
+                <th>Mã Đơn</th>
+                <th>Khách hàng</th>
+                <th>Ngày đặt</th>
+                <th>Tổng tiền</th>
+                <th>Trạng thái</th>
+                <th>Hành động</th>
+            </tr>
+        </thead>
+
+        <tbody id="ordersTableBody">
+            <!-- Orders will be loaded here -->
+            <tr class="loading-row">
+                <td colspan="6">
+                    <div class="spinner"></div>
+                    <p class="mt-2 text-muted">Đang tải dữ liệu...</p>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <!-- Pagination -->
+    <div id="paginationContainer" class="d-flex justify-content-center mt-3">
+        <!-- Pagination will be rendered here -->
+    </div>
+</div>
+
+<!-- Order Detail Modal -->
+<div id="orderDetailModal" class="modal-overlay">
+    <div class="modal-content">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <h5 class="fw-bold mb-0">Chi tiết đơn hàng</h5>
+            <button type="button" class="btn-close" onclick="closeOrderDetail()"></button>
+        </div>
+        <div id="orderDetailContent">
+            <!-- Order details will be loaded here -->
+        </div>
+    </div>
+</div>
+
+<script>
+(function() {
+    const API_BASE = 'http://localhost:5000/api';
+
+    // Helper function to format price to Vietnamese currency
+    function formatPrice(num) {
+        if (num === null || num === undefined || isNaN(num)) return '0 đ';
+        return new Intl.NumberFormat('vi-VN').format(num) + ' đ';
+    }
+
+    // Helper function to format date
+    function formatDate(dateStr) {
+        if (!dateStr) return '--';
+        const date = new Date(dateStr);
+        return date.toLocaleDateString('vi-VN', {
+            day: '2-digit',
+            month: '2-digit',
+            year: 'numeric'
+        });
+    }
+
+    // Get auth token
+    function getAuthHeaders() {
+        const token = localStorage.getItem('access_token');
+        return {
+            'Authorization': 'Bearer ' + token,
+            'Content-Type': 'application/json'
+        };
+    }
+
+    // Get status display text and class
+    function getStatusInfo(status) {
+        const statusMap = {
+            'cho_xac_nhan': { text: 'Chờ xác nhận', class: 'status-cho_xac_nhan' },
+            'da_xac_nhan': { text: 'Đã xác nhận', class: 'status-da_xac_nhan' },
+            'dang_xu_ly': { text: 'Đang xử lý', class: 'status-dang_xu_ly' },
+            'dang_giao_hang': { text: 'Đang giao hàng', class: 'status-dang_giao_hang' },
+            'da_giao_hang': { text: 'Đã giao hàng', class: 'status-da_giao_hang' },
+            'da_huy': { text: 'Đã hủy', class: 'status-da_huy' }
+        };
+        return statusMap[status] || { text: status || 'Không xác định', class: '' };
+    }
+
+    // Render orders table
+    function renderOrders(orders) {
+        const tbody = document.getElementById('ordersTableBody');
+
+        if (!orders || orders.length === 0) {
+            tbody.innerHTML = `
+                <tr>
+                    <td colspan="6" class="text-center text-muted">
+                        <i class="bi bi-inbox" style="font-size: 2rem;"></i>
+                        <p class="mt-2">Không có đơn hàng nào</p>
+                    </td>
+                </tr>
+            `;
+            return;
+        }
+
+        tbody.innerHTML = orders.map(order => {
+            const statusInfo = getStatusInfo(order.TrangThaiDonHang);
+            return `
+                <tr>
+                    <td><strong>${order.MaDonHangHienThi || order.MaDonHang || '--'}</strong></td>
+                    <td>${order.HoTenNguoiNhan || '--'}</td>
+                    <td>${formatDate(order.NgayDat)}</td>
+                    <td class="text-danger fw-bold">${formatPrice(order.TongTienSauGiam || order.TongTien)}</td>
+                    <td>
+                        <span class="status-badge ${statusInfo.class}">${statusInfo.text}</span>
+                    </td>
+                    <td>
+                        <button class="btn-view" onclick="viewOrderDetail('${order.MaDonHang}')">
+                            <i class="bi bi-eye"></i> Xem
+                        </button>
+                    </td>
+                </tr>
+            `;
+        }).join('');
+    }
+
+    // Show loading state
+    function showLoading() {
+        const tbody = document.getElementById('ordersTableBody');
+        tbody.innerHTML = `
+            <tr class="loading-row">
+                <td colspan="6">
+                    <div class="spinner"></div>
+                    <p class="mt-2 text-muted">Đang tải dữ liệu...</p>
+                </td>
+            </tr>
+        `;
+    }
+
+    // Load orders from API
+    async function loadOrders() {
+        showLoading();
+
+        try {
+            const search = document.getElementById('searchInput').value;
+            const status = document.getElementById('statusFilter').value;
+            const date = document.getElementById('dateFilter').value;
+
+            // Build query params
+            const params = new URLSearchParams();
+            if (search) params.append('search', search);
+            if (status) params.append('status', status);
+            if (date) params.append('date', date);
+
+            const queryString = params.toString();
+            const url = API_BASE + '/admin/orders/' + (queryString ? '?' + queryString : '');
+
+            const response = await fetch(url, {
+                method: 'GET',
+                headers: getAuthHeaders()
+            });
+
+            if (!response.ok) {
+                throw new Error('Failed to load orders');
+            }
+
+            const orders = await response.json();
+            renderOrders(orders);
+
+        } catch (error) {
+            console.error('Error loading orders:', error);
+            const tbody = document.getElementById('ordersTableBody');
+            tbody.innerHTML = `
+                <tr>
+                    <td colspan="6" class="text-center text-danger">
+                        <i class="bi bi-exclamation-triangle" style="font-size: 2rem;"></i>
+                        <p class="mt-2">Không thể tải dữ liệu. Vui lòng thử lại.</p>
+                    </td>
+                </tr>
+            `;
+        }
+    }
+
+    // View order detail
+    window.viewOrderDetail = async function(orderId) {
+        const modal = document.getElementById('orderDetailModal');
+        const content = document.getElementById('orderDetailContent');
+
+        content.innerHTML = '<div class="text-center"><div class="spinner"></div><p class="mt-2">Đang tải...</p></div>';
+        modal.classList.add('active');
+
+        try {
+            const response = await fetch(API_BASE + '/admin/orders/' + orderId, {
+                method: 'GET',
+                headers: getAuthHeaders()
+            });
+
+            if (!response.ok) {
+                throw new Error('Failed to load order detail');
+            }
+
+            const order = await response.json();
+            const statusInfo = getStatusInfo(order.TrangThaiDonHang);
+
+            content.innerHTML = `
+                <div class="mb-3">
+                    <p><strong>Mã đơn hàng:</strong> ${order.MaDonHangHienThi || order.MaDonHang || '--'}</p>
+                    <p><strong>Ngày đặt:</strong> ${formatDate(order.NgayDat)}</p>
+                    <p><strong>Trạng thái:</strong> <span class="status-badge ${statusInfo.class}">${statusInfo.text}</span></p>
+                </div>
+
+                <hr>
+
+                <div class="mb-3">
+                    <h6 class="fw-bold">Thông tin người nhận</h6>
+                    <p><strong>Họ tên:</strong> ${order.HoTenNguoiNhan || '--'}</p>
+                    <p><strong>Số điện thoại:</strong> ${order.SDTNguoiNhan || '--'}</p>
+                    <p><strong>Địa chỉ:</strong> ${order.DiaChiNguoiNhan || '--'}</p>
+                </div>
+
+                <hr>
+
+                <div class="mb-3">
+                    <h6 class="fw-bold">Chi tiết đơn hàng</h6>
+                    ${order.ChiTietDonHang ? order.ChiTietDonHang.map(item => `
+                        <div class="d-flex justify-content-between border-bottom py-2">
+                            <span>${item.TenSP || item.TenSanPham || 'Sản phẩm'} x ${item.SoLuong || 1}</span>
+                            <span class="text-danger">${formatPrice(item.ThanhTien || item.GiaBan * item.SoLuong)}</span>
+                        </div>
+                    `).join('') : '<p>Không có chi tiết</p>'}
+                </div>
+
+                <hr>
+
+                <div class="d-flex justify-content-between">
+                    <span class="fw-bold">Tổng tiền:</span>
+                    <span class="text-danger fw-bold fs-5">${formatPrice(order.TongTienSauGiam || order.TongTien)}</span>
+                </div>
+            `;
+
+        } catch (error) {
+            console.error('Error loading order detail:', error);
+            content.innerHTML = `
+                <div class="text-center text-danger">
+                    <i class="bi bi-exclamation-triangle" style="font-size: 2rem;"></i>
+                    <p class="mt-2">Không thể tải chi tiết đơn hàng</p>
+                </div>
+            `;
+        }
+    };
+
+    // Close order detail modal
+    window.closeOrderDetail = function() {
+        document.getElementById('orderDetailModal').classList.remove('active');
+    };
+
+    // Close modal on overlay click
+    document.getElementById('orderDetailModal').addEventListener('click', function(e) {
+        if (e.target === this) {
+            closeOrderDetail();
+        }
+    });
+
+    // Filter button click
+    document.getElementById('btnFilter').addEventListener('click', loadOrders);
+
+    // Reset button click
+    document.getElementById('btnReset').addEventListener('click', function() {
+        document.getElementById('searchInput').value = '';
+        document.getElementById('statusFilter').value = '';
+        document.getElementById('dateFilter').value = '';
+        loadOrders();
+    });
+
+    // Search on Enter key
+    document.getElementById('searchInput').addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') {
+            e.preventDefault();
+            loadOrders();
+        }
+    });
+
+    // Initialize on DOM ready
+    document.addEventListener('DOMContentLoaded', loadOrders);
+})();
+</script>
+
+</body>
+
+</html>

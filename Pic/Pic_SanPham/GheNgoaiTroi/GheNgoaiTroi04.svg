@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="600" viewBox="0 0 800 600">
+<rect width="800" height="600" fill="#E8F4E8"/>
+<rect x="240" y="200" width="320" height="300" rx="20" fill="#C4956A"/>
+<rect x="260" y="220" width="280" height="200" rx="15" fill="#D4A574"/>
+<rect x="280" y="240" width="240" height="160" rx="10" fill="#E8D8C4"/>
+<rect x="280" y="100" width="40" height="140" rx="15" fill="#8B6347"/>
+<rect x="480" y="100" width="40" height="140" rx="15" fill="#8B6347"/>
+<rect x="300" y="500" width="30" height="60" rx="8" fill="#6B4C3B"/>
+<rect x="470" y="500" width="30" height="60" rx="8" fill="#6B4C3B"/>
+<circle cx="400" cy="80" r="50" fill="#87CEEB" opacity="0.3"/>
+<text x="400" y="590" font-family="Segoe UI,Arial" font-size="28" fill="#5C3D2E" text-anchor="middle" font-weight="bold">GHẾ NGOÀI TRỜI</text>
+<text x="400" y="625" font-family="Segoe UI,Arial" font-size="18" fill="#8B6347" text-anchor="middle">Nan Gỗ Có Đệm</text>
+</svg>

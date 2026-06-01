@@ -1,0 +1,705 @@
+* {
+    box-sizing: border-box;
+    
+}
+:root {
+    --primary: #0d2b5d;
+    --accent: #e91e63;
+    --text: #333;
+    --muted: #666;
+    --bg: #f7f8fa;
+    --white: #fff;
+    --shadow: 0 8px 16px rgba(0,0,0,.12);
+}
+body{
+    background-color: #f5f7f9;
+    
+}
+/*--------------------------------PHẦN HEADER--------------------------------*/
+.site-header {
+    background: #1E4D36;
+    color: var(--white);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    box-shadow: var(--shadow);
+}
+
+.header-inner {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 12px 0;
+}
+
+.logoMenu img{
+    width: 200px;
+}
+
+/* Nav */
+.main-nav {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    margin-left: 12px;
+}
+.main-nav > a, .dropbtn {
+    color: #fff;
+    text-decoration: none;
+    padding: 8px 10px;
+    border-radius: 8px;
+}
+.main-nav > a:hover, .dropbtn:hover {
+    background: rgba(255,255,255,.1);
+}
+
+.dropdown {
+    position: relative;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: #1E4D36;
+    min-width: 190px;
+    box-shadow: var(--shadow);
+    z-index: 10;
+    text-align: left;
+    border-radius: 10px;
+    overflow: visible;
+}
+
+.dropdown-content a {
+    color: white;
+    padding: 10px 12px;
+    display: block;
+    text-decoration: none;
+}
+
+.dropdown-content a:hover {
+    background: white;
+    color: black;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+/*Phần menu bên trong của Dropdown*/
+.menu {
+    list-style: none;
+    margin-top: 30px;
+    padding: 0;
+    position: relative;
+}
+.menu li{
+    transition: 0.2s;
+
+}
+.submenu {
+    display: none;
+    position: absolute;
+    top: 0%;
+    left: 100%;
+    background-color: #1E4D36;
+    color: white;
+    min-width: 800px;
+    padding: 10px;
+    border-radius: 6px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+    z-index: 100;
+   height: 500px;
+       
+}
+.submenu a{
+     color: white;
+}
+.submenu li{
+    border-bottom: 1px solid white;
+}
+.menu li:hover > .submenu{
+   
+    display: block;
+}
+
+
+
+/* Search box (phải) */
+.search-box {
+    margin-left: auto;
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+.search-box input {
+    padding: 8px 10px;
+    border: none;
+    border-radius: 10px;
+    width: 210px;
+}
+
+.search-box button {
+        padding: 9px 14px;
+        border: 1px solid white;
+        border-radius: 10px;
+        background: #1E4D36;
+        color: #fff;
+        cursor: pointer;
+}
+
+.search-box button:hover {
+    filter: brightness(1.1);
+    background: white;
+    color: #1E4D36;
+         
+}
+.login button{
+    background: green;
+    padding: 9px 14px;
+    border: none;
+    border-radius: 10px;
+    color: #fff;
+    cursor: pointer;
+ 
+}
+/*--------------------------------PHẦN MAIN--------------------------------*/
+/*Phần SideBar*/
+.sidebar {
+    background: #fff;
+    border-radius: 14px;
+    padding: 16px;
+    box-shadow: var(--shadow);
+}
+
+.sidebar h3 {
+    margin: 0 0 8px;
+}
+.category-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.category-list li a {
+    display: block;
+    padding: 10px 20px;
+    border-radius: 8px;
+    color: var(--text);
+    text-decoration: none;
+    border-bottom: 1px solid black;
+}
+
+.category-list li a:hover {
+    background: #f0f3f8;
+            
+    /* border-bottom: 1px solid black; */
+}
+
+/*Phần Carousel*/
+.carousel-item img{
+    border-radius: 10px;
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+
+/* CSS riêng cho #basicCarousel */
+#basicCarousel .carousel-control-prev-icon,
+#basicCarousel .carousel-control-next-icon{
+    background: none; 
+    border: solid white; 
+    border-width: 0 4px 4px 0;
+    display: inline-block;
+    padding: 8px;
+}
+
+#basicCarousel .carousel-control-prev-icon{
+    transform: rotate(135deg);
+}
+
+#basicCarousel .carousel-control-next-icon{
+    transform: rotate(-45deg);
+}
+
+#basicCarousel .carousel-control-prev{
+    left: 10px;
+}
+
+#basicCarousel .carousel-control-next {
+    right: 10px;
+}
+
+#basicCarousel .carousel-control-prev, 
+#basicCarousel .carousel-control-next {
+    background: none !important;
+    opacity: 1 !important; 
+    width: auto; 
+    border: none;
+    box-shadow: none; 
+}
+
+/*Phần banner Giảm Giá*/
+.GiamGia img{
+    padding:10px;
+    border-radius: 20px;
+    width: 330px;
+    height: 180px;
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+
+/*Phần Danh mục sản phẩm*/
+.subMenu_Category a{
+    text-decoration: none;
+    padding: 8px;
+    margin: 5px;
+    color: #3D6E57;
+    background-color: white;
+    border: 1px solid #3D6E57;
+    border-radius: 10px;
+}
+.subMenu_Category a:hover{
+    border: 1px solid white;
+    background-color: #3D6E57;
+    color: white;
+}
+.DanhMucHinhAnh .card {
+    border-radius: 30px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s ease;
+    overflow: hidden;
+}
+
+.DanhMucHinhAnh .card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+
+/*--------Phần Xe đạp trẻ em----------*/
+/*Carousel cho sản phẩm*/
+.card-title{
+    display: -webkit-box !important;
+    -webkit-box-orient: vertical;
+    line-clamp: 2;        
+    overflow: hidden;
+    text-overflow: ellipsis;
+    line-height: 1.4em;
+    height: 2.8em; 
+}
+#myCarousel .card{
+    margin: 8px;
+    width: 240px;
+    height: 350px;
+    border-radius: 12px;
+    background: #fff;
+    border: 1px solid #e5e7eb; 
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); 
+    overflow: hidden;
+    transition: all 0.3s ease; 
+}
+.card-img-top img{
+    margin-top: 50px;
+    position: relative;
+}
+
+/*Phần thông báo giảm giá ở product*/
+.discount-badge {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background: linear-gradient(to right, #fcd703 35%, #4385f4 35%);
+    border-radius: 50px;
+    padding: 2px 6px;
+    color: #fff;
+    font-weight: 600;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    z-index: 10;
+}
+.discount-badge .icon {
+    background-color: #fcd703;
+    color: #fff;
+    border-radius: 50%;
+    padding: 3px 6px;
+    font-size: 12px;
+    margin-right: 4px;
+}
+#myCarousel .carousel-control-prev-icon,.carousel-control-next-icon{
+     background: none; 
+    border: solid #3D6E57; 
+    border-width: 0 4px 4px 0;
+    display: inline-block;
+    padding: 8px;
+}
+
+#myCarousel .carousel-control-prev-icon{
+    transform: rotate(135deg);
+}
+
+#myCarousel .carousel-control-next-icon{
+    transform: rotate(-45deg);
+}
+#myCarousel .carousel-control-prev{
+    left: -40px;
+}
+
+#myCarousel .carousel-control-next {
+    right: -40px;
+}
+
+#myCarousel .carousel-control-prev, .carousel-control-next {
+    background: none !important;
+    opacity: 1 !important; 
+    width: auto; 
+    border: none;
+    box-shadow: none; 
+}
+
+/*--------Phần xe đạp thể thao----------*/
+#myCarousel2 .card{
+    margin: 8px;
+    width: 240px;
+    height: 350px;
+    border-radius: 12px;
+    background: #fff;
+    border: 1px solid #e5e7eb; 
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); 
+    overflow: hidden;
+    transition: all 0.3s ease; 
+}
+
+
+#myCarousel2 .carousel-control-prev-icon,.carousel-control-next-icon{
+    background: none; 
+    border: solid #3D6E57; 
+    border-width: 0 4px 4px 0;
+    display: inline-block;
+    padding: 8px;
+}
+
+#myCarousel2 .carousel-control-prev-icon{
+    transform: rotate(135deg);
+
+}
+
+#myCarousel2 .carousel-control-next-icon{
+    transform: rotate(-45deg);
+}
+#myCarousel2 .carousel-control-prev{
+    left: -40px;
+}
+
+#myCarousel2 .carousel-control-next {
+    right: -40px;
+}
+
+#myCarousel2 .carousel-control-prev, .carousel-control-next {
+    background: none !important;
+    opacity: 1 !important; 
+    width: auto; 
+    border: none;
+    box-shadow: none; 
+}
+
+/*Phần Banner giảm giá*/
+.bannerGiamGia{
+    display: block;
+    width: 100%;              
+    height: 450px;            
+    overflow: hidden;         
+    position: relative;
+}
+.bannerGiamGia img{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;        
+    transform: translate(-50%, -50%) scale(1);  
+    transform-origin: center center;
+    transition: transform 0.45s ease;
+}
+.bannerGiamGia img:hover{
+    transform: translate(-50%, -50%) scale(1.12); 
+}
+
+/*--------Phần xe đạp địa hình----------*/
+#myCarousel3 .card{
+    margin: 8px;
+    width: 240px;
+    height: 350px;
+    border-radius: 12px;
+    background: #fff;
+    border: 1px solid #e5e7eb; 
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); 
+    overflow: hidden;
+    transition: all 0.3s ease; 
+}
+
+
+#myCarousel3 .carousel-control-prev-icon,.carousel-control-next-icon{
+    background: none; 
+    border: solid #3D6E57; 
+    border-width: 0 4px 4px 0;
+    display: inline-block;
+    padding: 8px;
+}
+
+#myCarousel3 .carousel-control-prev-icon{
+    transform: rotate(135deg);
+
+}
+
+#myCarousel3 .carousel-control-next-icon{
+    transform: rotate(-45deg);
+}
+#myCarousel3 .carousel-control-prev{
+    left: -40px;
+}
+
+#myCarousel3 .carousel-control-next {
+    right: -40px;
+}
+
+#myCarousel3 .carousel-control-prev, .carousel-control-next {
+    background: none !important;
+    opacity: 1 !important; 
+    width: auto; 
+    border: none;
+    box-shadow: none; 
+}
+/*-----------Khuyến mãi hot-------------*/
+.KhuyenMaiHot img{
+    border-radius: 10px;
+    margin: 5px;
+    width: 300px;
+}
+
+/*-----------Phần xe đạp đua-------------*/
+#myCarousel4 .card{
+    margin: 8px;
+    width: 240px;
+    height: 350px;
+    border-radius: 12px;
+    background: #fff;
+    border: 1px solid #e5e7eb; 
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); 
+    overflow: hidden;
+    transition: all 0.3s ease; 
+}
+
+#myCarousel4 .carousel-control-prev-icon,.carousel-control-next-icon{
+     background: none; 
+    border: solid #3D6E57; 
+    border-width: 0 4px 4px 0;
+    display: inline-block;
+    padding: 8px;
+}
+
+#myCarousel4 .carousel-control-prev-icon{
+    transform: rotate(135deg);
+
+}
+
+#myCarousel4 .carousel-control-next-icon{
+    transform: rotate(-45deg);
+}
+#myCarousel4 .carousel-control-prev{
+    left: -40px;
+}
+
+#myCarousel4 .carousel-control-next {
+    right: -40px;
+}
+
+#myCarousel4 .carousel-control-prev, .carousel-control-next {
+    background: none !important;
+    opacity: 1 !important; 
+    width: auto; 
+    border: none;
+    box-shadow: none; 
+}
+
+/*-----------Phần xe đạp Touring-------------*/
+#myCarousel5 .card{
+    margin: 8px;
+    width: 240px;
+    height: 350px;
+    border-radius: 12px;
+    background: #fff;
+    border: 1px solid #e5e7eb; 
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); 
+    overflow: hidden;
+    transition: all 0.3s ease; 
+}
+
+
+#myCarousel5 .carousel-control-prev-icon,.carousel-control-next-icon{
+     background: none; 
+    border: solid #3D6E57; 
+    border-width: 0 4px 4px 0;
+    display: inline-block;
+    padding: 8px;
+}
+
+#myCarousel5 .carousel-control-prev-icon{
+    transform: rotate(135deg);
+
+}
+
+#myCarousel5 .carousel-control-next-icon{
+    transform: rotate(-45deg);
+}
+#myCarousel5 .carousel-control-prev{
+    left: -40px;
+}
+
+#myCarousel5 .carousel-control-next {
+    right: -40px;
+}
+
+#myCarousel5 .carousel-control-prev, .carousel-control-next {
+    background: none !important;
+    opacity: 1 !important; 
+    width: auto; 
+    border: none;
+    box-shadow: none; 
+}
+
+/*-----------Phần xe Điện-------------*/
+#myCarousel6 .card{
+    margin: 8px;
+    width: 240px;
+    height: 350px;
+    border-radius: 12px;
+    background: #fff;
+    border: 1px solid #e5e7eb; 
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); 
+    overflow: hidden;
+    transition: all 0.3s ease; 
+}
+
+
+#myCarousel6 .carousel-control-prev-icon,.carousel-control-next-icon{
+     background: none; 
+    border: solid #3D6E57; 
+    border-width: 0 4px 4px 0;
+    display: inline-block;
+    padding: 8px;
+}
+
+#myCarousel6 .carousel-control-prev-icon{
+    transform: rotate(135deg);
+
+}
+
+#myCarousel6 .carousel-control-next-icon{
+    transform: rotate(-45deg);
+}
+#myCarousel6 .carousel-control-prev{
+    left: -40px;
+}
+
+#myCarousel6 .carousel-control-next {
+    right: -40px;
+}
+
+#myCarousel6 .carousel-control-prev, .carousel-control-next {
+    background: none !important;
+    opacity: 1 !important; 
+    width: auto; 
+    border: none;
+    box-shadow: none; 
+}
+
+/*-----------Phần Phụ Kiện, Phụ tùng xe đạp-------------*/
+.PhuKienHeader h3,
+.PhuKienHeader p {
+    transition: transform 0.3s ease;
+    display: inline-block;
+}
+
+/* Khi hover vào nguyên khối */
+.PhuKienHeader:hover h3,
+.PhuKienHeader:hover p {
+    transform: scale(1.1);
+}
+
+.PhuKienItem {
+    width: 150px;
+    text-align: center;
+    align-items: flex-end;
+}
+
+.PhuKienImg img {
+    width: 150px !important;
+    height: 120px !important;
+    object-fit: cover;
+    display: block;
+    margin: 0 auto;
+    border-radius: 10px;
+}
+
+.PhuKienItem .card {
+    border: none;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+    border-radius: 12px;
+    transition: transform 0.2s ease;
+}
+
+.PhuKienItem .card:hover {
+    transform: scale(1.05);
+}
+
+/* Phần Thương Hiệu Hot*/
+.ThuongHieuHot a img{
+    border-radius: 10px;
+    margin: 10px;
+    width: 310px;
+}
+
+/* Phần iframe */
+iframe{
+    width: 600px;
+    height: 300px;
+}
+/*--------------------------------PHẦN FOOTER--------------------------------*/
+footer{
+
+    background-color: black;
+    color: white;
+}
+footer .row:first-child{
+    
+    padding-top: 30px;
+}
+.ThongTin > p > a{
+    color: white;
+}
+.ThongTin > p > a:hover{
+    color: red;
+}
+#img_DoiTac{
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+}
+/*Nút cuộn lên đầu trang*/
+#backTop{
+    width:50px ;
+    height: 50px ;
+    background-color: tomato;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    position: fixed;
+    bottom: 40px;
+    right: 20px;
+    cursor: pointer;
+}

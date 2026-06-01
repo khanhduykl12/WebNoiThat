@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="600" viewBox="0 0 800 600">
+<rect width="800" height="600" fill="#F5F0EB"/>
+<rect x="80" y="100" width="200" height="350" rx="5" fill="#8B6347"/>
+<rect x="90" y="110" width="180" height="330" rx="3" fill="#C4956A"/>
+<rect x="300" y="100" width="200" height="350" rx="5" fill="#8B6347"/>
+<rect x="310" y="110" width="180" height="330" rx="3" fill="#D4A574"/>
+<rect x="520" y="100" width="200" height="350" rx="5" fill="#8B6347"/>
+<rect x="530" y="110" width="180" height="330" rx="3" fill="#E8D8C4"/>
+<circle cx="180" cy="250" r="80" fill="#F0E8E0" opacity="0.5"/>
+<circle cx="400" cy="250" r="80" fill="#F0E8E0" opacity="0.5"/>
+<circle cx="620" cy="250" r="80" fill="#F0E8E0" opacity="0.5"/>
+<text x="400" y="520" font-family="Segoe UI,Arial" font-size="28" fill="#5C3D2E" text-anchor="middle" font-weight="bold">TRANH TREO TƯỜNG</text>
+<text x="400" y="555" font-family="Segoe UI,Arial" font-size="18" fill="#8B6347" text-anchor="middle">Canvas Cao Cấp</text>
+</svg>
