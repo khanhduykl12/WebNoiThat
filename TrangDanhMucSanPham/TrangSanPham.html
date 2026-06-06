@@ -13,10 +13,11 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
+    <div id="debugLog" style="position:fixed;top:0;left:0;background:#000;color:#0f0;font-size:14px;z-index:99999;padding:12px 16px;max-height:300px;overflow:auto;width:100%;font-family:'Courier New',monospace;border-bottom:3px solid #0f0;box-sizing:border-box;line-height:1.8;display:none;"></div>
     <header class="site-header">
         <div class="container header-inner">
             <div>
-                <a href="../TrangChu/TrangChu.html" class="logoMenu"><img src="../Pic/Pic_LogoShop/logoNoiThatXin.png" alt="NoiThatXinh" style="max-width:200px;height:auto;"></a>
+                <a href="../TrangChu/TrangChu.html" class="logoMenu"><img src="http://localhost:5000/Pic/Pic_LogoShop/logoNoiThatXin.png" alt="NoiThatXinh" style="max-width:200px;height:auto;"></a>
             </div>
 
             <nav class="main-nav">
@@ -105,9 +106,9 @@
         <div class="row BrandsLogo">
             <h5>THƯƠNG HIỆU</h5>
             <div class="brand-container">
-                <a href="#"><img src="../Pic/Pic_LogoThuongHieu/LogoFascino.jpg" alt="NoiThatViet" class="brand-logo"></a>
-                <a href="#"><img src="../Pic/Pic_LogoThuongHieu/LogoDtFly.jpg" alt="GiaDinhNhapKhau" class="brand-logo"></a>
-                <a href="#"><img src="../Pic/Pic_LogoThuongHieu/LogoHector.jpg" alt="NhapKhauViet" class="brand-logo"></a>
+                <a href="#"><img src="http://localhost:5000/Pic/Pic_LogoThuongHieu/LogoFascino.jpg" alt="NoiThatViet" class="brand-logo"></a>
+                <a href="#"><img src="http://localhost:5000/Pic/Pic_LogoThuongHieu/LogoDtFly.jpg" alt="GiaDinhNhapKhau" class="brand-logo"></a>
+                <a href="#"><img src="http://localhost:5000/Pic/Pic_LogoThuongHieu/LogoHector.jpg" alt="NhapKhauViet" class="brand-logo"></a>
             </div>
         </div>
 
@@ -167,6 +168,15 @@
         </div>
 
         <div class="product d-flex flex-wrap" id="productGrid"></div>
+
+        <!-- AI Search Banner (hiện khi redirect từ search ảnh) -->
+        <div id="aiSearchBanner" class="ai-search-banner" style="display:none;">
+          <div class="d-flex align-items-center gap-2 flex-wrap">
+            <span class="ai-badge-icon"><i class="bi bi-lightning-charge-fill"></i> AI</span>
+            <span id="aiSearchBannerText">Kết quả tìm kiếm bằng ảnh</span>
+            <a href="../TrangChu/TrangChu.html" class="btn btn-sm btn-outline-light ms-auto">← Quay lại trang chủ</a>
+          </div>
+        </div>
         <div id="paginationControls" class="d-flex justify-content-center mt-4 gap-2"></div>
 
     </main>
@@ -182,20 +192,20 @@
                         <h5 class="fw-bold">Phương thức thanh toán</h5>
                         <div class="row mb-3">
                             <div >
-                                <a href="#"><img src="../Pic/Pic_PThucThanhToan/LogoMomo.jpg" id="img_DoiTac" alt="payoo"></a>
-                                <a href="#"><img src="../Pic/Pic_PThucThanhToan/LogoVisa.jpg" id="img_DoiTac" alt="momo"></a>
-                                <a href="#"><img src="../Pic/Pic_PThucThanhToan/LogoZaloPay.jpg" id="img_DoiTac" alt="zaloPay"></a>
-                                <a href="#"><img src="../Pic/Pic_PThucThanhToan/LogoVNPay.jpg" id="img_DoiTac" alt="vnPay"></a>
+                                <a href="#"><img src="http://localhost:5000/Pic/Pic_PThucThanhToan/LogoMomo.jpg" id="img_DoiTac" alt="payoo"></a>
+                                <a href="#"><img src="http://localhost:5000/Pic/Pic_PThucThanhToan/LogoVisa.jpg" id="img_DoiTac" alt="momo"></a>
+                                <a href="#"><img src="http://localhost:5000/Pic/Pic_PThucThanhToan/LogoZaloPay.jpg" id="img_DoiTac" alt="zaloPay"></a>
+                                <a href="#"><img src="http://localhost:5000/Pic/Pic_PThucThanhToan/LogoVNPay.jpg" id="img_DoiTac" alt="vnPay"></a>
                             </div>
                         </div>
 
                         <h5 class="fw-bold">Kết Nối Với Chúng Tôi</h5>
                         <div class="row ">
                             <div>
-                                <a href="#"><img src="../Pic/Pic_LogoLKetNoi/LogoFacebook.jpg" id="img_DoiTac" alt="LogoFacebook"></a>
-                                <a href="#"><img src="../Pic/Pic_LogoLKetNoi/LogoTwitter.jpg" id="img_DoiTac" alt="LogoTwitter"></a>
-                                <a href="#"><img src="../Pic/Pic_LogoLKetNoi/LogoTiktok.jpg" id="img_DoiTac" alt="LogoTiktok"></a>
-                                <a href="#"><img src="../Pic/Pic_LogoLKetNoi/LogoYoutube.jpg" id="img_DoiTac" alt="LogoYoutube"></a>
+                                <a href="#"><img src="http://localhost:5000/Pic/Pic_LogoLKetNoi/LogoFacebook.jpg" id="img_DoiTac" alt="LogoFacebook"></a>
+                                <a href="#"><img src="http://localhost:5000/Pic/Pic_LogoLKetNoi/LogoTwitter.jpg" id="img_DoiTac" alt="LogoTwitter"></a>
+                                <a href="#"><img src="http://localhost:5000/Pic/Pic_LogoLKetNoi/LogoTiktok.jpg" id="img_DoiTac" alt="LogoTiktok"></a>
+                                <a href="#"><img src="http://localhost:5000/Pic/Pic_LogoLKetNoi/LogoYoutube.jpg" id="img_DoiTac" alt="LogoYoutube"></a>
                             </div>
                         </div>
                     </div>
@@ -313,10 +323,114 @@
     <!--------------Product API Script-------------------->
     <script>
         const API_BASE = 'http://localhost:5000/api';
+        const STATIC_BASE = 'http://localhost:5000/Pic';
+        const FALLBACK_IMG = STATIC_BASE + '/Pic_SanPham/default.svg';
+
+        function showDebug(msg) {
+            const el = document.getElementById('debugLog');
+            if (!el) return;
+            el.style.display = 'block';
+            el.style.color = '#0f0';
+            el.innerHTML += msg + '<br/>';
+            el.scrollTop = el.scrollHeight;
+        }
+
+        // ─── AI Search Results ───────────────────────────────────────
+        let AI_SEARCH_RESULTS = null;
+
+        function handleAISearchParams() {
+            const params = new URLSearchParams(window.location.search);
+            showDebug(`[HANDLE] URL: ${window.location.search}`);
+            if (params.get('ai_search') !== '1') {
+                showDebug('[HANDLE] Not AI search mode, skipping');
+                return;
+            }
+
+        const raw = sessionStorage.getItem('ai_search_results');
+        const metaRaw = sessionStorage.getItem('ai_search_meta');
+        showDebug(`[HANDLE] raw sessionStorage: ${raw ? raw.substring(0, 200) + '...' : 'null/undefined'}`);
+        showDebug(`[HANDLE] raw meta: ${metaRaw ? metaRaw.substring(0, 200) + '...' : 'null/undefined'}`);
+
+        const banner = document.getElementById('aiSearchBanner');
+        const bannerText = document.getElementById('aiSearchBannerText');
+        let meta = null;
+        try {
+            meta = metaRaw ? JSON.parse(metaRaw) : null;
+        } catch (e) {
+            showDebug(`[HANDLE] meta parse ERROR: ${e.message}`);
+        }
+
+            if (raw && raw !== '[]' && raw !== '"[]"' && raw !== 'null' && raw !== 'undefined') {
+                try {
+                    const parsed = JSON.parse(raw);
+                    if (Array.isArray(parsed) && parsed.length > 0) {
+                        AI_SEARCH_RESULTS = parsed;
+                        showDebug(`[HANDLE] ✓ Parsed ${AI_SEARCH_RESULTS.length} AI results`);
+                        showDebug(`[HANDLE] First item: ${JSON.stringify(AI_SEARCH_RESULTS[0]).substring(0, 200)}`);
+                        if (banner && bannerText) {
+                            const labels = Array.isArray(meta?.detections) && meta.detections.length
+                                ? meta.detections.map(d => d.label).join(', ')
+                                : (meta?.topLabel || 'AI');
+                            bannerText.textContent = `Tìm thấy ${AI_SEARCH_RESULTS.length} sản phẩm tương tự${labels ? ` • Nhận diện: ${labels}` : ''}`;
+                            banner.style.display = 'block';
+                        }
+                    } else if (Array.isArray(parsed) && parsed.length === 0) {
+                        showDebug('[HANDLE] AI results array is empty — will show "no results"');
+                        AI_SEARCH_RESULTS = [];
+                        if (banner && bannerText) {
+                            const labels = Array.isArray(meta?.detections) && meta.detections.length
+                                ? meta.detections.map(d => d.label).join(', ')
+                                : (meta?.topLabel || 'AI');
+                            bannerText.textContent = `Không tìm thấy sản phẩm tương tự${labels ? ` • Nhận diện: ${labels}` : ''}`;
+                            banner.style.display = 'block';
+                        }
+                    }
+                } catch (e) {
+                    showDebug(`[HANDLE] ✗ Parse ERROR: ${e.message}, raw: ${raw}`);
+                }
+            } else {
+                showDebug(`[HANDLE] No AI results in sessionStorage (raw=${raw})`);
+            }
+
+            // Remove after reading (only once)
+            sessionStorage.removeItem('ai_search_results');
+        sessionStorage.removeItem('ai_search_meta');
+        }
 
         function formatPrice(num) {
             if (num === null || num === undefined || isNaN(num)) return '0 đ';
             return num.toLocaleString('vi-VN') + ' đ';
+        }
+
+        function formatAISearchCard(sp) {
+            const imageSrc = sp.hinhAnh || sp.HinhAnh || FALLBACK_IMG;
+            const tenSP = sp.tenSP || sp.TenSP || '(no name)';
+            const giaBan = sp.giaBan || sp.GiaBan || sp.giaSauGiam || 0;
+            const giaGoc = sp.giaGoc || sp.GiaGoc || 0;
+            const khuyenMai = sp.khuyenMai || sp.KhuyenMai || 0;
+            const simScore = sp.similarityScore || sp.similarity || 0;
+            const simPct = (simScore * 100).toFixed(1);
+            const maSP = sp.id || sp.MaSP || '';
+            const discountBadge = khuyenMai > 0 ? `<div class="discount-badge">Giảm ${khuyenMai}%</div>` : '';
+            const originalPrice = giaGoc > giaBan ? `<span class="product-price-original">${formatPrice(giaGoc)}</span>` : '';
+            const simBadge = simScore > 0 ? `<div class="ai-sim-badge"><i class="bi bi-lightning-charge-fill"></i> ${simPct}%</div>` : '';
+            return `
+                <a href="../TrangChiTiet/TrangChiTiet.html?id=${maSP}">
+                    <div class="card" style="position:relative;">
+                        ${simBadge}
+                        <div class="card-img-top">
+                            ${discountBadge}
+                            <img src="${imageSrc}" class="img-fluid" onerror="this.src='${FALLBACK_IMG}'" />
+                        </div>
+                        <div class="card-body">
+                            <p class="card-title">${tenSP}</p>
+                            <div class="product-card-prices">
+                                <span class="product-price-current">${formatPrice(giaBan)}</span>
+                                ${originalPrice}
+                            </div>
+                        </div>
+                    </div>
+                </a>`;
         }
 
         // Map phong slug -> database MaPhong ID
@@ -390,7 +504,7 @@
         }
 
         function renderProductCard(sp) {
-            const imageSrc = sp.HinhAnh && sp.HinhAnh !== 'null' ? sp.HinhAnh : '../Pic/Pic_SanPham/default.svg';
+            const imageSrc = sp.HinhAnh && sp.HinhAnh !== 'null' ? sp.HinhAnh : FALLBACK_IMG;
             const discountBadge = sp.KhuyenMai > 0
                 ? `<div class="discount-badge">Giảm ${sp.KhuyenMai}%</div>`
                 : '';
@@ -403,7 +517,7 @@
                     <div class="card">
                         <div class="card-img-top">
                             ${discountBadge}
-                            <img src="${imageSrc}" class="img-fluid" onerror="this.src='../Pic/Pic_SanPham/default.svg'" />
+                            <img src="${imageSrc}" class="img-fluid" onerror="this.src='${FALLBACK_IMG}'" />
                         </div>
                         <div class="card-body">
                             <p class="card-title">${sp.TenSP}</p>
@@ -468,26 +582,28 @@
         // DEFAULT PRODUCTS (fallback when API unavailable)
         // ========================================================
         const DEFAULT_PRODUCTS = [
-            { MaSP: 1, TenSP: 'Sofa Vải Nhung 3 Chỗ Xanh Navy', GiaBan: 8500000, GiaGoc: 9500000, KhuyenMai: 10, HinhAnh: '../Pic/Pic_SanPham/Sofa/Sofa01.jpg' },
-            { MaSP: 2, TenSP: 'Sofa Da Cao Cấp 3 Chỗ Nâu Sáng', GiaBan: 13500000, GiaGoc: 15000000, KhuyenMai: 10, HinhAnh: '../Pic/Pic_SanPham/Sofa/Sofa02.jpg' },
-            { MaSP: 3, TenSP: 'Sofa Giường Gấp Được - Màu Xám', GiaBan: 6200000, GiaGoc: 7000000, KhuyenMai: 11, HinhAnh: '../Pic/Pic_SanPham/Sofa/SofaGiuong.jpg' },
-            { MaSP: 5, TenSP: 'Bàn Trà Gỗ Tự Nhiên Hình Oval', GiaBan: 2800000, GiaGoc: 3200000, KhuyenMai: 12, HinhAnh: '../Pic/Pic_SanPham/BanTra/BanTra01.jpg' },
-            { MaSP: 8, TenSP: 'Thảm Trải Sàn 200x300cm - Xám', GiaBan: 2100000, GiaGoc: 2500000, KhuyenMai: 16, HinhAnh: '../Pic/Pic_SanPham/Tham/Tham01.jpg' },
-            { MaSP: 10, TenSP: 'Gối Tựa Lưng Sofa Hình Tròn', GiaBan: 280000, GiaGoc: 350000, KhuyenMai: 20, HinhAnh: '../Pic/Pic_SanPham/Goi/Goi01.jpg' },
-            { MaSP: 11, TenSP: 'Giường Ngủ Đôi Khung Gỗ Sồi', GiaBan: 15900000, GiaGoc: 18000000, KhuyenMai: 11, HinhAnh: '../Pic/Pic_SanPham/Giuong/Giuong01.jpg' },
-            { MaSP: 15, TenSP: 'Ga Giường Cotton 100% King Size', GiaBan: 950000, GiaGoc: 1200000, KhuyenMai: 20, HinhAnh: '../Pic/Pic_SanPham/GaGiuong/Ga01.jpg' },
-            { MaSP: 17, TenSP: 'Đèn Bàn Ngủ LED Cảm Ứng', GiaBan: 520000, GiaGoc: 650000, KhuyenMai: 20, HinhAnh: '../Pic/Pic_SanPham/Den/Den01.jpg' },
-            { MaSP: 18, TenSP: 'Bàn Ăn Gỗ Tự Nhiên 6 Chỗ', GiaBan: 10500000, GiaGoc: 12000000, KhuyenMai: 12, HinhAnh: '../Pic/Pic_SanPham/BanAn/BanAn01.jpg' },
-            { MaSP: 20, TenSP: 'Bàn Làm Việc Có Ngăn Kéo', GiaBan: 3900000, GiaGoc: 4500000, KhuyenMai: 13, HinhAnh: '../Pic/Pic_SanPham/BanLamViec/BLViec01.jpg' },
-            { MaSP: 21, TenSP: 'Ghế Văn Phòng Lưng Lưới Mesh', GiaBan: 2700000, GiaGoc: 3200000, KhuyenMai: 15, HinhAnh: '../Pic/Pic_SanPham/GheVanPhong/GVP01.jpg' },
-            { MaSP: 23, TenSP: 'Tranh Canvas Phong Cảnh 3 Mảnh', GiaBan: 680000, GiaGoc: 850000, KhuyenMai: 20, HinhAnh: '../Pic/Pic_SanPham/Tranh/Tranh01.jpg' },
-            { MaSP: 24, TenSP: 'Bình Hoa Gốm Trắng Hiện Đại', GiaBan: 450000, GiaGoc: 580000, KhuyenMai: 22, HinhAnh: '../Pic/Pic_SanPham/BinhHoa/BinhHoa01.jpg' },
-            { MaSP: 25, TenSP: 'Cây Giả Trang Trí Xương Rồng Mix', GiaBan: 350000, GiaGoc: 420000, KhuyenMai: 16, HinhAnh: '../Pic/Pic_SanPham/CayCanh/Cay01.jpg' },
+            { MaSP: 1, TenSP: 'Sofa Vải Nhung 3 Chỗ Xanh Navy', GiaBan: 8500000, GiaGoc: 9500000, KhuyenMai: 10, HinhAnh: 'http://localhost:5000/Pic/Pic_SanPham/Sofa/Sofa01.jpg' },
+            { MaSP: 2, TenSP: 'Sofa Da Cao Cấp 3 Chỗ Nâu Sáng', GiaBan: 13500000, GiaGoc: 15000000, KhuyenMai: 10, HinhAnh: 'http://localhost:5000/Pic/Pic_SanPham/Sofa/Sofa02.svg' },
+            { MaSP: 3, TenSP: 'Sofa Giường Gấp Được - Màu Xám', GiaBan: 6200000, GiaGoc: 7000000, KhuyenMai: 11, HinhAnh: 'http://localhost:5000/Pic/Pic_SanPham/Sofa/Sofa04.svg' },
+            { MaSP: 5, TenSP: 'Bàn Trà Gỗ Tự Nhiên Hình Oval', GiaBan: 2800000, GiaGoc: 3200000, KhuyenMai: 12, HinhAnh: 'http://localhost:5000/Pic/Pic_SanPham/BanTra/BanTra01.svg' },
+            { MaSP: 8, TenSP: 'Thảm Trải Sàn 200x300cm - Xám', GiaBan: 2100000, GiaGoc: 2500000, KhuyenMai: 16, HinhAnh: 'http://localhost:5000/Pic/Pic_SanPham/Tham/Tham01.svg' },
+            { MaSP: 10, TenSP: 'Gối Tựa Lưng Sofa Hình Tròn', GiaBan: 280000, GiaGoc: 350000, KhuyenMai: 20, HinhAnh: 'http://localhost:5000/Pic/Pic_SanPham/Goi/Goi01.svg' },
+            { MaSP: 11, TenSP: 'Giường Ngủ Đôi Khung Gỗ Sồi', GiaBan: 15900000, GiaGoc: 18000000, KhuyenMai: 11, HinhAnh: 'http://localhost:5000/Pic/Pic_SanPham/Giuong/Giuong01.svg' },
+            { MaSP: 15, TenSP: 'Ga Giường Cotton 100% King Size', GiaBan: 950000, GiaGoc: 1200000, KhuyenMai: 20, HinhAnh: 'http://localhost:5000/Pic/Pic_SanPham/GaGiuong/GaGiuong03.svg' },
+            { MaSP: 17, TenSP: 'Đèn Bàn Ngủ LED Cảm Ứng', GiaBan: 520000, GiaGoc: 650000, KhuyenMai: 20, HinhAnh: 'http://localhost:5000/Pic/Pic_SanPham/Den/Den01.svg' },
+            { MaSP: 18, TenSP: 'Bàn Ăn Gỗ Tự Nhiên 6 Chỗ', GiaBan: 10500000, GiaGoc: 12000000, KhuyenMai: 12, HinhAnh: 'http://localhost:5000/Pic/Pic_SanPham/BanAn/BanAn03.svg' },
+            { MaSP: 20, TenSP: 'Bàn Làm Việc Có Ngăn Kéo', GiaBan: 3900000, GiaGoc: 4500000, KhuyenMai: 13, HinhAnh: 'http://localhost:5000/Pic/Pic_SanPham/BanLamViec/BanLamViec01.svg' },
+            { MaSP: 21, TenSP: 'Ghế Văn Phòng Lưng Lưới Mesh', GiaBan: 2700000, GiaGoc: 3200000, KhuyenMai: 15, HinhAnh: 'http://localhost:5000/Pic/Pic_SanPham/GheVanPhong/GheVanPhong03.svg' },
+            { MaSP: 23, TenSP: 'Tranh Canvas Phong Cảnh 3 Mảnh', GiaBan: 680000, GiaGoc: 850000, KhuyenMai: 20, HinhAnh: 'http://localhost:5000/Pic/Pic_SanPham/Tranh/Tranh01.svg' },
+            { MaSP: 24, TenSP: 'Bình Hoa Gốm Trắng Hiện Đại', GiaBan: 450000, GiaGoc: 580000, KhuyenMai: 22, HinhAnh: 'http://localhost:5000/Pic/Pic_SanPham/BinhHoa/BinhHoa02.svg' },
+            { MaSP: 25, TenSP: 'Cây Giả Trang Trí Xương Rồng Mix', GiaBan: 350000, GiaGoc: 420000, KhuyenMai: 16, HinhAnh: 'http://localhost:5000/Pic/Pic_SanPham/CayCanh/CayCanh01.svg' },
         ];
 
         async function loadProducts(page = 1, filters = null) {
             const productGrid = document.getElementById('productGrid');
             const paginationContainer = document.getElementById('paginationControls');
+
+            showDebug(`[LOAD] AI_SEARCH_RESULTS=${AI_SEARCH_RESULTS ? 'EXISTS(' + AI_SEARCH_RESULTS.length + ')' : 'null'}`);
 
             productGrid.innerHTML = `
                 <div class="w-100 text-center py-5">
@@ -499,6 +615,35 @@
             `;
             paginationContainer.innerHTML = '';
 
+            // ── Ưu tiên AI search results ──
+            const isAISearchMode = new URLSearchParams(window.location.search).get('ai_search') === '1';
+
+            if (isAISearchMode) {
+                showDebug(`[LOAD] AI mode, AI_SEARCH_RESULTS=${AI_SEARCH_RESULTS ? 'EXISTS(' + AI_SEARCH_RESULTS.length + ')' : 'null'}`);
+
+                if (AI_SEARCH_RESULTS && AI_SEARCH_RESULTS.length > 0) {
+                    showDebug(`[LOAD] AI path: rendering ${AI_SEARCH_RESULTS.length} cards`);
+                    const html = AI_SEARCH_RESULTS.map(sp => formatAISearchCard(sp)).join('');
+                    showDebug(`[LOAD] HTML len=${html.length}, first 100: ${html.substring(0, 100)}`);
+                    productGrid.innerHTML = html;
+                    showDebug(`[LOAD] DONE - AI cards rendered`);
+                    return;
+                } else if (AI_SEARCH_RESULTS !== null) {
+                    // AI search was done but returned 0 results
+                    showDebug(`[LOAD] AI search returned 0 results`);
+                    productGrid.innerHTML = `
+                        <div class="w-100 text-center py-5">
+                            <i class="bi bi-search" style="font-size: 4rem; color: #ccc;"></i>
+                            <p class="mt-3 text-muted">Không tìm thấy sản phẩm tương tự với ảnh của bạn</p>
+                        </div>
+                    `;
+                    return;
+                }
+                // AI_SEARCH_RESULTS is null → fall through to normal API (shouldn't happen normally)
+                showDebug(`[LOAD] AI mode but AI_SEARCH_RESULTS is null, falling back to normal API`);
+            }
+
+            showDebug(`[LOAD] Normal path: fetching from API`);
             if (!filters) {
                 filters = getUrlParams();
             }
@@ -515,10 +660,12 @@
                     if (data.success && data.data && data.data.length > 0) {
                         products = data.data;
                         totalPages = data.pages || 1;
+                        showDebug(`[LOAD] API OK: ${products.length} products`);
                     }
                 }
             } catch (error) {
                 console.warn('API unavailable, using default products:', error);
+                showDebug(`[LOAD] API error: ${error.message}`);
             }
 
             if (products.length === 0) {
@@ -532,6 +679,7 @@
             }
 
             productGrid.innerHTML = products.map(sp => renderProductCard(sp)).join('');
+            showDebug(`[LOAD] DONE - ${products.length} regular cards rendered`);
 
             if (totalPages > 1) {
                 renderPagination(page, totalPages, filters);
@@ -571,7 +719,20 @@
         document.addEventListener('DOMContentLoaded', function() {
             updateAuthState();
             updateCartBadge();
+
+            // Handle AI search params SYNCHRONOUSLY before loading products.
+            // This must complete first so AI_SEARCH_RESULTS is populated before loadProducts() reads it.
+            handleAISearchParams();
+
+            // Get filters AFTER handleAISearchParams so AI_SEARCH_RESULTS is already set
             const filters = getUrlParams();
+
+            // Only load normal products if NOT in AI search mode
+            if (new URLSearchParams(window.location.search).get('ai_search') === '1') {
+                // AI search mode: loadProducts will check AI_SEARCH_RESULTS
+                showDebug(`[INIT] AI mode: AI_SEARCH_RESULTS=${AI_SEARCH_RESULTS ? AI_SEARCH_RESULTS.length : 'null'}`);
+            }
+
             loadProducts(1, filters);
         });
     </script>

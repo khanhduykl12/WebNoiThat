@@ -13,6 +13,7 @@ import io
 import json
 import time
 import base64
+import uuid
 import numpy as np
 from PIL import Image
 from datetime import datetime
@@ -121,10 +122,31 @@ class AIService:
             logger.error(f"Khong load duoc YOLO: {e}")
             self.yolo = None
 
+    def _normalize_image_bytes(self, image_bytes: bytes) -> bytes:
+        """Convert image to standard JPEG bytes — fix 'Unsupported image type' error"""
+        try:
+            img = Image.open(io.BytesIO(image_bytes))
+            img_format = img.format
+            if img.mode in ('RGBA', 'P', 'LA', 'RGBA'):
+                background = Image.new('RGB', img.size, (255, 255, 255))
+                if img.mode == 'P':
+                    img = img.convert('RGBA')
+                background.paste(img, mask=img.split()[-1] if img.mode == 'RGBA' else None)
+                img = background
+            elif img.mode != 'RGB':
+                img = img.convert('RGB')
+            buf = io.BytesIO()
+            img.save(buf, format='JPEG', quality=95)
+            normalized = buf.getvalue()
+            logger.info(f"Image normalized: {img_format} ({len(image_bytes)} bytes) -> JPEG ({len(normalized)} bytes)")
+            return normalized
+        except Exception as e:
+            logger.error(f"Normalize failed: {e}")
+            return image_bytes
+
     def detect_furniture(self, image_bytes: bytes, conf_threshold: float = None) -> list:
         """
         Phát hiện đồ nội thất trong ảnh bằng YOLOv8 custom model (19 class).
-
         Trả về list detections [{label, confidence, bbox, class_idx}, ...]
         """
         if self.yolo is None:
@@ -133,9 +155,18 @@ class AIService:
         if conf_threshold is None:
             conf_threshold = self.yolo_conf
 
+        # Lưu normalized ảnh ra file tạm → pass file path cho YOLO
+        # (YOLO xử lý file path reliable hơn raw bytes)
+        temp_path = None
         try:
+            normalized = self._normalize_image_bytes(image_bytes)
+            temp_path = os.path.join(Config.UPLOAD_FOLDER, f'yolo_temp_{uuid.uuid4().hex[:8]}.jpg')
+            os.makedirs(os.path.dirname(temp_path), exist_ok=True)
+            with open(temp_path, 'wb') as f:
+                f.write(normalized)
+
             results = self.yolo.predict(
-                source=image_bytes,
+                source=temp_path,
                 conf=conf_threshold,
                 verbose=False
             )
@@ -147,8 +178,6 @@ class AIService:
                 for box in r.boxes:
                     cls_id = int(box.cls[0].item())
                     conf = float(box.conf[0].item())
-
-                    # Lấy tên class từ model hoặc fallback
                     if hasattr(self.yolo, 'names') and self.yolo.names:
                         label = self.yolo.names.get(cls_id, f"class_{cls_id}")
                     else:
@@ -160,12 +189,20 @@ class AIService:
                         'confidence': round(conf, 4),
                         'bbox': [round(x, 1) for x in box.xyxy[0].cpu().numpy().tolist()],
                     })
-
             return detections
 
         except Exception as e:
             logger.error(f"Loi detect_furniture: {e}")
+            import traceback
+            traceback.print_exc()
             return []
+        finally:
+            # Dọn file tạm
+            if temp_path and os.path.exists(temp_path):
+                try:
+                    os.remove(temp_path)
+                except Exception:
+                    pass
 
     # ─── Vision Transformer ────────────────────────────────────────────────────
 
@@ -204,6 +241,8 @@ class AIService:
             return [0.0] * self.embedding_dim
 
         try:
+            # Normalize ảnh → JPEG (fix Unsupported image type)
+            image_bytes = self._normalize_image_bytes(image_bytes)
             img = Image.open(io.BytesIO(image_bytes)).convert('RGB')
             img = img.resize((224, 224))
 
@@ -225,6 +264,7 @@ class AIService:
     def extract_embedding_from_crop(self, image_bytes: bytes, bbox: list) -> list:
         """Cắt vùng bbox từ ảnh rồi trích xuất embedding"""
         try:
+            image_bytes = self._normalize_image_bytes(image_bytes)
             img = Image.open(io.BytesIO(image_bytes)).convert('RGB')
             x1, y1, x2, y2 = map(int, bbox)
             cropped = img.crop((x1, y1, x2, y2))
@@ -364,11 +404,13 @@ class AIService:
             }
         """
         t0 = time.time()
+        print(f"[AI] search_by_image called, image_bytes len={len(image_bytes)}", flush=True)
 
         # 1. YOLOv8 detect
         t_yolo = time.time()
         detections = self.detect_furniture(image_bytes, conf_threshold)
         t_yolo_ms = round((time.time() - t_yolo) * 1000, 1)
+        print(f"[AI] YOLO detected {len(detections)} objects", flush=True)
 
         # 2. Trích xuất embedding
         t_vit = time.time()

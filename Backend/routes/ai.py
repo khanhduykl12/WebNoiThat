@@ -17,7 +17,7 @@ from flask import Blueprint, request, jsonify, current_app
 from flask_jwt_extended import jwt_required, get_jwt_identity, get_jwt
 from werkzeug.utils import secure_filename
 
-from models import SanPham
+from models import SanPham, make_absolute_image_url
 from models.user import NguoiDung, LichSuTimKiemAnh
 from extensions import db
 from ai_service import get_ai_service
@@ -26,6 +26,17 @@ from config import Config
 ai_bp = Blueprint('ai', __name__)
 
 ALLOWED_EXTENSIONS = {'jpg', 'jpeg', 'png', 'webp'}
+
+FALLBACK_LABEL_KEYWORDS = {
+    'ghe': ['ghế', 'ghe', 'chair', 'đôn', 'don'],
+    'sofa': ['sofa', 'ghế sofa', 'salon'],
+    'ban': ['bàn', 'ban', 'table', 'bàn ăn', 'bàn trà', 'bàn làm việc'],
+    'giuong': ['giường', 'giuong', 'bed'],
+    'den': ['đèn', 'den', 'lamp'],
+    'tham': ['thảm', 'tham', 'rug', 'carpet'],
+    'goi': ['gối', 'goi', 'pillow', 'cushion'],
+    'tu': ['tủ', 'tu', 'cabinet', 'wardrobe'],
+}
 
 
 def allowed_file(filename):
@@ -74,11 +85,32 @@ def load_products_by_ids(product_ids: list) -> dict:
     return {p.MaSP: p for p in products}
 
 
-def format_sanpham(sp, similarity=None, yolo_label=None):
+def build_label_keywords(top_label: str) -> list:
+    label = (top_label or '').strip().lower()
+    if not label:
+        return []
+    keywords = [label]
+    mapped = FALLBACK_LABEL_KEYWORDS.get(label, [])
+    for kw in mapped:
+        if kw not in keywords:
+            keywords.append(kw)
+    return keywords
+
+
+def format_sanpham(sp, similarity=None, yolo_label=None, request=None):
     """Format SanPham model → dict cho response"""
     gia_ban = float(sp.GiaBan or 0)
     khuyen_mai = sp.KhuyenMai or 0
     gia_sau_giam = round(gia_ban * (100 - khuyen_mai) / 100, -3)
+
+    base_url = request.host_url.rstrip('/') if request else 'http://localhost:5000'
+    hinh_anh = make_absolute_image_url(sp.HinhAnh, base_url=base_url)
+    hinh_anh_phu = [
+        make_absolute_image_url(sp.HinhAnhPhu1, base_url=base_url),
+        make_absolute_image_url(sp.HinhAnhPhu2, base_url=base_url),
+        make_absolute_image_url(sp.HinhAnhPhu3, base_url=base_url),
+        make_absolute_image_url(sp.HinhAnhPhu4, base_url=base_url),
+    ]
 
     data = {
         'id': sp.MaSP,
@@ -89,8 +121,8 @@ def format_sanpham(sp, similarity=None, yolo_label=None):
         'giaBan': gia_ban,
         'giaSauGiam': gia_sau_giam,
         'khuyenMai': khuyen_mai,
-        'hinhAnh': sp.HinhAnh,
-        'hinhAnhPhu': [sp.HinhAnhPhu1, sp.HinhAnhPhu2, sp.HinhAnhPhu3, sp.HinhAnhPhu4],
+        'hinhAnh': hinh_anh,
+        'hinhAnhPhu': hinh_anh_phu,
         'thuongHieu': sp.ThuongHieu,
         'chatLieu': sp.ChatLieu,
         'mauSac': sp.MauSac,
@@ -175,7 +207,7 @@ def search_by_image():
     except Exception:
         image_path = None
 
-    return _do_ai_search(image_bytes, image_path)
+    return _do_ai_search(image_bytes, image_path, request)
 
 
 @ai_bp.route('/search-base64', methods=['POST'])
@@ -200,17 +232,23 @@ def search_by_base64():
     except Exception as e:
         return jsonify({'success': False, 'message': f'Lỗi xử lý ảnh: {e}'}), 400
 
-    return _do_ai_search(image_bytes, image_path)
+    return _do_ai_search(image_bytes, image_path, request)
 
 
-def _do_ai_search(image_bytes, image_path=None):
+def _do_ai_search(image_bytes, image_path=None, request=None):
     """
     Logic xử lý AI search chung cho cả upload file và base64.
     Tách riêng để tái sử dụng.
     """
+    import traceback
+    import sys
+
+    print(f"[AI SEARCH] image_bytes len={len(image_bytes)}, image_path={image_path}", flush=True)
+
     try:
         ai = get_ai_service()
     except Exception as e:
+        traceback.print_exc()
         return jsonify({
             'success': False,
             'message': f'Lỗi khởi tạo AI: {e}',
@@ -219,6 +257,7 @@ def _do_ai_search(image_bytes, image_path=None):
     try:
         result = ai.search_by_image(image_bytes)
     except Exception as e:
+        traceback.print_exc()
         return jsonify({
             'success': False,
             'message': f'Lỗi xử lý AI: {e}',
@@ -227,6 +266,47 @@ def _do_ai_search(image_bytes, image_path=None):
     detections = result.get('detections', [])
     similar = result.get('similar_products', [])
     proc_time = result.get('processing_time', {})
+    top_label = result.get('top_label')
+    query_vector = result.get('query_vector', [])
+
+    # ── Fallback: nếu FAISS trả rỗng, dùng YOLO label hoặc vector để tìm ──
+    if not similar:
+        if top_label:
+            print(f"[AI SEARCH] FAISS empty → fallback text search với label='{top_label}'", flush=True)
+        else:
+            print(f"[AI SEARCH] FAISS empty + no detections → fallback random san pham", flush=True)
+
+        try:
+            query = SanPham.query.filter(SanPham.TrangThai == 'active')
+            fallback_products = []
+
+            if top_label:
+                keywords = build_label_keywords(top_label)
+                print(f"[AI SEARCH] Fallback keywords: {keywords}", flush=True)
+                conditions = [SanPham.YOLOLabel == top_label]
+                for keyword in keywords:
+                    conditions.extend([
+                        SanPham.TenSP.ilike(f'%{keyword}%'),
+                        SanPham.MoTa.ilike(f'%{keyword}%'),
+                        SanPham.ChatLieu.ilike(f'%{keyword}%'),
+                        SanPham.MauSac.ilike(f'%{keyword}%'),
+                    ])
+                fallback_products = query.filter(db.or_(*conditions)).limit(12).all()
+
+            if not fallback_products:
+                print('[AI SEARCH] No keyword match, fallback to random active products', flush=True)
+                fallback_products = query.order_by(db.func.rand()).limit(12).all()
+
+            for sp in fallback_products:
+                similar.append({
+                    'product_id': sp.MaSP,
+                    'similarity': 0.0,
+                    'yolo_label': sp.YOLOLabel or top_label or '',
+                    '_fallback': True
+                })
+            print(f"[AI SEARCH] Fallback: tìm được {len(similar)} sản phẩm", flush=True)
+        except Exception as e:
+            print(f"[AI SEARCH] Fallback error: {e}", flush=True)
 
     # Load thông tin sản phẩm từ DB
     if similar:
@@ -240,7 +320,8 @@ def _do_ai_search(image_bytes, image_path=None):
                 formatted_results.append(format_sanpham(
                     sp,
                     similarity=s['similarity'],
-                    yolo_label=s.get('yolo_label')
+                    yolo_label=s.get('yolo_label'),
+                    request=request
                 ))
     else:
         formatted_results = []
@@ -392,5 +473,5 @@ def search_by_text():
 
     return jsonify({
         'success': True,
-        'data': [format_sanpham(p) for p in products]
+        'data': [format_sanpham(p, request=request) for p in products]
     })

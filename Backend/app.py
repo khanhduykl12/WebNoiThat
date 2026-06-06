@@ -1,14 +1,74 @@
-from flask import Flask
+from flask import Flask, send_from_directory
 from flask_cors import CORS
 from flask_jwt_extended import JWTManager
+import os
 from extensions import db
 from config import Config
 
 jwt = JWTManager()
 
+# Resolve project root (Backend/ → parent)
+PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+PIC_FOLDER = os.path.join(PROJECT_ROOT, 'Pic')
+CSS_FOLDER = os.path.join(PROJECT_ROOT, 'CSS')
+JS_FOLDER = os.path.join(PROJECT_ROOT, 'JS')
+TRANG_CHU_FOLDER = os.path.join(PROJECT_ROOT, 'TrangChu')
+TRANG_DANH_MUC_FOLDER = os.path.join(PROJECT_ROOT, 'TrangDanhMucSanPham')
+TRANG_CHI_TIET_FOLDER = os.path.join(PROJECT_ROOT, 'TrangChiTiet')
+TRANG_THANH_TOAN_FOLDER = os.path.join(PROJECT_ROOT, 'TrangThanhToan')
+LOGIN_FOLDER = os.path.join(PROJECT_ROOT, 'Login')
+TRANG_GIOI_THIEU_FOLDER = os.path.join(PROJECT_ROOT, 'TrangGioiThieu')
+TRANG_LIEN_HE_FOLDER = os.path.join(PROJECT_ROOT, 'TrangLienHe')
+
+
 def create_app():
     app = Flask(__name__)
     app.config.from_object(Config)
+
+    # URL: /Pic/Pic_SanPham/Sofa/Sofa01.jpg -> filesystem: <project>/Pic/Pic_SanPham/Sofa/Sofa01.jpg
+    @app.route('/Pic/<path:filename>')
+    def serve_pic(filename):
+        return send_from_directory(PIC_FOLDER, filename)
+
+    @app.route('/CSS/<path:filename>')
+    def serve_css(filename):
+        return send_from_directory(CSS_FOLDER, filename)
+
+    @app.route('/JS/<path:filename>')
+    def serve_js(filename):
+        return send_from_directory(JS_FOLDER, filename)
+
+    @app.route('/TrangChu/<path:filename>')
+    def serve_trang_chu(filename):
+        return send_from_directory(TRANG_CHU_FOLDER, filename)
+
+    @app.route('/TrangDanhMucSanPham/<path:filename>')
+    def serve_trang_danh_muc(filename):
+        return send_from_directory(TRANG_DANH_MUC_FOLDER, filename)
+
+    @app.route('/TrangChiTiet/<path:filename>')
+    def serve_trang_chi_tiet(filename):
+        return send_from_directory(TRANG_CHI_TIET_FOLDER, filename)
+
+    @app.route('/TrangThanhToan/<path:filename>')
+    def serve_trang_thanh_toan(filename):
+        return send_from_directory(TRANG_THANH_TOAN_FOLDER, filename)
+
+    @app.route('/Login/<path:filename>')
+    def serve_login(filename):
+        return send_from_directory(LOGIN_FOLDER, filename)
+
+    @app.route('/TrangGioiThieu/<path:filename>')
+    def serve_trang_gioi_thieu(filename):
+        return send_from_directory(TRANG_GIOI_THIEU_FOLDER, filename)
+
+    @app.route('/TrangLienHe/<path:filename>')
+    def serve_trang_lien_he(filename):
+        return send_from_directory(TRANG_LIEN_HE_FOLDER, filename)
+
+    @app.route('/ai-results')
+    def serve_ai_results_page():
+        return send_from_directory(TRANG_DANH_MUC_FOLDER, 'TrangKetQuaAI.html')
 
     CORS(app, resources={r"/api/*": {"origins": "*", "methods": ["GET", "POST", "PUT", "DELETE", "OPTIONS"], "allow_headers": ["Content-Type", "Authorization"]}}, supports_credentials=True)
 

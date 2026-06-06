@@ -1,6 +1,6 @@
 from flask import Blueprint, request, jsonify
 from models.user import Banner
-from extensions import db
+from models import make_absolute_image_url
 from datetime import datetime
 
 banners_bp = Blueprint('banners', __name__)
@@ -26,7 +26,7 @@ def get_banners():
             'MaBanner': b.MaBanner,
             'TenBanner': b.TenBanner,
             'Loai': b.Loai,
-            'DuongDanAnh': b.DuongDanAnh,
+            'DuongDanAnh': make_absolute_image_url(b.DuongDanAnh),
             'LinkDen': b.LinkDen,
             'TieuDe': b.TieuDe,
             'MoTa': b.MoTa,

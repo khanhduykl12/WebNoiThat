@@ -322,6 +322,8 @@
     </script>
     <script>
         const API_BASE = 'http://localhost:5000/api';
+        const STATIC_BASE = 'http://localhost:5000/Pic';
+        const FALLBACK_IMG = STATIC_BASE + '/Pic_SanPham/default.svg';
 
         function formatPrice(num) {
             return new Intl.NumberFormat('vi-VN').format(num);
@@ -387,7 +389,7 @@
                 cartItemsBody.innerHTML = items.map(item => `
                     <tr data-magh="${item.MaGioHang}">
                         <td class="product-pic">
-                            <img src="${item.HinhAnh || '../Pic/Pic_SanPham/default.jpg'}" width="60" alt="${item.TenSP}" />
+                            <img src="${item.HinhAnh || FALLBACK_IMG}" width="60" alt="${item.TenSP}" />
                         </td>
                         <td class="product-name">${item.TenSP}</td>
                         <td class="product-price">${formatPrice(item.Gia)}</td>
