@@ -1,0 +1,126 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đăng Nhập</title>
+    <link rel="stylesheet" href="../CSS/all.min.css">
+    <link rel="stylesheet" href="../CSS/bootstrap.min.css">
+    <link rel="stylesheet" href="../Login/CssLogin_Register.css">
+</head>
+<body>
+    <div class="d-flex justify-content-center align-items-center vh-100">
+        <div class="wrapper">
+            <div class="m-auto align-middle w-75">
+                <h3>Đăng Nhập</h3>
+                <div class="input-box">
+                    <label for="UserName">Tên đăng nhập</label>
+                    <div class="input-wrapper">
+                        <input type="text" id="UserName" placeholder="Nhập tên đăng nhập" />
+                    </div>
+                </div>
+                <div class="input-box">
+                    <label for="Password">Mật khẩu</label>
+                    <div class="input-wrapper">
+                        <input type="password" id="Password" placeholder="Nhập mật khẩu" />
+                    </div>
+                </div>
+                <div class="d-flex justify-content-between fs-6 mb-3">
+                    <div></div>
+                    <div>
+                        <a href="#">Quên mật khẩu?</a>
+                    </div>
+                </div>
+                <button class="btn-create" type="button" id="btnLogin">ĐĂNG NHẬP</button>
+                <div class="login-link-wrapper">
+                    <span>Bạn không có tài khoản? </span>
+                    <a href="DangKy.html">Đăng ký</a>
+                </div>
+                <p id="message-error-log" style="min-height:1.2em;color:red;"></p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        var API_BASE = "http://localhost:5000/api";
+
+        async function handleLogin() {
+            var username = document.getElementById("UserName").value.trim();
+            var password = document.getElementById("Password").value;
+            var msgEl = document.getElementById("message-error-log");
+            var btnEl = document.getElementById("btnLogin");
+
+            if (!username || !password) {
+                msgEl.textContent = "Vui lòng nhập đầy đủ tên đăng nhập và mật khẩu!";
+                return;
+            }
+
+            msgEl.textContent = "Đang đăng nhập...";
+            msgEl.style.color = "#666";
+            btnEl.disabled = true;
+            btnEl.textContent = "Đang xử lý...";
+
+            try {
+                var response = await fetch(API_BASE + "/auth/login", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ TenDangNhap: username, MatKhau: password })
+                });
+
+                var data = await response.json();
+
+                if (response.ok) {
+                    localStorage.setItem("access_token", data.access_token);
+                    localStorage.setItem("refresh_token", data.refresh_token);
+                    localStorage.setItem("user", JSON.stringify(data.user));
+
+                    var user = data.user;
+                    if (user && user.VaiTro === "admin") {
+                        window.location.href = "../TrangAdmin/TrangAdmin.html";
+                    } else {
+                        window.location.href = "../TrangChu/TrangChu.html";
+                    }
+                } else {
+                    msgEl.textContent = data.message || "Tên đăng nhập hoặc mật khẩu không đúng!";
+                    msgEl.style.color = "red";
+                    btnEl.disabled = false;
+                    btnEl.textContent = "ĐĂNG NHẬP";
+                }
+            } catch (error) {
+                msgEl.textContent = "Không thể kết nối đến server! Vui lòng kiểm tra backend đang chạy chưa.";
+                msgEl.style.color = "red";
+                btnEl.disabled = false;
+                btnEl.textContent = "ĐĂNG NHẬP";
+            }
+        }
+
+        document.addEventListener("DOMContentLoaded", function() {
+            var token = localStorage.getItem("access_token");
+            var userData = localStorage.getItem("user");
+
+            if (token) {
+                if (userData) {
+                    try {
+                        var user = JSON.parse(userData);
+                        if (user.VaiTro === "admin") {
+                            window.location.href = "../TrangAdmin/TrangAdmin.html";
+                            return;
+                        }
+                    } catch (e) {}
+                }
+                window.location.href = "../TrangChu/TrangChu.html";
+                return;
+            }
+
+            var btnLogin = document.getElementById("btnLogin");
+            if (btnLogin) {
+                btnLogin.addEventListener("click", handleLogin);
+            }
+
+            document.getElementById("Password").addEventListener("keypress", function(e) {
+                if (e.key === "Enter") handleLogin();
+            });
+        });
+    </script>
+</body>
+</html>

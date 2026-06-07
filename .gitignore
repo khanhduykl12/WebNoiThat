@@ -1,0 +1,60 @@
+# ─── Python ───────────────────────────────────────────────
+__pycache__/
+*.py[cod]
+*.egg-info/
+dist/
+build/
+*.egg
+*.whl
+
+# Virtual environments
+venv/
+venv311/
+.venv/
+
+# ─── Environment & Secrets ─────────────────────────────────
+.env
+.env.*
+*.env
+
+# ─── AI Models & Weights ──────────────────────────────────
+*.pt
+*.pth
+*.weights
+models/
+models_ai/
+runs/
+uploads/
+*.pkl
+*.h5
+*.onnx
+
+# ─── IDE ──────────────────────────────────────────────────
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
+
+# ─── Database ─────────────────────────────────────────────
+*.db
+*.sqlite
+*.sqlite3
+
+# ─── Logs ─────────────────────────────────────────────────
+*.log
+logs/
+
+# ─── Jupyter ──────────────────────────────────────────────
+*.ipynb
+.ipynb_checkpoints/
+
+# ─── Dataset (download from Roboflow separately) ───────────
+# Download: https://universe.roboflow.com/your-project/furniture-detection
+Furniture_Dectection.v8i.yolov12/
+
+# ─── OS ───────────────────────────────────────────────────
+.DS_Store
+Thumbs.db
+desktop.ini

@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="600" viewBox="0 0 800 600">
+<rect width="800" height="600" fill="#F0E8E0"/>
+<rect x="180" y="250" width="440" height="200" rx="15" fill="#8B6347"/>
+<rect x="200" y="270" width="400" height="160" rx="10" fill="#E8D8C4"/>
+<rect x="210" y="280" width="380" height="90" rx="8" fill="#F5EDE0"/>
+<rect x="180" y="160" width="440" height="110" rx="20" fill="#6B4C3B"/>
+<rect x="190" y="170" width="420" height="90" rx="15" fill="#8B6347"/>
+<rect x="200" y="450" width="40" height="60" rx="8" fill="#5C3D2E"/>
+<rect x="560" y="450" width="40" height="60" rx="8" fill="#5C3D2E"/>
+<text x="400" y="560" font-family="Segoe UI,Arial" font-size="28" fill="#5C3D2E" text-anchor="middle" font-weight="bold">GIƯỜNG NGỦ ĐƠN</text>
+<text x="400" y="600" font-family="Segoe UI,Arial" font-size="18" fill="#8B6347" text-anchor="middle">Thiết Kế Tiện Dụng</text>
+</svg>

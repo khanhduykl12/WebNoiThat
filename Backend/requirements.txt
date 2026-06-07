@@ -1,0 +1,30 @@
+flask>=3.0.0
+flask-sqlalchemy>=3.1.0
+flask-cors>=6.0.0
+flask-jwt-extended>=4.7.0
+pyodbc>=5.0.0
+bcrypt>=4.2.0
+python-dotenv>=1.0.0
+marshmallow>=3.23.0
+werkzeug>=3.1.0
+gunicorn>=23.0.0
+
+# ─── AI Core (NVIDIA GPU + CUDA 12.x) ───
+# PyTorch với CUDA 12.1 (NVIDIA)
+--extra-index-url https://download.pytorch.org/whl/cu121
+torch==2.2.0
+torchvision==0.17.0
+
+# AI Models
+ultralytics==8.3.0     # YOLOv12
+timm==0.9.16            # Vision Transformer (ViT)
+
+# Vector Search
+faiss-gpu==1.8.0       # GPU-accelerated FAISS
+scikit-learn==1.4.2    # Cosine Similarity backup
+
+# Utilities
+pillow==10.2.0         # Xử lý ảnh
+numpy>=1.26.0
+requests>=2.31.0       # Gọi Roboflow API
+opencv-python>=4.9.0   # Xử lý ảnh nâng cao

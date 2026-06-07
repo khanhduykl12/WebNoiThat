@@ -1,0 +1,101 @@
+:root{
+        --bg:#f4f5f7;
+        --white:#fff;
+        --border:#e3e6eb;
+        --text:#1f2937;
+        --muted:#6b7280;
+        --accent:#0b74de;
+    }
+
+    *{ box-sizing:border-box; font-family:"Segoe UI",sans-serif; }
+    body{ background:var(--bg); margin:0; padding:28px; }
+
+    .page{ max-width:1200px; margin:0 auto; }
+    h1{ margin:0 0 8px; font-size:22px; }
+    p{ margin:0; color:var(--muted); }
+
+    .grid{
+        margin-top:20px;
+        display:grid;
+        grid-template-columns:1fr 380px;
+        gap:18px;
+    }
+
+    .card{
+        background:var(--white);
+        padding:18px;
+        border-radius:10px;
+        border:1px solid var(--border);
+        box-shadow:0 6px 16px rgba(0,0,0,0.04);
+    }
+
+    label{
+        display:block;
+        margin-bottom:6px;
+        font-weight:600;
+        color:var(--text);
+    }
+
+    input[type="text"], input[type="number"], select, textarea{
+        width:100%;
+        padding:10px 12px;
+        border-radius:8px;
+        border:1px solid #d1d5db;
+        font-size:14px;
+        outline:none;
+    }
+    textarea{ min-height:90px; resize:vertical; }
+
+    .form-row{ display:flex; gap:12px; margin-bottom:12px; }
+    .col{ flex:1; }
+
+    .panel{ background:#fff; padding:14px; border-radius:10px; border:1px solid var(--border); }
+    .panel h3{ margin:0 0 8px; font-size:15px; }
+    .muted{ color:var(--muted); font-size:13px; }
+
+    .checkbox-list{ display:flex; flex-direction:column; gap:6px; margin-top:10px; }
+    .checkbox-inline{ display:flex; align-items:center; gap:8px; }
+
+    .btn{
+        background:var(--accent);
+        color:#fff;
+        border:none;
+        padding:11px 20px;
+        border-radius:8px;
+        cursor:pointer;
+        font-weight:600;
+        font-size:14px;
+        box-shadow:0 4px 12px rgba(11,116,222,0.22);
+    }
+    .btn.secondary{
+        background:#fff;
+        color:var(--accent);
+        border:1px solid var(--border);
+        box-shadow:none;
+    }
+
+    .actions{ display:flex; margin-top:16px; gap:10px; }
+
+    /* toast */
+    .toast{
+        position:fixed;
+        right:20px;
+        bottom:20px;
+        background:#111827;
+        color:#fff;
+        padding:12px 16px;
+        border-radius:8px;
+        display:none;
+        box-shadow:0 6px 20px rgba(0,0,0,0.28);
+        z-index:999;
+    }
+    .toast.show{ display:block; animation:fade .25s ease; }
+
+    @keyframes fade{
+        from{ transform:translateY(10px); opacity:0; }
+        to{ transform:none; opacity:1; }
+    }
+
+    @media(max-width:900px){
+        .grid{ grid-template-columns:1fr; }
+    }

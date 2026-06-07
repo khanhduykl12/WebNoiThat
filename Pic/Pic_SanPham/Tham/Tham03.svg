@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="600" viewBox="0 0 800 600">
+<rect width="800" height="600" fill="#F0E8E0"/>
+<rect x="100" y="150" width="600" height="350" rx="20" fill="#D4C8BC"/>
+<rect x="120" y="170" width="560" height="310" rx="15" fill="#C4956A"/>
+<rect x="140" y="190" width="520" height="270" rx="10" fill="#E8D8C4"/>
+<path d="M160 220 Q260 200 360 220 Q460 240 560 220 Q620 230 660 220" stroke="#C4956A" stroke-width="3" fill="none"/>
+<path d="M160 270 Q260 250 360 270 Q460 290 560 270 Q620 280 660 270" stroke="#C4956A" stroke-width="3" fill="none"/>
+<path d="M160 320 Q260 300 360 320 Q460 340 560 320 Q620 330 660 320" stroke="#C4956A" stroke-width="3" fill="none"/>
+<text x="400" y="560" font-family="Segoe UI,Arial" font-size="28" fill="#5C3D2E" text-anchor="middle" font-weight="bold">THẢM TRẢI SÀN</text>
+<text x="400" y="595" font-family="Segoe UI,Arial" font-size="18" fill="#8B6347" text-anchor="middle">Phòng Khách Sang Trọng</text>
+</svg>

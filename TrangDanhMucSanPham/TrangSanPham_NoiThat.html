@@ -1,0 +1,1040 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Trang Sản Phẩm</title>
+    <link rel="stylesheet" href="../CSS/all.min.css" />
+    <link rel="stylesheet" href="../CSS/bootstrap.min.css" />
+    <link rel="stylesheet" href="CssTrangSanPham.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+    />
+    <script src="../JS/all.min.js"></script>
+    <script src="../JS/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  </head>
+  <body>
+    <!-- =====================================================================
+       HEADER
+       ===================================================================== -->
+    <header class="site-header">
+      <!-- Tầng 1: Header top -->
+      <div class="header-top">
+        <p><i class="bi bi-shop"></i> Địa điểm</p>
+        <p><i class="bi bi-truck"></i> Giao hàng</p>
+      </div>
+
+      <!-- Tầng 2: Header main -->
+      <div class="header-main">
+        <!-- Search box -->
+        <div class="header-search-box">
+          <input
+            type="text"
+            id="searchProductInput"
+            placeholder="Nhập tên sản phẩm..."
+            aria-label="Tìm kiếm"
+          />
+          <button type="button" id="btnTextSearch" class="btn-search-icon">
+            <i class="bi bi-search"></i>
+          </button>
+          <button
+            type="button"
+            id="openAdvancedSearchBtn"
+            class="btn-search-advanced"
+            data-bs-toggle="modal"
+            data-bs-target="#advancedSearchModal"
+          >
+            <i class="bi bi-sliders"></i>
+          </button>
+        </div>
+
+        <!-- Logo -->
+        <div class="header-logo-wrapper">
+          <a href="../TrangChu/TrangChu.html" class="header-logo-link">
+            <img
+              src="http://localhost:5000/Pic/Pic_LogoShop/logoNoiThatXin.png"
+              alt="NoiThatXin Logo"
+            />
+          </a>
+        </div>
+
+        <!-- Actions -->
+        <div class="header-actions">
+          <span id="authSection">
+            <a href="../Login/DangNhap.html" class="btn-login-link">
+              <button type="button" class="btn-login">Đăng nhập</button>
+            </a>
+          </span>
+          <div class="cart-box">
+            <a href="../TrangThanhToan/GioHang.html" class="btn-cart-link">
+              <i class="bi bi-cart3"></i>
+              <span class="cart-badge" id="cartBadge">0</span>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tầng 3: Nav chính -->
+      <nav class="main-nav">
+        <a href="../TrangChu/TrangChu.html">Trang chủ</a>
+
+        <div class="nav-dropdown">
+          <a href="../TrangDanhMucSanPham/TrangSanPham.html" class="nav-dropbtn">Danh mục ▾</a>
+          <div class="nav-dropdown-menu">
+            <ul class="nav-menu-list">
+              <li><a href="../TrangDanhMucSanPham/TrangSanPham.html?phong=phong-khach">Phòng khách</a></li>
+              <li><a href="../TrangDanhMucSanPham/TrangSanPham.html?phong=phong-ngu">Phòng ngủ</a></li>
+              <li><a href="../TrangDanhMucSanPham/TrangSanPham.html?phong=phong-bep">Phòng bếp</a></li>
+              <li><a href="../TrangDanhMucSanPham/TrangSanPham.html?phong=phong-tam">Phòng tắm</a></li>
+              <li><a href="../TrangDanhMucSanPham/TrangSanPham.html?phong=ngoai-troi">Ngoài trời</a></li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="nav-dropdown">
+          <a href="../TrangDanhMucSanPham/TrangSanPham.html?phong=phong-khach" class="nav-dropbtn">Phòng khách ▾</a>
+          <div class="nav-dropdown-menu">
+            <ul class="nav-menu-list">
+              <li><a href="../TrangDanhMucSanPham/TrangSanPham.html?phong=phong-khach">Xem tất cả</a></li>
+              <li><a href="../TrangDanhMucSanPham/TrangSanPham.html?phong=phong-khach&noi_bat=1">Bộ sưu tập phòng khách mới</a></li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="nav-dropdown">
+          <a href="../TrangDanhMucSanPham/TrangSanPham.html?phong=phong-ngu" class="nav-dropbtn">Phòng ngủ ▾</a>
+          <div class="nav-dropdown-menu">
+            <ul class="nav-menu-list">
+              <li><a href="../TrangDanhMucSanPham/TrangSanPham.html?phong=phong-ngu">Xem tất cả</a></li>
+              <li><a href="../TrangDanhMucSanPham/TrangSanPham.html?phong=phong-ngu&noi_bat=1">Bộ sưu tập phòng ngủ mới</a></li>
+            </ul>
+          </div>
+        </div>
+
+        <a href="../TrangGioiThieu/TrangGioiThieu.html">Giới thiệu</a>
+        <a href="../TrangLienHe/TrangLienHe.html">Liên hệ</a>
+      </nav>
+
+      <!-- Tầng 4: Header bottom -->
+      <div class="header-bottom">
+        <p class="fw-bold">Ưu đãi trả góp đặc biệt trong 24 tháng‡*</p>
+      </div>
+    </header>
+
+    <!-- =====================================================================
+       MODAL TÌM KIẾM NÂNG CAO
+       ===================================================================== -->
+    <div
+      class="modal fade"
+      id="advancedSearchModal"
+      tabindex="-1"
+      aria-labelledby="advancedSearchModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <div>
+              <h5 class="modal-title" id="advancedSearchModalLabel">
+                Tìm kiếm sản phẩm
+              </h5>
+              <p class="modal-subtitle">
+                Chọn cách tìm kiếm phù hợp: nhập tên, upload ảnh, hoặc mở
+                camera.
+              </p>
+            </div>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Đóng"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <!-- Tabs -->
+            <div class="modal-search-tabs">
+              <button
+                type="button"
+                class="modal-tab-btn active"
+                data-tab="tab-text-search"
+              >
+                Nhập từ khóa
+              </button>
+              <button
+                type="button"
+                class="modal-tab-btn"
+                data-tab="tab-upload-image"
+              >
+                Upload ảnh
+              </button>
+              <button
+                type="button"
+                class="modal-tab-btn"
+                data-tab="tab-camera-search"
+              >
+                Mở camera
+              </button>
+            </div>
+
+            <!-- Tab: Nhập từ khóa -->
+            <div class="search-tab-panel active" id="tab-text-search">
+              <div class="search-panel-row">
+                <label for="modalSearchInput" class="form-label"
+                  >Tìm sản phẩm theo tên</label
+                >
+                <input
+                  id="modalSearchInput"
+                  type="text"
+                  class="form-control"
+                  placeholder="Nhập tên sản phẩm..."
+                />
+                <button
+                  type="button"
+                  id="btnModalTextSearch"
+                  class="btn btn-primary"
+                >
+                  Tìm kiếm
+                </button>
+                <div id="textSearchResult" class="search-result-note">
+                  Nhập tên sản phẩm và nhấn tìm kiếm.
+                </div>
+              </div>
+            </div>
+
+            <!-- Tab: Upload ảnh -->
+            <div class="search-tab-panel" id="tab-upload-image">
+              <div class="search-panel-row">
+                <label for="imageUploadInput" class="form-label"
+                  >Upload ảnh sản phẩm</label
+                >
+                <input
+                  id="imageUploadInput"
+                  type="file"
+                  accept="image/*"
+                  class="form-control"
+                />
+                <div class="image-preview-wrapper">
+                  <div class="image-preview-empty">Chưa có ảnh được chọn.</div>
+                  <img id="imagePreview" alt="Preview ảnh" />
+                </div>
+                <button
+                  type="button"
+                  id="btnUploadSearch"
+                  class="btn btn-primary"
+                >
+                  Tìm sản phẩm bằng ảnh
+                </button>
+                <div id="imageSearchResult" class="search-result-note">
+                  Upload ảnh để tìm kiếm sản phẩm tương tự.
+                </div>
+              </div>
+            </div>
+
+            <!-- Tab: Camera -->
+            <div class="search-tab-panel" id="tab-camera-search">
+              <div class="search-panel-row">
+                <label class="form-label">Mở camera để nhận diện ảnh</label>
+                <div class="camera-actions">
+                  <button
+                    type="button"
+                    id="startCameraBtn"
+                    class="btn btn-secondary"
+                  >
+                    Bật camera
+                  </button>
+                  <button
+                    type="button"
+                    id="captureCameraBtn"
+                    class="btn btn-primary"
+                    disabled
+                  >
+                    Chụp ảnh
+                  </button>
+                </div>
+                <div class="camera-preview-wrapper">
+                  <video id="cameraPreview" autoplay muted playsinline></video>
+                  <canvas id="cameraSnapshot" class="camera-snapshot"></canvas>
+                </div>
+                <div id="cameraStatus" class="search-result-note">
+                  Nhấn 'Bật camera' để mở camera.
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- =====================================================================
+       HERO BANNER
+       ===================================================================== -->
+    <main class="p-0">
+      <section class="hero-banner-section">
+        <!-- Dải chữ chạy -->
+        <div class="banner-ticker-top">
+          <div class="ticker-track">
+            <span
+              >GOING ON NOW • GOING ON NOW • GOING ON NOW • GOING ON NOW • GOING
+              ON NOW • GOING ON NOW • &nbsp;</span
+            >
+            <span
+              >GOING ON NOW • GOING ON NOW • GOING ON NOW • GOING ON NOW • GOING
+              ON NOW • GOING ON NOW • &nbsp;</span
+            >
+          </div>
+        </div>
+
+        <!-- Carousel -->
+        <div
+          id="ashleyHeroCarousel"
+          class="carousel slide position-relative"
+          data-bs-ride="carousel"
+          data-bs-interval="3000"
+        >
+          <div class="carousel-indicators carousel-indicators-custom">
+            <button
+              type="button"
+              data-bs-target="#ashleyHeroCarousel"
+              data-bs-slide-to="0"
+              class="active"
+              aria-current="true"
+            ></button>
+            <button
+              type="button"
+              data-bs-target="#ashleyHeroCarousel"
+              data-bs-slide-to="1"
+            ></button>
+            <button
+              type="button"
+              data-bs-target="#ashleyHeroCarousel"
+              data-bs-slide-to="2"
+            ></button>
+          </div>
+
+          <div class="carousel-inner">
+            <div class="carousel-item hero-carousel-item active">
+              <img
+                src="http://localhost:5000/Pic/Pic_TrangChu/Pic_Carousel/Carousel5.jpg"
+                class="d-block w-100 hero-bg-img"
+                alt="Nội Thất 1"
+              />
+            </div>
+            <div class="carousel-item hero-carousel-item">
+              <img
+                src="http://localhost:5000/Pic/Pic_TrangChu/Pic_Carousel/Carousel6.jpg"
+                class="d-block w-100 hero-bg-img"
+                alt="Nội Thất 2"
+              />
+            </div>
+            <div class="carousel-item hero-carousel-item">
+              <img
+                src="http://localhost:5000/Pic/Pic_TrangChu/Pic_Carousel/Carousel7.jpg"
+                class="d-block w-100 hero-bg-img"
+                alt="Nội Thất 3"
+              />
+            </div>
+          </div>
+
+          <!-- Caption -->
+          <div class="hero-caption-overlay">
+            <p class="hero-event-subtitle">MEMORIAL DAY SALE</p>
+            <h1 class="hero-main-title">
+              Up to 60% off**<br /><span class="thin-text">select items</span>
+            </h1>
+            <div>
+              <a
+                href="../TrangDanhMucSanPham/TrangSanPham.html"
+                class="btn-shop-now"
+                >SHOP THE SALE</a
+              >
+            </div>
+          </div>
+
+          <button
+            class="carousel-control-prev carousel-ctrl-custom"
+            type="button"
+            data-bs-target="#ashleyHeroCarousel"
+            data-bs-slide="prev"
+          >
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          </button>
+          <button
+            class="carousel-control-next carousel-ctrl-custom"
+            type="button"
+            data-bs-target="#ashleyHeroCarousel"
+            data-bs-slide="next"
+          >
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          </button>
+        </div>
+
+        <!-- Banner footer info -->
+        <div class="banner-footer-info">
+          <div class="banner-footer-inner">
+            <span class="banner-brand-sublogo"
+              >NoiThatXin <span class="accent-text">advantage</span></span
+            >
+            <p class="banner-footer-text">
+              <strong>Trả góp ưu đãi đặc biệt trong 24 tháng‡*</strong><br />
+              Áp dụng cho các đơn hàng đủ điều kiện khi thanh toán bằng thẻ tín
+              dụng. Yêu cầu giá trị đơn hàng tối thiểu.
+            </p>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- =====================================================================
+       MAIN CONTENT
+       ===================================================================== -->
+    <div class="container">
+      <!-- Logo thương hiệu -->
+      <div class="row brands-logo-section">
+        <h5>THƯƠNG HIỆU</h5>
+        <div class="brand-logo-grid">
+          <a href="#"
+            ><img src="http://localhost:5000/Pic/Pic_LogoThuongHieu/LogoHector.jpg" alt="Hector"
+          /></a>
+          <a href="#"
+            ><img src="http://localhost:5000/Pic/Pic_LogoThuongHieu/LogoDtFly.jpg" alt="DtFly"
+          /></a>
+          <a href="#"
+            ><img src="http://localhost:5000/Pic/Pic_LogoThuongHieu/LogoFascino.jpg" alt="Fascino"
+          /></a>
+          <a href="#"
+            ><img src="http://localhost:5000/Pic/Pic_LogoThuongHieu/LogoGiant.jpg" alt="Giant"
+          /></a>
+          <a href="#"
+            ><img src="http://localhost:5000/Pic/Pic_LogoThuongHieu/LogoJsXiong.jpg" alt="JsXiong"
+          /></a>
+          <a href="#"
+            ><img src="http://localhost:5000/Pic/Pic_LogoThuongHieu/LogoMax.jpg" alt="Max"
+          /></a>
+          <a href="#"
+            ><img src="http://localhost:5000/Pic/Pic_LogoThuongHieu/LogoNesto.jpg" alt="Nesto"
+          /></a>
+          <a href="#"
+            ><img src="http://localhost:5000/Pic/Pic_LogoThuongHieu/LogoQitong.jpg" alt="Qitong"
+          /></a>
+          <a href="#"
+            ><img src="http://localhost:5000/Pic/Pic_LogoThuongHieu/LogoRaccoon.jpg" alt="Raccoon"
+          /></a>
+          <a href="#"
+            ><img src="http://localhost:5000/Pic/Pic_LogoThuongHieu/LogoShukyo.jpg" alt="Shukyo"
+          /></a>
+          <a href="#"
+            ><img
+              src="http://localhost:5000/Pic/Pic_LogoThuongHieu/LogoThongNhat.jpg"
+              alt="Thống Nhất"
+          /></a>
+        </div>
+      </div>
+
+      <!-- Bộ lọc -->
+      <div class="filter-container">
+        <div class="filter-header">
+          <label>Chọn theo tiêu chí:</label>
+          <div class="filter-buttons">
+            <button class="filter-btn" data-filter="price">
+              Lọc Theo Giá ▾
+            </button>
+            <button class="filter-btn" data-filter="category">
+              Danh Mục ▾
+            </button>
+            <button class="filter-btn" data-filter="height">
+              Đồ nội thất ▾
+            </button>
+            
+          </div>
+        </div>
+
+        <div class="filter-dropdown" id="price" aria-hidden="true">
+          <div class="filter-options">
+            <button>Dưới 3 Triệu</button>
+            <button>Từ 3 - 6 Triệu</button>
+            <button>Từ 6 - 10 Triệu</button>
+            <button>Từ 10 - 15 Triệu</button>
+            <button>Trên 15 Triệu</button>
+          </div>
+        </div>
+
+        <div class="filter-dropdown" id="category" aria-hidden="true">
+          <div class="filter-options">
+            <button>Phòng khách</button>
+            <button>Phòng bếp</button>
+            <button>Phòng ngủ</button>
+            <button>Phòng tắm</button>
+            <button>Ngoài trời</button>
+            
+          </div>
+        </div>
+
+        <div class="filter-dropdown" id="height" aria-hidden="true">
+          <div class="filter-options">
+            <button>Bàn</button>
+            <button>Ghế </button>
+            <button>Sofa</button>
+            <button>Giường</button>
+            <button>Tủ</button>
+            <button>Thảm</button>
+            <button>Nệm</button>     
+          </div>
+        </div> 
+      </div>
+
+      <!-- Danh sách sản phẩm -->
+      <div class="row">
+        <div class="product-list">
+          <!-- Lặp lại card sản phẩm (11 card) -->
+          <a href="../TrangChiTiet/TrangChiTiet.html" class="product-card-link">
+            <div class="product-card">
+              <div class="product-card-img-wrapper">
+                <img
+                  src="http://localhost:5000/Pic/Pic_SanPham/XeDapTreEm/TreEm_JsXiong2301_BigImg.jpg"
+                  class="img-fluid"
+                  alt="Xe Đạp Trẻ Em"
+                />
+              </div>
+              <div class="product-discount-badge">
+                <span class="badge-icon">⚡</span> Giảm 26%
+              </div>
+              <div class="product-card-body">
+                <p class="product-card-title">
+                  Xe Đạp Trẻ Em JsXiong 2310 Hiphop 12inch
+                </p>
+                <div class="product-card-prices">
+                  <span class="product-price-current">1.450.000 đ</span>
+                  <span class="product-price-original">1.550.000 ₫</span>
+                </div>
+              </div>
+            </div>
+          </a>
+
+          <a href="#" class="product-card-link">
+            <div class="product-card">
+              <div class="product-card-img-wrapper">
+                <img
+                  src="http://localhost:5000/Pic/Pic_SanPham/XeDapTreEm/TreEm_JsXiong2301_BigImg.jpg"
+                  class="img-fluid"
+                  alt="Xe Đạp Trẻ Em"
+                />
+              </div>
+              <div class="product-discount-badge">
+                <span class="badge-icon">⚡</span> Giảm 26%
+              </div>
+              <div class="product-card-body">
+                <p class="product-card-title">
+                  Xe Đạp Trẻ Em JsXiong 2310 Hiphop 12inch
+                </p>
+                <div class="product-card-prices">
+                  <span class="product-price-current">1.450.000 đ</span>
+                  <span class="product-price-original">1.550.000 ₫</span>
+                </div>
+              </div>
+            </div>
+          </a>
+
+          <a href="#" class="product-card-link">
+            <div class="product-card">
+              <div class="product-card-img-wrapper">
+                <img
+                  src="http://localhost:5000/Pic/Pic_SanPham/XeDapTreEm/TreEm_JsXiong2301_BigImg.jpg"
+                  class="img-fluid"
+                  alt="Xe Đạp Trẻ Em"
+                />
+              </div>
+              <div class="product-discount-badge">
+                <span class="badge-icon">⚡</span> Giảm 26%
+              </div>
+              <div class="product-card-body">
+                <p class="product-card-title">
+                  Xe Đạp Trẻ Em JsXiong 2310 Hiphop 12inch
+                </p>
+                <div class="product-card-prices">
+                  <span class="product-price-current">1.450.000 đ</span>
+                  <span class="product-price-original">1.550.000 ₫</span>
+                </div>
+              </div>
+            </div>
+          </a>
+
+          <a href="#" class="product-card-link">
+            <div class="product-card">
+              <div class="product-card-img-wrapper">
+                <img
+                  src="http://localhost:5000/Pic/Pic_SanPham/XeDapTreEm/TreEm_JsXiong2301_BigImg.jpg"
+                  class="img-fluid"
+                  alt="Xe Đạp Trẻ Em"
+                />
+              </div>
+              <div class="product-discount-badge">
+                <span class="badge-icon">⚡</span> Giảm 26%
+              </div>
+              <div class="product-card-body">
+                <p class="product-card-title">
+                  Xe Đạp Trẻ Em JsXiong 2310 Hiphop 12inch
+                </p>
+                <div class="product-card-prices">
+                  <span class="product-price-current">1.450.000 đ</span>
+                  <span class="product-price-original">1.550.000 ₫</span>
+                </div>
+              </div>
+            </div>
+          </a>
+
+          <a href="#" class="product-card-link">
+            <div class="product-card">
+              <div class="product-card-img-wrapper">
+                <img
+                  src="http://localhost:5000/Pic/Pic_SanPham/XeDapTreEm/TreEm_JsXiong2301_BigImg.jpg"
+                  class="img-fluid"
+                  alt="Xe Đạp Trẻ Em"
+                />
+              </div>
+              <div class="product-discount-badge">
+                <span class="badge-icon">⚡</span> Giảm 26%
+              </div>
+              <div class="product-card-body">
+                <p class="product-card-title">
+                  Xe Đạp Trẻ Em JsXiong 2310 Hiphop 12inch
+                </p>
+                <div class="product-card-prices">
+                  <span class="product-price-current">1.450.000 đ</span>
+                  <span class="product-price-original">1.550.000 ₫</span>
+                </div>
+              </div>
+            </div>
+          </a>
+
+          <a href="#" class="product-card-link">
+            <div class="product-card">
+              <div class="product-card-img-wrapper">
+                <img
+                  src="http://localhost:5000/Pic/Pic_SanPham/XeDapTreEm/TreEm_JsXiong2301_BigImg.jpg"
+                  class="img-fluid"
+                  alt="Xe Đạp Trẻ Em"
+                />
+              </div>
+              <div class="product-discount-badge">
+                <span class="badge-icon">⚡</span> Giảm 26%
+              </div>
+              <div class="product-card-body">
+                <p class="product-card-title">
+                  Xe Đạp Trẻ Em JsXiong 2310 Hiphop 12inch
+                </p>
+                <div class="product-card-prices">
+                  <span class="product-price-current">1.450.000 đ</span>
+                  <span class="product-price-original">1.550.000 ₫</span>
+                </div>
+              </div>
+            </div>
+          </a>
+
+          <a href="#" class="product-card-link">
+            <div class="product-card">
+              <div class="product-card-img-wrapper">
+                <img
+                  src="http://localhost:5000/Pic/Pic_SanPham/XeDapTreEm/TreEm_JsXiong2301_BigImg.jpg"
+                  class="img-fluid"
+                  alt="Xe Đạp Trẻ Em"
+                />
+              </div>
+              <div class="product-discount-badge">
+                <span class="badge-icon">⚡</span> Giảm 26%
+              </div>
+              <div class="product-card-body">
+                <p class="product-card-title">
+                  Xe Đạp Trẻ Em JsXiong 2310 Hiphop 12inch
+                </p>
+                <div class="product-card-prices">
+                  <span class="product-price-current">1.450.000 đ</span>
+                  <span class="product-price-original">1.550.000 ₫</span>
+                </div>
+              </div>
+            </div>
+          </a>
+
+          <a href="#" class="product-card-link">
+            <div class="product-card">
+              <div class="product-card-img-wrapper">
+                <img
+                  src="http://localhost:5000/Pic/Pic_SanPham/XeDapTreEm/TreEm_JsXiong2301_BigImg.jpg"
+                  class="img-fluid"
+                  alt="Xe Đạp Trẻ Em"
+                />
+              </div>
+              <div class="product-discount-badge">
+                <span class="badge-icon">⚡</span> Giảm 26%
+              </div>
+              <div class="product-card-body">
+                <p class="product-card-title">
+                  Xe Đạp Trẻ Em JsXiong 2310 Hiphop 12inch
+                </p>
+                <div class="product-card-prices">
+                  <span class="product-price-current">1.450.000 đ</span>
+                  <span class="product-price-original">1.550.000 ₫</span>
+                </div>
+              </div>
+            </div>
+          </a>
+
+          <a href="#" class="product-card-link">
+            <div class="product-card">
+              <div class="product-card-img-wrapper">
+                <img
+                  src="http://localhost:5000/Pic/Pic_SanPham/XeDapTreEm/TreEm_JsXiong2301_BigImg.jpg"
+                  class="img-fluid"
+                  alt="Xe Đạp Trẻ Em"
+                />
+              </div>
+              <div class="product-discount-badge">
+                <span class="badge-icon">⚡</span> Giảm 26%
+              </div>
+              <div class="product-card-body">
+                <p class="product-card-title">
+                  Xe Đạp Trẻ Em JsXiong 2310 Hiphop 12inch
+                </p>
+                <div class="product-card-prices">
+                  <span class="product-price-current">1.450.000 đ</span>
+                  <span class="product-price-original">1.550.000 ₫</span>
+                </div>
+              </div>
+            </div>
+          </a>
+
+          <a href="#" class="product-card-link">
+            <div class="product-card">
+              <div class="product-card-img-wrapper">
+                <img
+                  src="http://localhost:5000/Pic/Pic_SanPham/XeDapTreEm/TreEm_JsXiong2301_BigImg.jpg"
+                  class="img-fluid"
+                  alt="Xe Đạp Trẻ Em"
+                />
+              </div>
+              <div class="product-discount-badge">
+                <span class="badge-icon">⚡</span> Giảm 26%
+              </div>
+              <div class="product-card-body">
+                <p class="product-card-title">
+                  Xe Đạp Trẻ Em JsXiong 2310 Hiphop 12inch
+                </p>
+                <div class="product-card-prices">
+                  <span class="product-price-current">1.450.000 đ</span>
+                  <span class="product-price-original">1.550.000 ₫</span>
+                </div>
+              </div>
+            </div>
+          </a>
+
+          <a href="#" class="product-card-link">
+            <div class="product-card">
+              <div class="product-card-img-wrapper">
+                <img
+                  src="http://localhost:5000/Pic/Pic_SanPham/XeDapTreEm/TreEm_JsXiong2301_BigImg.jpg"
+                  class="img-fluid"
+                  alt="Xe Đạp Trẻ Em"
+                />
+              </div>
+              <div class="product-discount-badge">
+                <span class="badge-icon">⚡</span> Giảm 26%
+              </div>
+              <div class="product-card-body">
+                <p class="product-card-title">
+                  Xe Đạp Trẻ Em JsXiong 2310 Hiphop 12inch
+                </p>
+                <div class="product-card-prices">
+                  <span class="product-price-current">1.450.000 đ</span>
+                  <span class="product-price-original">1.550.000 ₫</span>
+                </div>
+              </div>
+            </div>
+          </a>
+        </div>
+
+        <!-- Pagination -->
+        <div class="pagination-container">
+          <button class="page-btn" id="prevPage">← Trang trước</button>
+
+          <div class="page-numbers">
+            <button class="page-number active">1</button>
+            <button class="page-number">2</button>
+            <button class="page-number">3</button>
+          </div>
+
+          <button class="page-btn" id="nextPage">Trang sau →</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- =====================================================================
+       FOOTER
+       ===================================================================== -->
+    <footer>
+      <div class="row mt-5 pb-5">
+        <div class="col-4 text-center">
+          <div class="row">
+            <h4 class="fw-bold">Thông tin liên hệ</h4>
+            <p>
+              <span class="fw-bold">Hotline: </span> 0909 123456<br />
+              <span class="fw-bold">Email: </span>noithatxinh@gmail.com
+            </p>
+            <h5 class="fw-bold">Phương thức thanh toán</h5>
+            <div class="row mb-3">
+              <div>
+                <a href="#"
+                  ><img
+                    src="http://localhost:5000/Pic/Pic_PThucThanhToan/LogoMomo.jpg"
+                    class="footer-partner-img"
+                    alt="Momo"
+                /></a>
+                <a href="#"
+                  ><img
+                    src="http://localhost:5000/Pic/Pic_PThucThanhToan/LogoVisa.jpg"
+                    class="footer-partner-img"
+                    alt="Visa"
+                /></a>
+                <a href="#"
+                  ><img
+                    src="http://localhost:5000/Pic/Pic_PThucThanhToan/LogoZaloPay.jpg"
+                    class="footer-partner-img"
+                    alt="ZaloPay"
+                /></a>
+                <a href="#"
+                  ><img
+                    src="http://localhost:5000/Pic/Pic_PThucThanhToan/LogoVNPay.jpg"
+                    class="footer-partner-img"
+                    alt="VNPay"
+                /></a>
+              </div>
+            </div>
+            <h5 class="fw-bold">Kết Nối Với Chúng Tôi</h5>
+            <div class="row">
+              <div>
+                <a href="#"
+                  ><img
+                    src="http://localhost:5000/Pic/Pic_LogoLKetNoi/LogoFacebook.jpg"
+                    class="footer-partner-img"
+                    alt="Facebook"
+                /></a>
+                <a href="#"
+                  ><img
+                    src="http://localhost:5000/Pic/Pic_LogoLKetNoi/LogoTwitter.jpg"
+                    class="footer-partner-img"
+                    alt="Twitter"
+                /></a>
+                <a href="#"
+                  ><img
+                    src="http://localhost:5000/Pic/Pic_LogoLKetNoi/LogoTiktok.jpg"
+                    class="footer-partner-img"
+                    alt="Tiktok"
+                /></a>
+                <a href="#"
+                  ><img
+                    src="http://localhost:5000/Pic/Pic_LogoLKetNoi/LogoYoutube.jpg"
+                    class="footer-partner-img"
+                    alt="Youtube"
+                /></a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-4 text-center">
+          <div class="row">
+            <h4 class="fw-bold">Thông tin và chính sách</h4>
+            <div class="mt-2 footer-links">
+              <p><a href="#">Hướng Dẫn Mua Hàng</a></p>
+              <p><a href="#">Chính Sách Giao Hàng</a></p>
+              <p><a href="#">Chính Sách Bảo Hành</a></p>
+              <p><a href="#">Chính Sách Bảo Mật</a></p>
+              <p><a href="#">Chính Sách Đổi Trả Hàng</a></p>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-4 text-center">
+          <div class="row">
+            <h4 class="fw-bold">Đối tác</h4>
+            <div class="mt-2 footer-links">
+              <p>
+                <a href="#"
+                  >CH1: 140 Lê Trọng Tấn, Phường Tây Thạnh, Quận Tân Phú,
+                  TP.HCM.</a
+                >
+              </p>
+              <p>
+                <a href="#"
+                  >CH2: 93 Tân Kỳ Tân Quý, Phường Tân Sơn Nhì, TP.HCM.</a
+                >
+              </p>
+              <p>
+                <a href="#">CH3: 31 Chế Lan Viên, Phường Tây Thạnh, TP.HCM.</a>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="backTop">
+        <i class="bi bi-caret-up-fill"></i>
+      </div>
+    </footer>
+
+    <!-- =====================================================================
+       JAVASCRIPT
+       ===================================================================== -->
+    <script>
+      /* ---- Bộ lọc dropdown ---- */
+      (function () {
+        const buttons = document.querySelectorAll(".filter-btn");
+        const dropdowns = document.querySelectorAll(".filter-dropdown");
+        let openId = null;
+
+        function closeAll() {
+          dropdowns.forEach((d) => {
+            d.classList.remove("active");
+            d.setAttribute("aria-hidden", "true");
+          });
+          buttons.forEach((b) => b.classList.remove("active"));
+          openId = null;
+        }
+
+        buttons.forEach((btn) => {
+          btn.addEventListener("click", (e) => {
+            const id = btn.getAttribute("data-filter");
+            const target = document.getElementById(id);
+
+            if (openId === id) {
+              closeAll();
+              return;
+            }
+
+            closeAll();
+
+            const rect = btn.getBoundingClientRect();
+            const containerRect = document
+              .querySelector(".filter-container")
+              .getBoundingClientRect();
+            let left = rect.left - containerRect.left;
+            const dropWidth = 560;
+            if (left + dropWidth > containerRect.width) {
+              left = Math.max(0, containerRect.width - dropWidth - 10);
+            }
+
+            target.style.left = left + "px";
+            target.classList.add("active");
+            target.setAttribute("aria-hidden", "false");
+            btn.classList.add("active");
+            openId = id;
+            e.stopPropagation();
+          });
+        });
+
+        document.addEventListener("click", (e) => {
+          if (
+            e.target.closest(".filter-dropdown") ||
+            e.target.closest(".filter-btn")
+          )
+            return;
+          closeAll();
+        });
+        document.addEventListener("keydown", (e) => {
+          if (e.key === "Escape") closeAll();
+        });
+        window.addEventListener("resize", closeAll);
+      })();
+
+      /* ---- Modal tabs ---- */
+      (function () {
+        const tabBtns = document.querySelectorAll(".modal-tab-btn");
+        const panels = document.querySelectorAll(".search-tab-panel");
+
+        tabBtns.forEach((btn) => {
+          btn.addEventListener("click", () => {
+            tabBtns.forEach((b) => b.classList.remove("active"));
+            panels.forEach((p) => p.classList.remove("active"));
+            btn.classList.add("active");
+            document
+              .getElementById(btn.getAttribute("data-tab"))
+              .classList.add("active");
+          });
+        });
+      })();
+
+      /* ---- Nút back-to-top ---- */
+      $(document).ready(function () {
+        $(window).scroll(function () {
+          if ($(this).scrollTop() > 100) {
+            $("#backTop").fadeIn();
+          } else {
+            $("#backTop").fadeOut();
+          }
+        });
+        $("#backTop").click(function () {
+          $("html, body").animate({ scrollTop: 0 }, 300);
+        });
+      });
+    </script>
+    <script>
+  const pageNumbers = document.querySelectorAll('.page-number');
+
+  pageNumbers.forEach(btn => {
+    btn.addEventListener('click', () => {
+
+      // bỏ active cũ
+      pageNumbers.forEach(b => b.classList.remove('active'));
+
+      // active mới
+      btn.classList.add('active');
+
+      console.log("Đang ở trang:", btn.innerText);
+
+      // sau này cậu render sản phẩm theo trang ở đây
+    });
+  });
+
+  document.getElementById('prevPage').addEventListener('click', () => {
+    console.log('Trang trước');
+  });
+
+  document.getElementById('nextPage').addEventListener('click', () => {
+    console.log('Trang sau');
+  });
+
+  function updateCartBadge() {
+    const cart = JSON.parse(localStorage.getItem('cart') || '[]');
+    const badge = document.getElementById('cartBadge');
+    if (badge) badge.textContent = cart.reduce((s, i) => s + (i.SoLuong || 1), 0);
+  }
+
+  function updateAuthState() {
+    const token = localStorage.getItem('access_token');
+    const userStr = localStorage.getItem('user');
+    const authSection = document.getElementById('authSection');
+    if (!authSection) return;
+    if (token && userStr) {
+      try {
+        const user = JSON.parse(userStr);
+        authSection.innerHTML = `<div class="d-flex align-items-center gap-2"><span class="text-white small">Xin chào, ${user.HoTen || user.TenDangNhap}</span><button class="btn btn-outline-light btn-sm" onclick="logout()">Đăng xuất</button></div>`;
+      } catch (e) {
+        authSection.innerHTML = `<a href="../Login/DangNhap.html"><button class="btn-login">Đăng nhập</button></a>`;
+      }
+    }
+  }
+
+  function logout() {
+    localStorage.removeItem('access_token');
+    localStorage.removeItem('refresh_token');
+    localStorage.removeItem('user');
+    updateAuthState();
+    updateCartBadge();
+  }
+  window.logout = logout;
+
+  updateAuthState();
+  updateCartBadge();
+</script>
+  </body>
+</html>

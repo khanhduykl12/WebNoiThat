@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="600" viewBox="0 0 800 600">
+<rect width="800" height="600" fill="#F5F0EB"/>
+<rect x="220" y="80" width="360" height="440" rx="15" fill="#C0C0C0"/>
+<rect x="230" y="90" width="340" height="120" rx="10" fill="#D8D8D8"/>
+<rect x="230" y="220" width="340" height="120" rx="10" fill="#D8D8D8"/>
+<rect x="230" y="350" width="340" height="120" rx="10" fill="#D8D8D8"/>
+<rect x="240" y="100" width="320" height="20" rx="5" fill="#A0A0A0"/>
+<rect x="240" y="230" width="320" height="20" rx="5" fill="#A0A0A0"/>
+<rect x="240" y="360" width="320" height="20" rx="5" fill="#A0A0A0"/>
+<text x="400" y="570" font-family="Segoe UI,Arial" font-size="28" fill="#5C3D2E" text-anchor="middle" font-weight="bold">KỆ PHÒNG TẮM</text>
+<text x="400" y="605" font-family="Segoe UI,Arial" font-size="18" fill="#8B6347" text-anchor="middle">Inox 304 Chống Gỉ</text>
+</svg>

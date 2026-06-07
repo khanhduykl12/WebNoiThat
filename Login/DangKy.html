@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đăng Ký</title>
+    <link rel="stylesheet" href="../CSS/all.min.css">
+    <link rel="stylesheet" href="../CSS/bootstrap.min.css">
+    <link rel="stylesheet" href="../Login/CssLogin_Register.css">
+</head>
+<body>
+    <div class="d-flex justify-content-center align-items-center min-vh-100 " >
+        <div class="wrapper">
+            <form id="register-form">
+                <h3>Đăng Ký</h3>
+                
+                <div class="input-box">
+                    <label>Tên đăng nhập</label>
+                    <div class="input-wrapper">
+                        <input type="text" id="UserName" required>                 
+                    </div>
+                </div>
+
+                <div class="input-box">
+                    <label>Email</label>
+                    <div class="input-wrapper">
+                        <input type="email" id="Email" placeholder="VD: email@example.com" required>
+                    </div>
+                </div>
+                
+                <div class="input-box">
+                    <label>Họ tên</label>
+                    <div class="input-wrapper">
+                        <input type="text" id="FullName" required>
+                        
+                    </div>
+                </div>
+                
+                <div class="input-box">
+                    <label>Mật khẩu</label>
+                    <div class="input-wrapper">
+                        <input type="password" id="Password" required>
+                      
+                    </div>
+                </div>
+                
+                <div class="input-box">
+                    <label>Xác nhận mật khẩu</label>
+                    <div class="input-wrapper">
+                        <input type="password" id="RePassword" required>
+                       
+                    </div>
+                </div>
+                
+                <div class="input-box">
+                    <label>Giới tính</label>
+                    <div class="input-wrapper">
+                        <select id="GioiTinh" name="GioiTinh" required>
+                            <option value="">-- Chọn giới tính --</option>
+                            <option value="Nam">Nam</option>
+                            <option value="Nữ">Nữ</option>
+                        </select>
+                        <span><i class="bi bi-gender-ambiguous"></i></span>
+                    </div>
+                </div>
+                
+                <div class="input-box">
+                    <label>Số điện thoại</label>
+                    <div class="input-wrapper">
+                        <input type="tel" name="Phone" placeholder="VD: 090xxxxxxx" required>
+                      
+                    </div>
+                </div>
+                
+                <div class="input-box">
+                    <label>Địa chỉ</label>
+                    <div class="input-wrapper">
+                        <input type="text" name="Address" placeholder="Địa chỉ liên hệ" required>
+                        
+                    </div>
+                </div>
+                
+                <button class="btn-create" type="submit">ĐĂNG KÝ</button>
+                
+                <div class="login-link-wrapper">
+                    <span>Bạn đã có tài khoản? </span>
+                    <a href="DangNhap.html">Đăng nhập</a>
+                </div>
+                
+                <p id="message-error-reg"></p>
+            </form>
+        </div>
+    </div>
+    <script>
+        const API_BASE = 'http://localhost:5000/api';
+
+        async function handleRegister(e) {
+            e.preventDefault();
+            const HoTen = document.getElementById('FullName').value;
+            const Email = document.getElementById('Email').value;
+            const SoDienThoai = document.querySelector('input[name="Phone"]').value;
+            const TenDangNhap = document.getElementById('UserName').value;
+            const MatKhau = document.getElementById('Password').value;
+            const GioiTinh = document.getElementById('GioiTinh').value;
+            const DiaChi = document.querySelector('input[name="Address"]').value;
+
+            try {
+                const response = await fetch(`${API_BASE}/auth/register`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        HoTen,
+                        Email,
+                        SoDienThoai,
+                        TenDangNhap,
+                        MatKhau,
+                        GioiTinh,
+                        DiaChi
+                    })
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    alert('Đăng ký thành công!');
+                    window.location.href = 'DangNhap.html';
+                } else {
+                    alert(data.message || 'Đăng ký thất bại!');
+                }
+            } catch (error) {
+                alert('Không thể kết nối đến server!');
+            }
+        }
+
+        document.getElementById('register-form').addEventListener('submit', handleRegister);
+    </script>
+</body>
+</html>

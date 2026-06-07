@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Sửa sản phẩm</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: "Segoe UI", sans-serif;
+        }
+
+        body {
+            background: #f4f5f7;
+            padding: 30px;
+        }
+
+        .edit-product {
+            max-width: 1100px;
+            margin: auto;
+            background: #fff;
+            border-radius: 12px;
+            padding: 25px;
+            display: grid;
+            grid-template-columns: 320px 1fr;
+            gap: 30px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+        }
+
+        /* ===== CỘT TRÁI ===== */
+        .product-image {
+            text-align: center;
+        }
+
+        .product-image img {
+            width: 100%;
+            border-radius: 10px;
+            border: 1px solid #ddd;
+            object-fit: cover;
+        }
+
+        .product-image input {
+            margin-top: 15px;
+        }
+
+        /* ===== CỘT PHẢI ===== */
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 6px;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 10px;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            font-size: 14px;
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 70px;
+        }
+
+        .row {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+        }
+
+        .row-2 {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+        }
+
+        /* ===== BUTTON ===== */
+        .actions {
+            margin-top: 25px;
+            display: flex;
+            gap: 15px;
+        }
+
+        .btn {
+            padding: 12px 22px;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        .btn-save {
+            background: #4f46e5;
+            color: #fff;
+        }
+
+        .btn-cancel {
+            background: #e5e7eb;
+        }
+    </style>
+</head>
+<body>
+
+<div class="edit-product">
+
+    <!-- CỘT TRÁI: HÌNH -->
+    <div class="product-image">
+        <img src="../Pic/Pic_SanPham/XeDapTreEm/TreEm_HectorPolo14inch.jpg" alt="Sản phẩm">
+        <input type="file">
+    </div>
+
+    <!-- CỘT PHẢI: FORM -->
+    <div>
+        <div class="form-group">
+            <label>Tên sản phẩm</label>
+            <input type="text" value="Xe Đạp Trẻ Em Hector Luna 12 Inch">
+        </div>
+
+        <div class="row">
+            <div class="form-group">
+                <label>Giá bán</label>
+                <input type="number" value="1450000">
+            </div>
+
+            <div class="form-group">
+                <label>Giá khuyến mãi</label>
+                <input type="number" value="1650000">
+            </div>
+
+            <div class="form-group">
+                <label>Giảm giá (%)</label>
+                <input type="number" value="12">
+            </div>
+        </div>
+
+        <div class="row-2">
+            <div class="form-group">
+                <label>Số lượng tồn</label>
+                <input type="number" value="30">
+            </div>
+
+            <div class="form-group">
+                <label>Trạng thái</label>
+                <select>
+                    <option selected>Còn hàng</option>
+                    <option>Hết hàng</option>
+                    <option>Ngừng bán</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>Mô tả 1</label>
+            <textarea>Thiết kế màu sắc tươi sáng, phù hợp với bé gái</textarea>
+        </div>
+
+        <div class="form-group">
+            <label>Mô tả 2</label>
+            <textarea>Khung sườn thiết kế chắc chắn, thẩm mỹ</textarea>
+        </div>
+
+        <div class="form-group">
+            <label>Mô tả 3</label>
+            <textarea>Nhập khẩu chính hãng & Freeship</textarea>
+        </div>
+
+        <div class="form-group">
+            <label>Mô tả 4</label>
+            <textarea>Bảo hành 12 tháng</textarea>
+        </div>
+
+        <div class="actions">
+            <button class="btn btn-save">💾 Lưu thay đổi</button>
+            <button class="btn btn-cancel">❌ Hủy</button>
+        </div>
+    </div>
+
+</div>
+
+</body>
+</html>

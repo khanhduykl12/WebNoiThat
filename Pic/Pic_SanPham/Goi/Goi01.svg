@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="600" viewBox="0 0 800 600">
+<rect width="800" height="600" fill="#F5F0EB"/>
+<circle cx="400" cy="280" r="180" fill="#C4956A"/>
+<circle cx="400" cy="270" r="160" fill="#D4A574"/>
+<circle cx="400" cy="260" r="140" fill="#E8D8C4"/>
+<ellipse cx="400" cy="520" rx="200" ry="60" fill="#C4956A" opacity="0.3"/>
+<text x="400" y="560" font-family="Segoe UI,Arial" font-size="28" fill="#5C3D2E" text-anchor="middle" font-weight="bold">GỐI TRANG TRÍ</text>
+<text x="400" y="595" font-family="Segoe UI,Arial" font-size="18" fill="#8B6347" text-anchor="middle">Phong Cách Hiện Đại</text>
+</svg>

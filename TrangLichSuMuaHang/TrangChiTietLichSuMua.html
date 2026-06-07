@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thông tin tài khoản</title>
+    <link rel="stylesheet" href="CssTrangChiTietLichSuMua.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+   <link rel="stylesheet" href="../CSS/bootstrap.min.css">
+    <link rel="stylesheet" href="CssTrangLichSuMuaHang.css">
+   
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+
+</head>
+
+<body>
+    <div class="container">
+        <!-- ======== THÔNG TIN NGƯỜI DÙNG ======== -->
+        <div class="profile-card">
+
+            <div class="profile-header">
+                <div class="avatar">T</div>
+
+                <div class="info">
+                    <h2>Trần Minh Phúc</h2>
+                    <span class="role">Admin</span>
+                    <p class="email">Email: tranminhphuc11a4@gmail.com</p>
+                </div>
+            </div>
+
+            <hr>
+
+            <div class="info-grid">
+                <div class="info-item">
+                    <i class="bi bi-person"></i> <strong>Họ tên</strong>
+                    <p>Trần Minh Phúc</p>
+                </div>
+
+                <div class="info-item">
+                    <i class="bi bi-telephone"></i> <strong>Số điện thoại</strong>
+                    <p>0766996126</p>
+                </div>
+
+                <div class="info-item">
+                    <i class="bi bi-envelope"></i> <strong>Email</strong>
+                    <p>tranminhphuc11a4@gmail.com</p>
+                </div>
+
+                <div class="info-item">
+                    <i class="bi bi-geo-alt"></i> <strong>Địa chỉ</strong>
+                    <p>Chưa cập nhật</p>
+                </div>
+            </div>
+
+            <div class="action-row">
+                <button class="btn-back">Quay lại trang chủ</button>
+                <div class="actions-right">
+                 
+                    <button class="btn-logout"><i class="bi bi-box-arrow-right"></i> Đăng xuất</button>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- ======== LỊCH SỬ ĐƠN HÀNG ======== -->
+        <div class="order-history">
+            <h3><i class="bi bi-clock-history"></i> Lịch sử đơn hàng</h3>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Mã đơn</th>
+                        <th>Ngày đặt</th>
+                        <th>Tổng tiền</th>
+                        <th>Trạng thái</th>
+                        <th>Chi tiết</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr>
+                        <td>#10</td>
+                        <td>10-12-2025 15:16</td>
+                        <td class="money">118,680,000đ</td>
+                        <td>
+                            <span class="label status-processing">Đang xử lý</span>
+                        </td>
+                        <td><button class="btn-view">Xem</button></td>
+                    </tr>
+
+                    <tr>
+                        <td>#9</td>
+                        <td>10-12-2025 15:14</td>
+                        <td class="money">31,990,000đ</td>
+                        <td>
+                            <span class="label status-processing">Đang xử lý</span>
+                        </td>
+                        <td><button class="btn-view">Xem</button></td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+</body>
+</html>

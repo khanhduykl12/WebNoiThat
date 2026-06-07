@@ -1,0 +1,167 @@
+/* --- CSS CHO PHẦN LIÊN HỆ MỚI --- */
+.contact-section {
+  background: #fff;
+  border-radius: 15px;
+  padding: 40px;
+  margin: 30px 0;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+}
+
+.contact-header {
+  text-align: center;
+  margin-bottom: 40px;
+  padding-bottom: 20px;
+  border-bottom: 3px solid #1e4d36;
+}
+
+.contact-header h1 {
+  color: #1e4d36;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+/* Khung thông tin chính (Màu xanh) */
+.contact-info-box {
+  background: linear-gradient(135deg, #1e4d36 0%, #143a29 100%);
+  color: white;
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(30, 77, 54, 0.2);
+  padding: 50px;
+  transition: all 0.3s ease;
+}
+
+/* Từng mục liên hệ con */
+.contact-item {
+  display: flex;
+  align-items: center;
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.08); /* Nền trong suốt nhẹ */
+  border-radius: 15px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: all 0.3s ease;
+  height: 100%; /* Để các ô bằng nhau */
+}
+
+.contact-item:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: translateY(-5px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* Vòng tròn chứa Icon */
+.icon-circle {
+  width: 60px;
+  height: 60px;
+  background: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 20px;
+  flex-shrink: 0;
+}
+
+.contact-item i {
+  font-size: 28px;
+  color: #1e4d36;
+  margin: 0;
+}
+
+.contact-item-content h5 {
+  margin-bottom: 5px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-size: 1.1rem;
+}
+
+.contact-item-content p {
+  margin: 0;
+  opacity: 0.95;
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+/* Mạng xã hội */
+.social-links {
+  display: flex;
+  gap: 15px;
+  margin-top: 10px;
+}
+
+.social-links a {
+  width: 50px;
+  height: 50px;
+  background: white;
+  color: #1e4d36;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  transition: all 0.3s;
+  text-decoration: none;
+}
+
+.social-links a:hover {
+  background: #ffc107;
+  color: #fff;
+  transform: scale(1.1) rotate(10deg);
+}
+
+/* --- CSS CHO CÁC PHẦN KHÁC (Cửa hàng, Map, FAQ) --- */
+.store-card {
+  background: white;
+  border-radius: 15px;
+  padding: 25px;
+  margin: 15px 0;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s;
+  height: 100%;
+}
+
+.store-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
+}
+
+.store-card h4 {
+  color: #1e4d36;
+  font-weight: 600;
+  margin-bottom: 15px;
+}
+
+.store-card p {
+  margin-bottom: 10px;
+  color: #666;
+}
+
+.store-card i {
+  color: #1e4d36;
+  margin-right: 10px;
+}
+
+.map-container {
+  border-radius: 15px;
+  overflow: hidden;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  margin: 30px 0;
+}
+
+.map-container iframe {
+  width: 100%;
+  height: 450px;
+  border: none;
+}
+
+/* Accordion FAQ */
+.accordion-button:not(.collapsed) {
+  color: #1e4d36;
+  background-color: #e8f5e9;
+  box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.125);
+}
+
+.accordion-button:focus {
+  border-color: #1e4d36;
+  box-shadow: 0 0 0 0.25rem rgba(30, 77, 54, 0.25);
+}

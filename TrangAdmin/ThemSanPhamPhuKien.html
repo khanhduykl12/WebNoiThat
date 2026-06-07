@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<title>Admin - Thêm Phụ Kiện</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<style>
+    :root{
+        --bg:#f4f5f7;
+        --white:#fff;
+        --border:#e3e6eb;
+        --text:#1f2937;
+        --muted:#6b7280;
+        --accent:#0b74de;
+    }
+
+    *{ box-sizing:border-box; font-family:"Segoe UI",sans-serif; }
+    body{ background:var(--bg); margin:0; padding:28px; }
+
+    .page{ max-width:1200px; margin:0 auto; }
+    h1{ margin:0 0 8px; font-size:22px; }
+    p{ margin:0; color:var(--muted); }
+
+    .grid{
+        margin-top:20px;
+        display:grid;
+        grid-template-columns:1fr 380px;
+        gap:18px;
+    }
+
+    .card{
+        background:var(--white);
+        padding:18px;
+        border-radius:10px;
+        border:1px solid var(--border);
+        box-shadow:0 6px 16px rgba(0,0,0,0.04);
+    }
+
+    label{
+        display:block;
+        margin-bottom:6px;
+        font-weight:600;
+        color:var(--text);
+    }
+
+    input[type="text"], input[type="number"], select, textarea{
+        width:100%;
+        padding:10px 12px;
+        border-radius:8px;
+        border:1px solid #d1d5db;
+        font-size:14px;
+        outline:none;
+    }
+    textarea{ min-height:90px; resize:vertical; }
+
+    .form-row{ display:flex; gap:12px; margin-bottom:12px; }
+    .col{ flex:1; }
+
+    .panel{ background:#fff; padding:14px; border-radius:10px; border:1px solid var(--border); }
+    .panel h3{ margin:0 0 8px; font-size:15px; }
+    .muted{ color:var(--muted); font-size:13px; }
+
+    .checkbox-list{ display:flex; flex-direction:column; gap:6px; margin-top:10px; }
+    .checkbox-inline{ display:flex; align-items:center; gap:8px; }
+
+    .btn{
+        background:var(--accent);
+        color:#fff;
+        border:none;
+        padding:11px 20px;
+        border-radius:8px;
+        cursor:pointer;
+        font-weight:600;
+        font-size:14px;
+        box-shadow:0 4px 12px rgba(11,116,222,0.22);
+    }
+    .btn.secondary{
+        background:#fff;
+        color:var(--accent);
+        border:1px solid var(--border);
+        box-shadow:none;
+    }
+
+    .actions{ display:flex; margin-top:16px; gap:10px; }
+
+    /* toast */
+    .toast{
+        position:fixed;
+        right:20px;
+        bottom:20px;
+        background:#111827;
+        color:#fff;
+        padding:12px 16px;
+        border-radius:8px;
+        display:none;
+        box-shadow:0 6px 20px rgba(0,0,0,0.28);
+        z-index:999;
+    }
+    .toast.show{ display:block; animation:fade .25s ease; }
+
+    @keyframes fade{
+        from{ transform:translateY(10px); opacity:0; }
+        to{ transform:none; opacity:1; }
+    }
+
+    @media(max-width:900px){
+        .grid{ grid-template-columns:1fr; }
+    }
+</style>
+</head>
+
+<body>
+<div class="page">
+    <h1>Thêm sản phẩm phụ kiện</h1>
+    <p>Điền các thông tin cần thiết để thêm phụ kiện mới.</p>
+
+    <div class="grid">
+
+        <!-- FORM CHÍNH -->
+        <div class="card">
+            <h2 style="margin:0 0 14px; font-size:18px">Thông tin sản phẩm</h2>
+
+            <div class="form-row">
+                <div class="col">
+                    <label>Tên sản phẩm</label>
+                    <input id="tenSp" type="text" placeholder="Ví dụ: Bình nước E5">
+                </div>
+                <div style="width:130px">
+                    <label>Số lượng</label>
+                    <input id="slTon" type="number" min="1" value="1">
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="col">
+                    <label>Giá bán</label>
+                    <input id="giaBan" type="number" min="0" placeholder="0">
+                </div>
+                <div class="col">
+                    <label>Giá khuyến mãi</label>
+                    <input id="giaKM" type="number" min="0" placeholder="0">
+                </div>
+                <div style="width:120px">
+                    <label>Giảm (%)</label>
+                    <input id="giamGia" type="number" min="0" max="100" value="0">
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="col">
+                    <label>Thương hiệu</label>
+                    <select id="thuongHieu">
+                        <option value="">-- Chọn thương hiệu --</option>
+                    </select>
+                </div>
+
+                <div style="width:180px">
+                    <label>Trạng thái</label>
+                    <select id="trangThai">
+                        <option value="Còn hàng">Còn hàng</option>
+                        <option value="Hết hàng">Hết hàng</option>
+                    </select>
+                </div>
+            </div>
+
+            <label>Ảnh sản phẩm</label>
+            <input id="anhSp" type="file" accept="image/*">
+
+            <label style="margin-top:12px">Mô tả 1</label>
+            <input id="mota1" type="text">
+
+            <label style="margin-top:12px">Mô tả 2</label>
+            <input id="mota2" type="text">
+
+            <label style="margin-top:12px">Mô tả 3</label>
+            <input id="mota3" type="text">
+
+            <label style="margin-top:12px">Mô tả 4</label>
+            <textarea id="mota4"></textarea>
+
+            <div class="actions">
+                <button class="btn" id="btnSubmit">Thêm sản phẩm</button>
+                <button class="btn secondary" id="btnReset">Xoá form</button>
+            </div>
+        </div>
+
+        <!-- CỘT BÊN PHẢI -->
+        <div class="side">
+
+            <!-- DANH MỤC -->
+            <div class="panel">
+                <h3>Danh mục</h3>
+                <div class="muted">Chỉ có 1 danh mục cho phụ kiện</div>
+
+                <div class="checkbox-list" id="danhmucBox"></div>
+            </div>
+
+            <!-- LOẠI PHỤ KIỆN -->
+            <div class="panel">
+                <h3>Loại phụ kiện</h3>
+                <div class="muted">Chọn 1 hoặc nhiều loại phụ kiện</div>
+
+                <div class="checkbox-list" id="loaipkBox"></div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div id="toast" class="toast">Đã thêm sản phẩm!</div>
+
+<script>
+/* ==========================
+    DATA
+==========================*/
+const THUONGHIEU = [
+    "Hector","JsXiong","Max Bike","Raccoon","Fascino",
+    "Giant","DTFLY","Qitong","Thống Nhất","Shukyo",
+    "Papylus","QT BIKE","Fornix","Nesto","Trinx"
+];
+
+const DANHMUC = [
+    { id:6, name:"Phụ kiện xe đạp" }
+];
+
+const LOAIPHUKIEN = [
+    { id:1, name:"Bình nước - Gọng bình" },
+    { id:2, name:"Yên xe" },
+    { id:3, name:"Chuông" },
+    { id:4, name:"Đèn xe đạp" },
+    { id:5, name:"Khóa xe" },
+    { id:6, name:"Gương chiếu hậu" },
+    { id:7, name:"Chân chống" },
+    { id:8, name:"Bơm xe" },
+    { id:9, name:"Nón bảo hiểm - Đồ bộ" },
+    { id:10, name:"Túi treo xe" }
+];
+
+/* ==========================
+    RENDER UI
+==========================*/
+function initUI(){
+    // Thương hiệu
+    const th = document.getElementById("thuongHieu");
+    THUONGHIEU.forEach((t,i)=>{
+        const op = document.createElement("option");
+        op.value = i+1;
+        op.textContent = t;
+        th.appendChild(op);
+    });
+
+    // Danh mục
+    const dmBox = document.getElementById("danhmucBox");
+    DANHMUC.forEach(dm=>{
+        dmBox.innerHTML = `
+            <label class="checkbox-inline">
+                <input type="checkbox" value="${dm.id}">
+                <span>${dm.name}</span>
+            </label>
+        `;
+    });
+
+    // Loại phụ kiện
+    const lpBox = document.getElementById("loaipkBox");
+    LOAIPHUKIEN.forEach(lp=>{
+        lpBox.innerHTML += `
+            <label class="checkbox-inline">
+                <input type="checkbox" value="${lp.id}">
+                <span>${lp.name}</span>
+            </label>
+        `;
+    });
+}
+initUI();
+
+/* ==========================
+    TOAST
+==========================*/
+function toast(msg){
+    const t = document.getElementById("toast");
+    t.textContent = msg;
+    t.classList.add("show");
+    setTimeout(()=> t.classList.remove("show"), 2200);
+}
+
+/* ==========================
+    COLLECT FORM
+==========================*/
+function collectForm(){
+    const data = {
+        TENSP: tenSp.value.trim(),
+        SLUONGTON: Number(slTon.value),
+        GIABAN: Number(giaBan.value),
+        GIAKHUYENMAI: Number(giaKM.value) || null,
+        GIAMGIA: Number(giamGia.value) || 0,
+        TRANGTHAI: trangThai.value,
+        MATHUONGHIEU: thuongHieu.value || null,
+        ANHSP: anhSp.files[0]?.name || null,
+        MOTA1: mota1.value || null,
+        MOTA2: mota2.value || null,
+        MOTA3: mota3.value || null,
+        MOTA4: mota4.value || null,
+        MADANHMUC: [...document.querySelectorAll("#danhmucBox input:checked")].map(x=>Number(x.value))[0] || null,
+        LOAIPHUKIEN_IDS: [...document.querySelectorAll("#loaipkBox input:checked")].map(x=>Number(x.value))
+    };
+
+    // Validate
+    if(!data.TENSP) return alert("Vui lòng nhập tên sản phẩm.");
+    if(!data.GIABAN) return alert("Giá bán phải > 0.");
+    if(data.LOAIPHUKIEN_IDS.length === 0) return alert("Chọn ít nhất 1 loại phụ kiện.");
+
+    return data;
+}
+
+/* ==========================
+    SUBMIT
+==========================*/
+btnSubmit.onclick = () => {
+    const payload = collectForm();
+    if(!payload) return;
+
+    console.log("Payload:", payload);
+    toast("Đã thêm sản phẩm (demo)!");
+};
+
+/* ==========================
+    RESET FORM
+==========================*/
+btnReset.onclick = () => {
+    if(!confirm("Xác nhận xoá toàn bộ form?")) return;
+
+    document.querySelector("form")?.reset();
+    document.querySelectorAll("input[type=checkbox]").forEach(c => c.checked = false);
+};
+</script>
+
+</body>
+</html>

@@ -1,0 +1,1750 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Trang Chủ</title>
+    <link rel="stylesheet" href="../CSS/all.min.css" />
+    <link rel="stylesheet" href="../CSS/bootstrap.min.css" />
+    <link rel="stylesheet" href="CssTrangChu2.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+    />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="../JS/bootstrap.bundle.min.js"></script>
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="header-top">
+        <p><i class="bi bi-shop"></i> Địa điểm</p>
+        <p><i class="bi bi-truck"></i> Giao hàng</p>
+      </div>
+
+      <div class="header-main">
+        <!-- SEARCH BOX -->
+        <div class="search-box">
+          <input
+            type="text"
+            id="searchProductInput"
+            name="q"
+            placeholder="Nhập tên sản phẩm..."
+            aria-label="Tìm kiếm"
+          />
+
+          <button type="button" id="btnTextSearch" class="search-btn">
+            <i class="bi bi-search"></i>
+          </button>
+
+          <button
+            type="button"
+            id="openAdvancedSearchBtn"
+            class="search-modal-toggle"
+            data-bs-toggle="modal"
+            data-bs-target="#advancedSearchModal"
+          >
+            <i class="bi bi-sliders"></i>
+          </button>
+        </div>
+
+        <p id="textSearchResult"></p>
+
+        <div class="logo-wrapper">
+          <a href="TrangChu.html" class="logoMenu">
+            <img
+              src="http://localhost:5000/Pic/Pic_LogoShop/logoNoiThatXin.png"
+              alt="NoiThatXin Logo"
+            />
+          </a>
+        </div>
+
+        <div class="header-actions">
+          <span id="authSection">
+            <a href="../Login/DangNhap.html" class="btn-login-link">
+              <button type="button" class="btn-login">Đăng nhập</button>
+            </a>
+          </span>
+          <div class="cart-box">
+            <a href="../TrangThanhToan/GioHang.html" class="btn-cart">
+              <i class="bi bi-cart3"></i>
+              <span class="badge" id="cartBadge">0</span>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <nav class="main-nav">
+        <a href="TrangChu.html">Trang chủ</a>
+        <div class="dropdown">
+          <a href="../TrangDanhMucSanPham/TrangSanPham.html" class="dropbtn"
+            >Danh mục ▾</a
+          >
+          <div class="dropdown-content">
+            <ul class="menu">
+              <li><a href="../TrangDanhMucSanPham/TrangSanPham.html?phong=phong-khach">Phòng khách</a></li>
+              <li><a href="../TrangDanhMucSanPham/TrangSanPham.html?phong=phong-ngu">Phòng ngủ</a></li>
+              <li><a href="../TrangDanhMucSanPham/TrangSanPham.html?phong=phong-bep">Phòng bếp</a></li>
+              <li><a href="../TrangDanhMucSanPham/TrangSanPham.html?phong=phong-tam">Phòng tắm</a></li>
+              <li><a href="../TrangDanhMucSanPham/TrangSanPham.html?phong=ngoai-troi">Ngoài trời</a></li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="dropdown">
+          <a href="../TrangDanhMucSanPham/TrangSanPham.html" class="dropbtn"
+            >Phòng khách ▾</a
+          >
+          <div class="dropdown-content">
+            <ul class="menu">
+              <li><a href="../TrangDanhMucSanPham/TrangSanPham.html?phong=phong-khach">Xem tất cả</a></li>
+              <li>
+                <a href="../TrangDanhMucSanPham/TrangSanPham.html?phong=phong-khach&noi_bat=1">Bộ sưu tập phòng khách mới</a>
+              </li>
+              <li><a href="../TrangDanhMucSanPham/TrangSanPham.html?phong=phong-khach">Đồ nội thất trang trí</a></li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="dropdown">
+          <a href="../TrangDanhMucSanPham/TrangSanPham.html" class="dropbtn">Phòng ngủ ▾</a
+          >
+          <div class="dropdown-content">
+            <ul class="menu">
+              <li><a href="../TrangDanhMucSanPham/TrangSanPham.html?phong=phong-ngu">Xem tất cả</a></li>
+              <li><a href="../TrangDanhMucSanPham/TrangSanPham.html?phong=phong-ngu&noi_bat=1">Bộ sưu tập phòng ngủ mới</a></li>
+              <li><a href="../TrangDanhMucSanPham/TrangSanPham.html?phong=phong-ngu">Đồ nội thất trang trí</a></li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="dropdown">
+          <a href="../TrangDanhMucSanPham/TrangSanPham.html" class="dropbtn">Phòng bếp ▾</a >
+          <div class="dropdown-content">
+            <ul class="menu">
+              <li><a href="../TrangDanhMucSanPham/TrangSanPham.html?phong=phong-bep">Xem tất cả</a></li>
+              <li><a href="../TrangDanhMucSanPham/TrangSanPham.html?phong=phong-bep&noi_bat=1">Bộ sưu tập phòng bếp mới</a></li>
+              <li><a href="../TrangDanhMucSanPham/TrangSanPham.html?phong=phong-bep">Đồ nội thất trang trí</a></li>
+            </ul>
+          </div>
+        </div>
+
+         <div class="dropdown">
+          <a href="../TrangDanhMucSanPham/TrangSanPham.html" class="dropbtn">Phòng tắm ▾</a
+          >
+          <div class="dropdown-content">
+            <ul class="menu">
+              <li><a href="../TrangDanhMucSanPham/TrangSanPham.html?phong=phong-tam">Xem tất cả</a></li>
+              <li><a href="../TrangDanhMucSanPham/TrangSanPham.html?phong=phong-tam&noi_bat=1">Bộ sưu tập phòng tắm mới</a></li>
+              <li><a href="../TrangDanhMucSanPham/TrangSanPham.html?phong=phong-tam">Đồ nội thất trang trí</a></li>
+            </ul>
+          </div>
+        </div>
+        <a href="../TrangGioiThieu/TrangGioiThieu.html">Giới thiệu</a>
+        <a href="../TrangLienHe/TrangLienHe.html">Liên hệ</a>
+      </nav>
+
+      <div class="header-bottom">
+        <p class="fw-bold">Miễn phí vận chuyển cho đơn hàng từ 2.000.000đ ‡*</p>
+      </div>
+    </header>
+
+    <div
+      class="modal fade"
+      id="advancedSearchModal"
+      tabindex="-1"
+      aria-labelledby="advancedSearchModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <div>
+              <h5 class="modal-title" id="advancedSearchModalLabel">
+                Tìm kiếm sản phẩm
+              </h5>
+              <p class="modal-subtitle">
+                Chọn cách tìm kiếm phù hợp: nhập tên, upload ảnh, hoặc mở
+                camera.
+              </p>
+            </div>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Đóng"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <div class="modal-search-tabs">
+              <button
+                type="button"
+                class="tab-btn active"
+                data-tab="tab-text-search"
+              >
+                Nhập từ khóa
+              </button>
+              <button type="button" class="tab-btn" data-tab="tab-upload-image">
+                Upload ảnh
+              </button>
+              <button
+                type="button"
+                class="tab-btn"
+                data-tab="tab-camera-search"
+              >
+                Mở camera
+              </button>
+            </div>
+
+            <div class="search-tab-panel active" id="tab-text-search">
+              <div class="search-panel-row">
+                <label for="modalSearchProductInput" class="form-label"
+                  >Tìm sản phẩm theo tên</label
+                >
+                <input
+                  id="modalSearchProductInput"
+                  type="text"
+                  class="form-control"
+                  placeholder="Nhập tên sản phẩm..."
+                />
+                <button
+                  type="button"
+                  id="modalBtnTextSearch"
+                  class="btn btn-primary"
+                >
+                  Tìm kiếm
+                </button>
+                <div id="modalTextSearchResult" class="search-result-note">
+                  Nhập tên sản phẩm và nhấn tìm kiếm.
+                </div>
+              </div>
+            </div>
+
+            <div class="search-tab-panel" id="tab-upload-image">
+              <div class="search-panel-row">
+                <label for="imageUploadInput" class="form-label"
+                  >Upload ảnh sản phẩm</label
+                >
+                <input
+                  id="imageUploadInput"
+                  type="file"
+                  accept="image/*"
+                  class="form-control"
+                  name="image"
+                  form="aiSearchForm"
+                />
+                <div class="image-preview-wrapper">
+                  <div class="image-preview-empty">Chưa có ảnh được chọn.</div>
+                  <img
+                    id="imagePreview"
+                    class="image-preview"
+                    alt="Preview ảnh"
+                  />
+                </div>
+                <!-- Form POST: browser tự navigate sau khi backend redirect -->
+                <form id="aiSearchForm" method="POST"
+                      action="http://127.0.0.1:5000/api/ai/search-image-redirect"
+                      enctype="multipart/form-data"
+                      target="_self">
+                  <input type="hidden" name="redirect_url" value="/TrangDanhMucSanPham/TrangSanPham.html" />
+                </form>
+                <button
+                  type="button"
+                  id="btnUploadSearch"
+                  class="btn btn-primary"
+                  disabled
+                >
+                  <span id="btnUploadSearchText">Tìm sản phẩm bằng ảnh</span>
+                  <span id="btnUploadSearchLoading" style="display:none">
+                    <span class="spinner-border spinner-border-sm" role="status"></span>
+                    Đang xử lý...
+                  </span>
+                </button>
+                <div id="imageSearchResult" class="search-result-note">
+                  Upload ảnh để tìm kiếm sản phẩm tương tự.
+                </div>
+
+                <!-- KẾT QUẢ AI SEARCH — TAB UPLOAD -->
+                <div id="imageSearchResults" class="ai-results-container" style="display:none">
+                  <div class="ai-results-header">
+                    <span class="ai-badge">AI</span>
+                    <span id="imageSearchCount"></span>
+                    <span class="ai-time" id="imageSearchTime"></span>
+                  </div>
+                  <div id="imageSearchResultsList" class="ai-results-grid"></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="search-tab-panel" id="tab-camera-search">
+              <div class="search-panel-row">
+                <label class="form-label">Mở camera để nhận diện ảnh</label>
+                <div class="camera-actions">
+                  <button
+                    type="button"
+                    id="startCameraBtn"
+                    class="btn btn-secondary"
+                  >
+                    Bật camera
+                  </button>
+                  <button
+                    type="button"
+                    id="captureCameraBtn"
+                    class="btn btn-primary"
+                    disabled
+                  >
+                    Chụp ảnh
+                  </button>
+                </div>
+                <div class="camera-preview-wrapper">
+                  <video id="cameraPreview" autoplay muted playsinline></video>
+                  <canvas id="cameraSnapshot" class="camera-snapshot"></canvas>
+                </div>
+                <div id="cameraStatus" class="search-result-note">
+                  Nhấn 'Bật camera' để mở camera. Trình duyệt cần cho phép truy
+                  cập thiết bị.
+                </div>
+
+                <!-- KẾT QUẢ AI SEARCH — TAB CAMERA -->
+                <div id="cameraSearchResults" class="ai-results-container" style="display:none">
+                  <div class="ai-results-header">
+                    <span class="ai-badge">AI</span>
+                    <span id="cameraSearchCount"></span>
+                    <span class="ai-time" id="cameraSearchTime"></span>
+                  </div>
+                  <div id="cameraSearchResultsList" class="ai-results-grid"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <main class="p-0">
+      <section class="hero-banner-section">
+        <div class="banner-ticker-top">
+          <div class="ticker-track">
+            <span
+              >GOING ON NOW • GOING ON NOW • GOING ON NOW • GOING ON NOW • GOING
+              ON NOW • GOING ON NOW • &nbsp;</span
+            >
+            <span
+              >GOING ON NOW • GOING ON NOW • GOING ON NOW • GOING ON NOW • GOING
+              ON NOW • GOING ON NOW • &nbsp;</span
+            >
+          </div>
+        </div>
+
+        <div
+          id="ashleyHeroCarousel"
+          class="carousel slide position-relative"
+          data-bs-ride="carousel"
+          data-bs-interval="3000"
+        >
+          <div class="carousel-indicators custom-indicators">
+            <button
+              type="button"
+              data-bs-target="#ashleyHeroCarousel"
+              data-bs-slide-to="0"
+              class="active"
+              aria-current="true"
+            ></button>
+            <button
+              type="button"
+              data-bs-target="#ashleyHeroCarousel"
+              data-bs-slide-to="1"
+            ></button>
+            <button
+              type="button"
+              data-bs-target="#ashleyHeroCarousel"
+              data-bs-slide-to="2"
+            ></button>
+          </div>
+
+          <div class="carousel-inner">
+            <div class="carousel-item active">
+              <img
+                src="http://localhost:5000/Pic/Pic_TrangChu/Pic_Carousel/Carousel5.jpg"
+                class="d-block w-100 hero-bg-img"
+                alt="Background Nội Thất 1"
+              />
+            </div>
+            <div class="carousel-item">
+              <img
+                src="http://localhost:5000/Pic/Pic_TrangChu/Pic_Carousel/Carousel6.jpg"
+                class="d-block w-100 hero-bg-img"
+                alt="Background Nội Thất 2"
+              />
+            </div>
+            <div class="carousel-item">
+              <img
+                src="http://localhost:5000/Pic/Pic_TrangChu/Pic_Carousel/Carousel7.jpg"
+                class="d-block w-100 hero-bg-img"
+                alt="Background Nội Thất 3"
+              />
+            </div>
+          </div>
+
+          <div class="hero-caption-overlay">
+            <p class="sub-title-event">MEMORIAL DAY SALE</p>
+            <h1 class="main-title-sale">
+              Up to 60% off**<br /><span class="thin-text">select items</span>
+            </h1>
+
+            <div class="action-box">
+              <a
+                href="../TrangDanhMucSanPham/TrangSanPham.html"
+                class="btn-shop-now"
+                >SHOP THE SALE</a
+              >
+            </div>
+          </div>
+
+          <button
+            class="carousel-control-prev custom-ctrl"
+            type="button"
+            data-bs-target="#ashleyHeroCarousel"
+            data-bs-slide="prev"
+          >
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          </button>
+          <button
+            class="carousel-control-next custom-ctrl"
+            type="button"
+            data-bs-target="#ashleyHeroCarousel"
+            data-bs-slide="next"
+          >
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          </button>
+        </div>
+
+        <div class="banner-footer-info">
+          <div class="footer-info-container">
+            <span class="brand-sub-logo"
+              >NoiThatXin <span class="accent-text">advantage</span></span
+            >
+            <p class="footer-info-text">
+              <strong>Trả góp ưu đãi đặc biệt trong 24 tháng‡*</strong><br />
+              Áp dụng cho các đơn hàng đủ điều kiện khi thanh toán bằng thẻ tín
+              dụng. Yêu cầu giá trị đơn hàng tối thiểu.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <div class="outdoor-banner-container">
+        <img
+          src="http://localhost:5000/Pic/Pic_TrangChu/Pic_GiamGia/BannerGiamGia4.jpg"
+          alt="Outdoor Furniture"
+          class="outdoor-bg-img"
+        />
+
+        <div class="outdoor-overlay-content">
+          <h1 class="outdoor-title">Outdoor up to 40% off**</h1>
+          <a href="#" class="outdoor-btn-shop">SHOP OUTDOOR</a>
+        </div>
+
+        <p class="outdoor-caption-text">Outdoor Dining Table and 5 Chairs</p>
+      </div>
+
+      <section class="deals-section">
+        <div class="deals-header">
+          <h2 class="deals-heading">
+            Sản Phẩm Hot <i class="bi bi-fire text-danger"></i>
+          </h2>
+          <div class="deals-nav-buttons">
+            <button class="deals-btn btn-prev" aria-label="Previous Slide">
+              <svg viewBox="0 0 24 24" width="18" height="18">
+                <polygon
+                  points="14.82 20.7 6.12 12 14.82 3.3 15.88 4.36 8.24 12 15.88 19.64 14.82 20.7"
+                ></polygon>
+              </svg>
+            </button>
+            <button class="deals-btn btn-next" aria-label="Next Slide">
+              <svg viewBox="0 0 24 24" width="18" height="18">
+                <polygon
+                  points="9.18 20.7 8.12 19.64 15.76 12 8.12 4.36 9.18 3.3 17.88 12 9.18 20.7"
+                ></polygon>
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <div class="deals-carousel-wrapper">
+          <ul class="deals-container">
+            <li class="deal-item">
+              <a href="#" class="deal-link">
+                <div class="deal-badge">UP TO 50% OFF**</div>
+                <div class="deal-image-box">
+                  <img
+                    src="http://localhost:5000/Pic/Pic_SanPham/Ghe/Ghe01.jpg"
+                    alt="Ghe"
+                    class="deal-img"
+                  />
+                </div>
+                <div class="deal-info">
+                  <h3 class="deal-title">Ghế 01</h3>
+                </div>
+              </a>
+            </li>
+
+            <li class="deal-item">
+              <a href="#" class="deal-link">
+                <div class="deal-badge">STARTING AT $999.98</div>
+                <div class="deal-image-box">
+                  <img
+                    src="http://localhost:5000/Pic/Pic_SanPham/Ban/Ban01.jpg"
+                    alt="Ban"
+                    class="deal-img"
+                  />
+                </div>
+                <div class="deal-info">
+                  <h3 class="deal-title">Bàn 01</h3>
+                </div>
+              </a>
+            </li>
+
+            <li class="deal-item">
+              <a href="#" class="deal-link">
+                <div class="deal-badge">UP TO 50% OFF**</div>
+                <div class="deal-image-box">
+                  <img
+                    src="http://localhost:5000/Pic/Pic_SanPham/Ghe/Ghe02.jpg"
+                    alt="Ghe"
+                    class="deal-img"
+                  />
+                </div>
+                <div class="deal-info">
+                  <h3 class="deal-title">Ghế 02</h3>
+                </div>
+              </a>
+            </li>
+
+            <li class="deal-item">
+              <a href="#" class="deal-link">
+                <div class="deal-badge">BUY ONE, GET ONE 25% OFF‡*</div>
+                <div class="deal-image-box">
+                  <img
+                    src="http://localhost:5000/Pic/Pic_SanPham/Sofa/Sofa01.jpg"
+                    alt="Sofa"
+                    class="deal-img"
+                  />
+                </div>
+                <div class="deal-info">
+                  <h3 class="deal-title">Sofa 01</h3>
+                </div>
+              </a>
+            </li>
+
+            <li class="deal-item">
+              <a href="#" class="deal-link">
+                <div class="deal-badge">STARTING AT $999.98</div>
+                <div class="deal-image-box">
+                  <img
+                    src="http://localhost:5000/Pic/Pic_SanPham/Ban/Ban02.jpg"
+                    alt="Ban"
+                    class="deal-img"
+                  />
+                </div>
+                <div class="deal-info">
+                  <h3 class="deal-title">Bàn 02</h3>
+                </div>
+              </a>
+            </li>
+          </ul>
+
+          <div class="deals-scrollbar-track">
+            <div class="deals-scrollbar-thumb"></div>
+          </div>
+        </div>
+      </section>
+
+      <div class="outdoor-banner-container">
+        <img
+          src="http://localhost:5000/Pic/Pic_TrangChu/Pic_GiamGia/BannerGiamGia6.jpg"
+          alt="Outdoor Furniture"
+          class="outdoor-bg-img"
+        />
+
+        <div class="outdoor-overlay-content">
+          <h1 class="outdoor-title text-white">Living room up to 30% off**</h1>
+          <a href="#" class="outdoor-btn-shop">SHOP LIVING ROOM</a>
+        </div>
+
+        <p class="outdoor-caption-text">Relaxation Sofa</p>
+      </div>
+
+      <section class="deals-section">
+        <div class="deals-header">
+          <h2 class="deals-heading">
+            Khuyến Mãi Hot <i class="bi bi-fire text-danger"></i>
+          </h2>
+          <div class="deals-nav-buttons">
+            <button class="deals-btn btn-prev" aria-label="Previous Slide">
+              <svg viewBox="0 0 24 24" width="18" height="18">
+                <polygon
+                  points="14.82 20.7 6.12 12 14.82 3.3 15.88 4.36 8.24 12 15.88 19.64 14.82 20.7"
+                ></polygon>
+              </svg>
+            </button>
+            <button class="deals-btn btn-next" aria-label="Next Slide">
+              <svg viewBox="0 0 24 24" width="18" height="18">
+                <polygon
+                  points="9.18 20.7 8.12 19.64 15.76 12 8.12 4.36 9.18 3.3 17.88 12 9.18 20.7"
+                ></polygon>
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <div class="deals-carousel-wrapper">
+          <ul class="deals-container">
+            <li class="deal-item">
+              <a href="#" class="deal-link">
+                <div class="deal-badge">UP TO 50% OFF**</div>
+                <div class="deal-image-box">
+                  <img
+                    src="http://localhost:5000/Pic/Pic_SanPham/Ghe/Ghe01.jpg"
+                    alt="Ghe"
+                    class="deal-img"
+                  />
+                </div>
+                <div class="deal-info">
+                  <h3 class="deal-title">Ghế 01</h3>
+                </div>
+              </a>
+            </li>
+
+            <li class="deal-item">
+              <a href="#" class="deal-link">
+                <div class="deal-badge">STARTING AT $999.98</div>
+                <div class="deal-image-box">
+                  <img
+                    src="http://localhost:5000/Pic/Pic_SanPham/Ban/Ban01.jpg"
+                    alt="Ban"
+                    class="deal-img"
+                  />
+                </div>
+                <div class="deal-info">
+                  <h3 class="deal-title">Bàn 01</h3>
+                </div>
+              </a>
+            </li>
+
+            <li class="deal-item">
+              <a href="#" class="deal-link">
+                <div class="deal-badge">UP TO 50% OFF**</div>
+                <div class="deal-image-box">
+                  <img
+                    src="http://localhost:5000/Pic/Pic_SanPham/Ghe/Ghe02.jpg"
+                    alt="Ghe"
+                    class="deal-img"
+                  />
+                </div>
+                <div class="deal-info">
+                  <h3 class="deal-title">Ghế 02</h3>
+                </div>
+              </a>
+            </li>
+
+            <li class="deal-item">
+              <a href="#" class="deal-link">
+                <div class="deal-badge">BUY ONE, GET ONE 25% OFF‡*</div>
+                <div class="deal-image-box">
+                  <img
+                    src="http://localhost:5000/Pic/Pic_SanPham/Sofa/Sofa01.jpg"
+                    alt="Sofa"
+                    class="deal-img"
+                  />
+                </div>
+                <div class="deal-info">
+                  <h3 class="deal-title">Sofa 01</h3>
+                </div>
+              </a>
+            </li>
+
+            <li class="deal-item">
+              <a href="#" class="deal-link">
+                <div class="deal-badge">STARTING AT $999.98</div>
+                <div class="deal-image-box">
+                  <img
+                    src="http://localhost:5000/Pic/Pic_SanPham/Ban/Ban02.jpg"
+                    alt="Ban"
+                    class="deal-img"
+                  />
+                </div>
+                <div class="deal-info">
+                  <h3 class="deal-title">Bàn 02</h3>
+                </div>
+              </a>
+            </li>
+          </ul>
+
+          <div class="deals-scrollbar-track">
+            <div class="deals-scrollbar-thumb"></div>
+          </div>
+        </div>
+      </section>
+
+      <div class="outdoor-banner-container">
+        <img
+          src="http://localhost:5000/Pic/Pic_TrangChu/Pic_GiamGia/BannerGiamGia7.jpg"
+          alt="Outdoor Furniture"
+          class="outdoor-bg-img"
+        />
+
+        <div class="outdoor-overlay-content">
+          <h1 class="outdoor-title text-white">OUR NEWEST COLLECTION</h1>
+          <a href="#" class="outdoor-btn-shop">EXPLORE MORE</a>
+        </div>
+
+        <p class="outdoor-caption-text">NoiThatXin</p>
+      </div>
+
+      <section class="values-section">
+        <h2 class="values-main-heading">Our values</h2>
+
+        <div class="values-grid">
+          <!-- Card 1 -->
+          <div class="value-card">
+            <div class="value-icon">
+              <i class="bi bi-house-door"></i>
+            </div>
+
+            <h3 class="value-title">
+              <a href="#">About Ashley</a>
+            </h3>
+
+            <p class="value-desc">
+              Who we are, our legacy, and the purpose that drives us every day.
+            </p>
+          </div>
+
+          <!-- Card 2 -->
+          <div class="value-card">
+            <div class="value-icon">
+              <i class="bi bi-globe2"></i>
+            </div>
+
+            <h3 class="value-title">
+              <a href="#">Beyond Home Promise</a>
+            </h3>
+
+            <p class="value-desc">
+              Learn about our retail commitment to the people, planet and
+              organizations we’re most passionate about.
+            </p>
+          </div>
+
+          <!-- Card 3 -->
+          <div class="value-card">
+            <div class="value-icon">
+              <i class="bi bi-buildings"></i>
+            </div>
+
+            <h3 class="value-title">
+              <a href="#">Corporate Social Responsibility</a>
+            </h3>
+
+            <p class="value-desc">
+              Get the whole picture on what the Ashley family of companies is
+              doing to help our employees, environment and community.
+            </p>
+          </div>
+
+          <!-- Card 4 -->
+          <div class="value-card">
+            <div class="value-icon">
+              <i class="bi bi-people"></i>
+            </div>
+
+            <h3 class="value-title">
+              <a href="#">Refer a friend</a>
+            </h3>
+
+            <p class="value-desc">Share with a friend, save with a friend.</p>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Modal xác nhận đăng xuất -->
+    <div class="modal fade" id="logoutConfirmModal" tabindex="-1" aria-labelledby="logoutConfirmLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="logoutConfirmLabel">Xác nhận đăng xuất</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Đóng"></button>
+                </div>
+                <div class="modal-body">
+                    Bạn có chắc muốn đăng xuất?
+                </div>
+                <div class="modal-footer">
+                <button type="button" class="btn btn-danger" id="confirmLogoutBtn" onclick="performLogout()">Có, đăng xuất</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══ POPUP KẾT QUẢ AI SEARCH ═══ -->
+    <div class="modal fade" id="aiSearchResultsModal" tabindex="-1" aria-labelledby="aiSearchResultsLabel" aria-hidden="true">
+      <div class="modal-dialog modal-xl modal-dialog-scrollable modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header" style="background: linear-gradient(135deg, #1E4D36, #2d6a4f); color: white;">
+            <div>
+              <h5 class="modal-title" id="aiSearchResultsLabel" style="color: white;">
+                <i class="bi bi-lightning-charge-fill"></i> Kết quả tìm kiếm bằng AI
+              </h5>
+              <p class="modal-subtitle mb-0" id="aiSearchDetectionsLabel" style="color: #a8d5c2; font-size: 0.8rem;"></p>
+            </div>
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Đóng"></button>
+          </div>
+          <div class="modal-body" id="aiSearchResultsBody" style="padding: 1.5rem;">
+            <!-- Products rendered here -->
+          </div>
+          <div class="modal-footer" style="justify-content: center;">
+            <small id="aiSearchProcessingTime" style="color: #888;"></small>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <footer>
+      <div class="row mt-5 pb-5">
+        <div class="col-4 text-center">
+          <div class="row">
+            <h4 class="fw-bold">Thông tin liên hệ</h4>
+            <p>
+              <span class="fw-bold">Hotline: </span> 0909 123456 <br />
+              <span class="fw-bold">Email: </span>NoiThatXin@gmail.com <br />
+            </p>
+            <h5 class="fw-bold">Phương thức thanh toán</h5>
+            <div class="row mb-3">
+              <div>
+                <a href="#"
+                  ><img
+                    src="http://localhost:5000/Pic/Pic_PThucThanhToan/LogoMomo.jpg"
+                    class="img_DoiTac"
+                    alt="payoo"
+                /></a>
+                <a href="#"
+                  ><img
+                    src="http://localhost:5000/Pic/Pic_PThucThanhToan/LogoVisa.jpg"
+                    class="img_DoiTac"
+                    alt="momo"
+                /></a>
+                <a href="#"
+                  ><img
+                    src="http://localhost:5000/Pic/Pic_PThucThanhToan/LogoZaloPay.jpg"
+                    class="img_DoiTac"
+                    alt="zaloPay"
+                /></a>
+                <a href="#"
+                  ><img
+                    src="http://localhost:5000/Pic/Pic_PThucThanhToan/LogoVNPay.jpg"
+                    class="img_DoiTac"
+                    alt="vnPay"
+                /></a>
+              </div>
+            </div>
+
+            <h5 class="fw-bold">Kết Nối Với Chúng Tôi</h5>
+            <div class="row">
+              <div>
+                <a href="#"
+                  ><img
+                    src="http://localhost:5000/Pic/Pic_LogoLKetNoi/LogoFacebook.jpg"
+                    class="img_DoiTac"
+                    alt="LogoFacebook"
+                /></a>
+                <a href="#"
+                  ><img
+                    src="http://localhost:5000/Pic/Pic_LogoLKetNoi/LogoTwitter.jpg"
+                    class="img_DoiTac"
+                    alt="LogoTwitter"
+                /></a>
+                <a href="#"
+                  ><img
+                    src="http://localhost:5000/Pic/Pic_LogoLKetNoi/LogoTiktok.jpg"
+                    class="img_DoiTac"
+                    alt="LogoTiktok"
+                /></a>
+                <a href="#"
+                  ><img
+                    src="http://localhost:5000/Pic/Pic_LogoLKetNoi/LogoYoutube.jpg"
+                    class="img_DoiTac"
+                    alt="LogoYoutube"
+                /></a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-4 text-center">
+          <div class="row">
+            <h4 class="fw-bold">Thông tin và chính sách</h4>
+            <div class="mt-2 ThongTin">
+              <p>
+                <a href="#" class="text-decoration-none">Hướng Dẫn Mua Hàng</a>
+              </p>
+              <p>
+                <a href="#" class="text-decoration-none"
+                  >Chính Sách Giao Hàng</a
+                >
+              </p>
+              <p>
+                <a href="#" class="text-decoration-none">Chính Sách Bảo Hành</a>
+              </p>
+              <p>
+                <a href="#" class="text-decoration-none">Chính Sách Bảo Mật</a>
+              </p>
+              <p>
+                <a href="#" class="text-decoration-none"
+                  >Chính Sách Đổi Trả Hàng</a
+                >
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-4 text-center">
+          <div class="row">
+            <h4 class="fw-bold">Cửa Hàng</h4>
+            <div class="mt-2 ThongTin">
+              <p>
+                <a href="#" class="text-decoration-none"
+                  >CH1: 140 Lê Trọng Tấn, Phường Tây Thạnh, Quận Tân Phú,
+                  TP.HCM.</a
+                >
+              </p>
+              <p>
+                <a href="#" class="text-decoration-none"
+                  >CH2: 93 Tân Kỳ Tân Quý, Phường Tân Sơn Nhì, TP.HCM.</a
+                >
+              </p>
+              <p>
+                <a href="#" class="text-decoration-none"
+                  >CH3: 31 Chế Lan Viên, Phường Tây Thạnh, TP.HCM.</a
+                >
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="backTop">
+        <i class="bi bi-caret-up-fill"></i>
+      </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+      const STATIC_IMAGE_BASE = 'http://127.0.0.1:5000/Pic';
+      const API_BASE = 'http://127.0.0.1:5000/api';
+      // Fallback ảnh khi sản phẩm không có hình hoặc hình lỗi
+      const FALLBACK_IMG = STATIC_IMAGE_BASE + '/Pic_SanPham/default.svg';
+      const FALLBACK_LOGO = STATIC_IMAGE_BASE + '/Pic_LogoShop/logoNoiThatXin.png';
+      $(document).ready(function () {
+        $(window).scroll(function () {
+          if ($(this).scrollTop() > 100) {
+            $("#backTop").fadeIn();
+          } else {
+            $("#backTop").fadeOut();
+          }
+        });
+
+        $("#backTop").click(function () {
+          $("html, body").animate(
+            {
+              scrollTop: 0,
+            },
+            300,
+          );
+        });
+      });
+
+      document.addEventListener("DOMContentLoaded", function () {
+        // Lấy tất cả section deals
+        const allDealsSections = document.querySelectorAll(".deals-section");
+
+        allDealsSections.forEach((section) => {
+          const container = section.querySelector(".deals-container");
+          const prevBtn = section.querySelector(".btn-prev");
+          const nextBtn = section.querySelector(".btn-next");
+          const thumb = section.querySelector(".deals-scrollbar-thumb");
+
+          if (!container || !prevBtn || !nextBtn || !thumb) return;
+
+          // ===== TÍNH KHOẢNG CUỘN =====
+          function getScrollAmount() {
+            const firstItem = container.querySelector(".deal-item");
+
+            return firstItem
+              ? firstItem.offsetWidth + 4
+              : container.offsetWidth;
+          }
+
+          // ===== NÚT NEXT =====
+          nextBtn.addEventListener("click", () => {
+            container.scrollBy({
+              left: getScrollAmount(),
+              behavior: "smooth",
+            });
+          });
+
+          // ===== NÚT PREV =====
+          prevBtn.addEventListener("click", () => {
+            container.scrollBy({
+              left: -getScrollAmount(),
+              behavior: "smooth",
+            });
+          });
+
+          // ===== UPDATE SCROLLBAR =====
+          function updateScrollbar() {
+            const maxScroll = container.scrollWidth - container.clientWidth;
+
+            const scrollPercentage =
+              maxScroll > 0 ? container.scrollLeft / maxScroll : 0;
+
+            const thumbWidth = thumb.offsetWidth;
+
+            const trackWidth = thumb.parentElement.offsetWidth;
+
+            const maxMove = trackWidth - thumbWidth;
+
+            thumb.style.transform = `translateX(${scrollPercentage * maxMove}px)`;
+          }
+
+          // ===== EVENT =====
+          container.addEventListener("scroll", updateScrollbar);
+
+          window.addEventListener("resize", updateScrollbar);
+
+          // ===== CHẠY LẦN ĐẦU =====
+          updateScrollbar();
+        });
+
+        const tabButtons = document.querySelectorAll(
+          ".modal-search-tabs .tab-btn",
+        );
+        const tabPanels = document.querySelectorAll(".search-tab-panel");
+
+        tabButtons.forEach((button) => {
+          button.addEventListener("click", () => {
+            tabButtons.forEach((item) => item.classList.remove("active"));
+            tabPanels.forEach((panel) => panel.classList.remove("active"));
+
+            button.classList.add("active");
+            document.getElementById(button.dataset.tab).classList.add("active");
+          });
+        });
+
+        /* ========================================================
+     2. TÌM KIẾM THEO TÊN (TAB 1)
+  ======================================================== */
+        const searchProductInput =
+          document.getElementById("searchProductInput");
+        const btnTextSearch = document.getElementById("btnTextSearch");
+        const textSearchResult = document.getElementById("textSearchResult");
+        const modalSearchProductInput =
+          document.getElementById("modalSearchProductInput");
+        const modalBtnTextSearch = document.getElementById("modalBtnTextSearch");
+        const modalTextSearchResult = document.getElementById("modalTextSearchResult");
+
+        function handleKeywordSearch(inputEl, resultEl) {
+          const query = inputEl?.value?.trim() || "";
+          if (!resultEl) return;
+          if (!query) {
+            resultEl.textContent = "Vui lòng nhập tên sản phẩm.";
+            resultEl.style.color = "#dc3545";
+            return;
+          }
+          resultEl.style.color = "";
+          resultEl.innerHTML = `Đã tìm thấy kết quả cho: <strong>${query}</strong>`;
+        }
+
+        btnTextSearch?.addEventListener("click", () => {
+          handleKeywordSearch(searchProductInput, textSearchResult);
+        });
+
+        modalBtnTextSearch?.addEventListener("click", () => {
+          handleKeywordSearch(modalSearchProductInput, modalTextSearchResult);
+        });
+
+        /* ========================================================
+     3. UPLOAD ẢNH & HIỂN THỊ XEM TRƯỚC (TAB 2)
+  ======================================================== */
+        const imageUploadInput = document.getElementById("imageUploadInput");
+        const imagePreview = document.getElementById("imagePreview");
+        const imageSearchResult = document.getElementById("imageSearchResult");
+        const previewEmptyText = document.querySelector(".image-preview-empty");
+
+        imageUploadInput?.addEventListener("change", () => {
+          const file = imageUploadInput.files[0];
+
+          if (!file) {
+            if (imagePreview) imagePreview.style.display = "none";
+            if (previewEmptyText) previewEmptyText.style.display = "block";
+            return;
+          }
+
+          // Đọc file ảnh và hiển thị lên giao diện thực tế
+          const reader = new FileReader();
+          reader.onload = (event) => {
+            if (imagePreview) {
+              imagePreview.src = event.target.result;
+              imagePreview.style.display = "block"; // Hiện ảnh thực tế
+            }
+            if (previewEmptyText) {
+              previewEmptyText.style.display = "none"; // Ẩn dòng chữ "Chưa có ảnh được chọn"
+            }
+          };
+          reader.readAsDataURL(file);
+
+          imageSearchResult.textContent = `Đã chọn ảnh: ${file.name}`;
+          const btn = document.getElementById("btnUploadSearch");
+          if (btn) btn.disabled = false;
+        });
+
+        // ── AI UPLOAD SEARCH ──────────────────────────────────────────────
+        // Bấm "Tìm sản phẩm bằng ảnh" trong modal → submit form trực tiếp
+        // ─────────────────────────────────────────────────────────────────
+        document
+          .getElementById("btnUploadSearch")
+          ?.addEventListener("click", (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+
+            const file = imageUploadInput?.files?.[0];
+            if (!file) {
+              imageSearchResult.textContent = "Vui lòng chọn ảnh trước khi bấm tìm kiếm.";
+              imageSearchResult.style.color = "#dc3545";
+              return;
+            }
+
+            const btnText = document.getElementById("btnUploadSearchText");
+            const btnLoading = document.getElementById("btnUploadSearchLoading");
+            const uploadBtn = document.getElementById("btnUploadSearch");
+            const form = document.getElementById("aiSearchForm");
+
+            if (!form) {
+              imageSearchResult.textContent = "Không tìm thấy form gửi ảnh.";
+              imageSearchResult.style.color = "#dc3545";
+              return;
+            }
+
+            btnText.style.display = "none";
+            btnLoading.style.display = "inline";
+            uploadBtn.disabled = true;
+            imageSearchResult.style.color = "";
+            imageSearchResult.textContent = "Đang xử lý AI và chuyển sang trang kết quả...";
+
+            form.submit();
+          });
+
+        /* ========================================================
+     4. ĐIỀU KHIỂN CAMERA & CHỤP ẢNH (TAB 3)
+  ======================================================== */
+        const startCameraBtn = document.getElementById("startCameraBtn");
+        const captureCameraBtn = document.getElementById("captureCameraBtn");
+        const cameraPreview = document.getElementById("cameraPreview");
+        const cameraSnapshot = document.getElementById("cameraSnapshot");
+        const cameraStatus = document.getElementById("cameraStatus");
+
+        let stream = null;
+
+        startCameraBtn?.addEventListener("click", async () => {
+          // Nếu camera đang bật sẵn rồi, nhấn lại sẽ đóng nó (bật/tắt đa năng)
+          if (stream) {
+            stopCamera();
+            return;
+          }
+
+          try {
+            stream = await navigator.mediaDevices.getUserMedia({
+              video: { facingMode: "user" },
+              audio: false,
+            });
+
+            if (cameraPreview) {
+              cameraPreview.srcObject = stream;
+              cameraPreview.style.display = "block"; // Đảm bảo thẻ video được hiển thị
+            }
+            if (cameraSnapshot) {
+              cameraSnapshot.style.display = "none"; // Ẩn ảnh chụp cũ nếu có
+            }
+
+            startCameraBtn.textContent = "Tắt camera";
+            startCameraBtn.classList.replace("btn-secondary", "btn-danger");
+            captureCameraBtn.disabled = false;
+            cameraStatus.textContent =
+              "Camera đang bật. Cân chỉnh sản phẩm vào giữa khung hình và nhấn 'Chụp ảnh'.";
+          } catch (error) {
+            console.error("Không thể truy cập camera:", error);
+            cameraStatus.textContent =
+              "Không thể mở camera. Vui lòng kiểm tra quyền truy cập thiết bị.";
+          }
+        });
+
+        captureCameraBtn?.addEventListener("click", async () => {
+          if (!cameraPreview || !cameraPreview.videoWidth) return;
+
+          const ctx = cameraSnapshot.getContext("2d");
+
+          // Đặt kích thước canvas chụp khớp 100% với camera thực tế
+          cameraSnapshot.width = cameraPreview.videoWidth;
+          cameraSnapshot.height = cameraPreview.videoHeight;
+
+          // Vẽ hình từ luồng video trực tiếp lên canvas
+          ctx.drawImage(
+            cameraPreview,
+            0,
+            0,
+            cameraSnapshot.width,
+            cameraSnapshot.height,
+          );
+
+          // Hoán đổi trạng thái: Hiện ảnh tĩnh, ẩn khung video động
+          cameraSnapshot.style.display = "block";
+          cameraPreview.style.display = "none";
+
+          cameraStatus.textContent =
+            "Đã chụp ảnh! Đang gửi đến AI xử lý...";
+
+          // ─── GỬI ẢNH CHỤP LÊN BACKEND ───
+          const canvasData = cameraSnapshot.toDataURL("image/jpeg", 0.85);
+          await sendCameraImage(canvasData);
+        });
+
+        // Hàm phụ bổ trợ tắt luồng camera
+        function stopCamera() {
+          if (stream) {
+            stream.getTracks().forEach((track) => track.stop());
+            stream = null;
+          }
+          if (cameraPreview) {
+            cameraPreview.srcObject = null;
+            cameraPreview.style.display = "none";
+          }
+          if (cameraSnapshot) {
+            cameraSnapshot.style.display = "none";
+          }
+          if (startCameraBtn) {
+            startCameraBtn.textContent = "Bật camera";
+            startCameraBtn.classList.replace("btn-danger", "btn-secondary");
+          }
+          if (captureCameraBtn) {
+            captureCameraBtn.disabled = true;
+          }
+          cameraStatus.textContent = "Nhấn 'Bật camera' để mở camera.";
+        }
+
+        /* ========================================================
+     5. TẮT SẠCH CAMERA KHI NGƯỜI DÙNG ĐÓNG MODAL
+  ======================================================== */
+        document
+          .getElementById("advancedSearchModal")
+          ?.addEventListener("hidden.bs.modal", () => {
+            stopCamera();
+
+            // Reset luôn cả phần xem trước ảnh khi đóng modal nếu cần
+            if (imageUploadInput) imageUploadInput.value = "";
+            if (imagePreview) imagePreview.style.display = "none";
+            if (previewEmptyText) previewEmptyText.style.display = "block";
+            imageSearchResult.textContent =
+              "Upload ảnh để tìm kiếm sản phẩm tương tự.";
+          });
+      });
+
+      // ========================================================
+      // API CONFIG (defined at top of script)
+      // ==========================================
+
+      // ========================================================
+      // AI RESULTS PAGE CONFIG
+      // ========================================================
+      function buildAISearchResultsUrl(count, searchId = '') {
+        const base = 'http://127.0.0.1:5000/TrangDanhMucSanPham/TrangSanPham.html';
+        const params = new URLSearchParams({ ai_search: '1', count: String(count), t: String(Date.now()) });
+        if (searchId) params.set('search_id', searchId);
+        return `${base}?${params.toString()}`;
+      }
+
+      function goToAISearchResults(results, options = {}) {
+        try {
+          const safeResults = (Array.isArray(results) ? results : []).slice(0, 20);
+          const meta = {
+            processingTime: options.processingTime || null,
+            detections: (options.detections || []).slice(0, 10),
+            topLabel: options.topLabel || '',
+            queryImage: (options.queryImage || '').substring(0, 50000),
+            ts: Date.now(),
+          };
+
+          // Encode payload vào fragment để tránh Flask routing
+          const jsonStr = JSON.stringify({ results: safeResults, meta });
+          const encoded = btoa(unescape(encodeURIComponent(jsonStr)));
+          const url = buildAISearchResultsUrl(safeResults.length, options.searchId || '') + '#data=' + encoded;
+
+          console.log('[AI SEARCH] === NAVIGATING ===');
+          console.log('[AI SEARCH] URL:', url);
+          console.log('[AI SEARCH] Length:', url.length);
+
+          // Chuyển trang — dùng replace không thêm vào history
+          window.location.replace(url);
+        } catch (err) {
+          console.error('[AI SEARCH] Error:', err);
+          alert('Lỗi: ' + err.message);
+        }
+      }
+
+      // ========================================================
+      // FORMAT PRICE
+      // ========================================================
+      function formatPrice(num) {
+        if (num == null || isNaN(num)) return '0 đ';
+        return new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND', maximumFractionDigits: 0 }).format(num);
+      }
+
+      // ========================================================
+      // AI SEARCH — CAMERA
+      // ========================================================
+      async function sendCameraImage(base64Image) {
+        try {
+          const response = await fetch(`${API_BASE}/ai/search-base64`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ image: base64Image })
+          });
+          const data = await response.json();
+
+          if (data.success && data.data) {
+            const d = data.data;
+
+            if (d.detections && d.detections.length > 0) {
+              const labels = d.detections.map(x => `${x.label} (${(x.confidence * 100).toFixed(0)}%)`).join(', ');
+              cameraStatus.innerHTML = `<span style="color:#1E4D36">✓ Phát hiện: <strong>${labels}</strong></span>`;
+            } else {
+              cameraStatus.innerHTML = `<span style="color:#fd7e14">⚠ Không phát hiện đồ nội thất. Hiện sản phẩm gợi ý...</span>`;
+            }
+
+            const searchId = (d && d.searchId) || '';
+            const results = d.results || [];
+            console.log('[Camera AI] Results:', results.length, 'items');
+            goToAISearchResults(results, {
+              searchId,
+              processingTime: d.processingTime || null,
+              detections: d.detections || [],
+              topLabel: d.topLabel || '',
+              queryImage: d.queryImage || '',
+            });
+            return;
+          } else {
+            console.log('[Camera AI] No success data, storing empty');
+            goToAISearchResults([], {
+              processingTime: null,
+              detections: [],
+              topLabel: '',
+              queryImage: '',
+            });
+            return;
+          }
+        } catch (error) {
+          console.error('[Camera AI] Error:', error);
+          goToAISearchResults([], {
+            processingTime: null,
+            detections: [],
+            topLabel: '',
+            queryImage: '',
+          });
+          return;
+        }
+      }
+
+      // ========================================================
+      // AI SEARCH — RENDER RESULTS
+      // ========================================================
+      function renderAISearchResults(results, processingTime, prefix) {
+        const container = document.getElementById(`${prefix}SearchResults`);
+        const listEl = document.getElementById(`${prefix}SearchResultsList`);
+        const countEl = document.getElementById(`${prefix}SearchCount`);
+        const timeEl = document.getElementById(`${prefix}SearchTime`);
+
+        if (!container || !listEl) return;
+
+        // Header
+        const totalMs = processingTime?.total_ms || 0;
+        const yoloMs = processingTime?.yolo_ms || 0;
+        const vitMs = processingTime?.vit_ms || 0;
+        if (countEl) countEl.textContent = `Tìm thấy ${results.length} sản phẩm tương tự`;
+        if (timeEl) timeEl.textContent = `YOLO ${yoloMs}ms | ViT ${vitMs}ms | Tổng ${totalMs}ms`;
+
+        // Grid sản phẩm
+        let html = '<div class="row g-3">';
+        results.forEach(sp => {
+          const giaSauGiam = sp.giaSauGiam || sp.giaBan || 0;
+          const giaGoc = sp.giaGoc || sp.giaBan || 0;
+          const khuyenMai = sp.khuyenMai || 0;
+          const simScore = sp.similarityScore || sp.similarity || 0;
+          const simPct = (simScore * 100).toFixed(1);
+          const imgSrc = sp.hinhAnh || FALLBACK_IMG;
+          const spLink = `../TrangChiTiet/TrangChiTiet.html?id=${sp.id || sp.MaSP}`;
+
+          html += `
+            <div class="col-6 col-md-4 col-lg-3">
+              <div class="ai-product-card">
+                <div class="ai-img-wrap">
+                  <a href="${spLink}">
+                    <img src="${imgSrc}" alt="${sp.tenSP || sp.TenSP || ''}" class="ai-product-img" onerror="this.src='${FALLBACK_LOGO}'">
+                  </a>
+                  ${khuyenMai > 0 ? `<span class="ai-discount-badge">-${khuyenMai}%</span>` : ''}
+                  <div class="ai-sim-score">
+                    <i class="bi bi-lightning-charge-fill"></i> ${simPct}%
+                  </div>
+                </div>
+                <div class="ai-product-info">
+                  <a href="${spLink}" class="ai-product-name">${sp.tenSP || sp.TenSP || ''}</a>
+                  <div class="ai-product-price">
+                    ${giaSauGiam > 0 ? `<span class="ai-price-sale">${formatPrice(giaSauGiam)}</span>` : ''}
+                    ${giaGoc > giaSauGiam ? `<span class="ai-price-original">${formatPrice(giaGoc)}</span>` : ''}
+                  </div>
+                </div>
+              </div>
+            </div>`;
+        });
+        html += '</div>';
+        listEl.innerHTML = html;
+        container.style.display = 'block';
+      }
+
+      // ═══ HIỆN POPUP KẾT QUẢ AI SEARCH ═══
+      function showAISearchResultsModal(results, processingTime, errorMsg) {
+        const body = document.getElementById('aiSearchResultsBody');
+        const timeEl = document.getElementById('aiSearchProcessingTime');
+
+        if (errorMsg) {
+          body.innerHTML = `
+            <div class="text-center py-4">
+              <i class="bi bi-exclamation-triangle" style="font-size:3rem;color:#dc3545;"></i>
+              <p class="mt-3 text-danger">${errorMsg}</p>
+              <small class="text-muted">Vui lòng kiểm tra server đang chạy và thử lại.</small>
+            </div>`;
+        } else if (results && results.length > 0) {
+          let html = `
+            <div class="row g-3">`;
+          results.forEach(sp => {
+            const giaSauGiam = sp.giaSauGiam || sp.giaBan || 0;
+            const giaGoc = sp.giaGoc || sp.giaBan || 0;
+            const khuyenMai = sp.khuyenMai || 0;
+            const simScore = sp.similarityScore || sp.similarity || 0;
+            const simPct = (simScore * 100).toFixed(1);
+            const imgSrc = sp.hinhAnh || FALLBACK_IMG;
+            const spLink = `../TrangChiTiet/TrangChiTiet.html?id=${sp.id || sp.MaSP}`;
+
+            html += `
+              <div class="col-6 col-md-4 col-lg-3">
+                <div class="ai-product-card">
+                  <div class="ai-img-wrap">
+                    <a href="${spLink}" target="_blank">
+                      <img src="${imgSrc}" alt="${sp.tenSP || sp.TenSP || ''}" class="ai-product-img" onerror="this.src='${FALLBACK_LOGO}'">
+                    </a>
+                    ${khuyenMai > 0 ? `<span class="ai-discount-badge">-${khuyenMai}%</span>` : ''}
+                    <div class="ai-sim-score">
+                      <i class="bi bi-lightning-charge-fill"></i> ${simPct}%
+                    </div>
+                  </div>
+                  <div class="ai-product-info">
+                    <a href="${spLink}" target="_blank" class="ai-product-name">${sp.tenSP || sp.TenSP || ''}</a>
+                    <div class="ai-product-price">
+                      ${giaSauGiam > 0 ? `<span class="ai-price-sale">${formatPrice(giaSauGiam)}</span>` : ''}
+                      ${giaGoc > giaSauGiam ? `<span class="ai-price-original">${formatPrice(giaGoc)}</span>` : ''}
+                    </div>
+                  </div>
+                </div>
+              </div>`;
+          });
+          html += `</div>`;
+          body.innerHTML = html;
+
+          if (timeEl) {
+            const totalMs = processingTime?.total_ms || 0;
+            const yoloMs = processingTime?.yolo_ms || 0;
+            const vitMs = processingTime?.vit_ms || 0;
+            timeEl.textContent = `YOLO ${yoloMs}ms | ViT ${vitMs}ms | Tổng ${totalMs}ms`;
+          }
+        } else {
+          body.innerHTML = `
+            <div class="text-center py-4">
+              <i class="bi bi-search" style="font-size:3rem;color:#aaa;"></i>
+              <p class="mt-3 text-muted">Không tìm thấy sản phẩm tương tự.</p>
+              <small class="text-muted">Thử tải lên ảnh rõ hơn hoặc ảnh có đồ nội thất rõ ràng.</small>
+            </div>`;
+        }
+
+        // Hiện popup
+        const modalEl = document.getElementById('aiSearchResultsModal');
+        const modal = new bootstrap.Modal(modalEl);
+        modal.show();
+      }
+
+      // ========================================================
+      // DEFAULT BANNERS (fallback when API fails or no data)
+      // ========================================================
+      const DEFAULT_BANNERS = [
+        { DuongDanAnh: 'http://localhost:5000/Pic/Pic_TrangChu/Pic_Carousel/Carousel5.jpg', TenBanner: 'Sale Lon Muа Hè', LinkDen: '../TrangDanhMucSanPham/TrangSanPham.html', ChuThich: 'GIAM DEN 60%' },
+        { DuongDanAnh: 'http://localhost:5000/Pic/Pic_TrangChu/Pic_Carousel/Carousel6.jpg', TenBanner: 'Noi That Phong Khach', LinkDen: '../TrangDanhMucSanPham/TrangSanPham.html?phong=phong-khach', ChuThich: 'NOI THAT PHONG KHACH' },
+        { DuongDanAnh: 'http://localhost:5000/Pic/Pic_TrangChu/Pic_Carousel/Carousel7.jpg', TenBanner: 'Ngoai Troi Giam 40%', LinkDen: '../TrangDanhMucSanPham/TrangSanPham.html?phong=ngoai-troi', ChuThich: 'NGOAI TROI GIAM 40%' },
+      ];
+
+      // ========================================================
+      // DEFAULT PRODUCTS (fallback)
+      // ========================================================
+      const DEFAULT_PRODUCTS = [
+        { MaSP: 1, TenSP: 'Sofa Vải Nhung 3 Chỗ Màu Xanh Navy', GiaBan: 8500000, GiaGoc: 9500000, KhuyenMai: 10, HinhAnh: 'http://localhost:5000/Pic/Pic_SanPham/Sofa/Sofa01.jpg' },
+        { MaSP: 2, TenSP: 'Sofa Da Cao Cấp 3 Chỗ', GiaBan: 13500000, GiaGoc: 15000000, KhuyenMai: 10, HinhAnh: 'http://localhost:5000/Pic/Pic_SanPham/Sofa/Sofa01.jpg' },
+        { MaSP: 11, TenSP: 'Giường Ngủ Đôi Khung Gỗ Sồi', GiaBan: 15900000, GiaGoc: 18000000, KhuyenMai: 11, HinhAnh: 'http://localhost:5000/Pic/Pic_SanPham/Sofa/Sofa01.jpg' },
+        { MaSP: 15, TenSP: 'Ga Giường Cotton 100% King Size', GiaBan: 950000, GiaGoc: 1200000, KhuyenMai: 20, HinhAnh: 'http://localhost:5000/Pic/Pic_SanPham/Ban/Ban01.jpg' },
+        { MaSP: 17, TenSP: 'Đèn Bàn Ngủ LED Cảm Ứng', GiaBan: 520000, GiaGoc: 650000, KhuyenMai: 20, HinhAnh: 'http://localhost:5000/Pic/Pic_SanPham/Ghe/Ghe01.jpg' },
+        { MaSP: 18, TenSP: 'Bàn Ăn Gỗ Tự Nhiên 6 Chỗ', GiaBan: 10500000, GiaGoc: 12000000, KhuyenMai: 12, HinhAnh: 'http://localhost:5000/Pic/Pic_SanPham/Ban/Ban02.jpg' },
+        { MaSP: 20, TenSP: 'Bàn Làm Việc Có Ngăn Kéo', GiaBan: 3900000, GiaGoc: 4500000, KhuyenMai: 13, HinhAnh: 'http://localhost:5000/Pic/Pic_SanPham/Ghe/Ghe02.jpg' },
+        { MaSP: 21, TenSP: 'Ghế Văn Phòng Lưng Lưới Mesh', GiaBan: 2700000, GiaGoc: 3200000, KhuyenMai: 15, HinhAnh: 'http://localhost:5000/Pic/Pic_SanPham/Sofa/Sofa01.jpg' },
+        { MaSP: 23, TenSP: 'Tranh Canvas Phong Cảnh 3 Mảnh', GiaBan: 680000, GiaGoc: 850000, KhuyenMai: 20, HinhAnh: 'http://localhost:5000/Pic/Pic_SanPham/Ban/Ban01.jpg' },
+        { MaSP: 25, TenSP: 'Cây Giả Trang Trí Xương Rồng Mix', GiaBan: 350000, GiaGoc: 420000, KhuyenMai: 16, HinhAnh: 'http://localhost:5000/Pic/Pic_SanPham/Ghe/Ghe01.jpg' },
+      ];
+
+      // ========================================================
+      // RENDER DEAL CARD
+      // ========================================================
+      function renderDealCard(sp) {
+        const badge = sp.KhuyenMai > 0 ? `GIAM ${sp.KhuyenMai}%` : 'HOTS';
+        const img = sp.HinhAnh && sp.HinhAnh !== 'null' ? sp.HinhAnh : FALLBACK_IMG;
+        return `
+        <li class="deal-item">
+          <a href="../TrangChiTiet/TrangChiTiet.html?id=${sp.MaSP}" class="deal-link">
+            <div class="deal-badge">${badge}</div>
+            <div class="deal-image-box">
+              <img src="${img}" alt="${sp.TenSP}" class="deal-img" onerror="this.onerror=null; this.src='${FALLBACK_IMG}'" />
+            </div>
+            <div class="deal-info">
+              <h3 class="deal-title">${sp.TenSP}</h3>
+              <div class="deal-price">
+                <span class="new-price">${formatPrice(sp.GiaBan)}</span>
+                ${sp.GiaGoc > sp.GiaBan ? `<span class="old-price">${formatPrice(sp.GiaGoc)}</span>` : ''}
+              </div>
+            </div>
+          </a>
+        </li>`;
+      }
+
+      // ========================================================
+      // RENDER BANNERS (Carousel) with fallback
+      // ========================================================
+      async function loadBanners() {
+        try {
+          const res = await fetch(`${API_BASE}/banners/?type=carousel`);
+          if (!res.ok) throw new Error('HTTP ' + res.status);
+          const json = await res.json();
+          const data = (json.success && json.data && json.data.length) ? json.data : DEFAULT_BANNERS;
+
+          const indicators = document.querySelector('.carousel-indicators.custom-indicators');
+          if (indicators) {
+            indicators.innerHTML = data.map((b, i) =>
+              `<button type="button" data-bs-target="#ashleyHeroCarousel" data-bs-slide-to="${i}" ${i === 0 ? 'class="active" aria-current="true"' : ''}></button>`
+            ).join('');
+          }
+
+          const inner = document.querySelector('#ashleyHeroCarousel .carousel-inner');
+          if (inner) {
+            inner.innerHTML = data.map((b, i) => `
+              <div class="carousel-item ${i === 0 ? 'active' : ''}">
+                <a href="${b.LinkDen || '#'}">
+                  <img src="${b.DuongDanAnh}" class="d-block w-100 hero-bg-img" alt="${b.TenBanner || ''}" onerror="this.onerror=null; this.src='${FALLBACK_IMG}'" />
+                </a>
+              </div>`).join('');
+          }
+        } catch (e) {
+          console.warn('Banners load failed, using default:', e);
+          // Use default banners on error
+          const data = DEFAULT_BANNERS;
+          const indicators = document.querySelector('.carousel-indicators.custom-indicators');
+          if (indicators) {
+            indicators.innerHTML = data.map((b, i) =>
+              `<button type="button" data-bs-target="#ashleyHeroCarousel" data-bs-slide-to="${i}" ${i === 0 ? 'class="active" aria-current="true"' : ''}></button>`
+            ).join('');
+          }
+          const inner = document.querySelector('#ashleyHeroCarousel .carousel-inner');
+          if (inner) {
+            inner.innerHTML = data.map((b, i) => `
+              <div class="carousel-item ${i === 0 ? 'active' : ''}">
+                <a href="${b.LinkDen || '#'}">
+                  <img src="${b.DuongDanAnh}" class="d-block w-100 hero-bg-img" alt="${b.TenBanner || ''}" onerror="this.onerror=null; this.src='${FALLBACK_IMG}'" />
+                </a>
+              </div>`).join('');
+          }
+        }
+      }
+
+      // ========================================================
+      // INIT DEALS SCROLL
+      // ========================================================
+      function initDealsScroll(section) {
+        const container = section.querySelector('.deals-container');
+        const prevBtn = section.querySelector('.btn-prev');
+        const nextBtn = section.querySelector('.btn-next');
+        const thumb = section.querySelector('.deals-scrollbar-thumb');
+        if (!container || !prevBtn || !nextBtn || !thumb) return;
+
+        function getScrollAmount() {
+          const first = container.querySelector('.deal-item');
+          return first ? first.offsetWidth + 4 : container.offsetWidth;
+        }
+
+        nextBtn.addEventListener('click', () => container.scrollBy({ left: getScrollAmount(), behavior: 'smooth' }));
+        prevBtn.addEventListener('click', () => container.scrollBy({ left: -getScrollAmount(), behavior: 'smooth' }));
+
+        function updateScrollbar() {
+          const maxScroll = container.scrollWidth - container.clientWidth;
+          const pct = maxScroll > 0 ? container.scrollLeft / maxScroll : 0;
+          const maxMove = thumb.parentElement.offsetWidth - thumb.offsetWidth;
+          thumb.style.transform = `translateX(${pct * maxMove}px)`;
+        }
+
+        container.addEventListener('scroll', updateScrollbar);
+        window.addEventListener('resize', updateScrollbar);
+        updateScrollbar();
+      }
+
+      // ========================================================
+      // RENDER DEALS CAROUSEL FROM API with fallback
+      // ========================================================
+      async function renderDealsCarousel(section, params) {
+        const container = section.querySelector('.deals-container');
+        if (!container) return;
+
+        let products = DEFAULT_PRODUCTS;
+
+        try {
+          const url = new URL(`${API_BASE}/products/`);
+          Object.entries(params).forEach(([k, v]) => url.searchParams.set(k, v));
+          url.searchParams.set('per_page', '20');
+
+          const res = await fetch(url.toString());
+          if (res.ok) {
+            const json = await res.json();
+            if (json.success && json.data && json.data.length) {
+              products = json.data;
+            }
+          }
+        } catch (e) {
+          console.warn('Deals API failed, using defaults:', e);
+        }
+
+        container.innerHTML = products.map(renderDealCard).join('');
+        initDealsScroll(section);
+      }
+
+      // ========================================================
+      // UPDATE CART BADGE
+      // ========================================================
+      function updateCartBadge() {
+        const cart = JSON.parse(localStorage.getItem('cart') || '[]');
+        const badge = document.getElementById('cartBadge');
+        if (badge) badge.textContent = cart.reduce((s, i) => s + (i.SoLuong || 1), 0);
+      }
+
+      // ========================================================
+      // DEBUG LOG on screen
+      // ========================================================
+      function showDebug(msg) {
+        const el = document.getElementById('debugLog');
+        if (!el) return;
+        el.innerHTML += msg + '<br/>';
+        el.scrollTop = el.scrollHeight;
+      }
+      function clearDebug() {
+        const el = document.getElementById('debugLog');
+        if (el) { el.innerHTML = ''; el.style.display = 'none'; }
+      }
+
+      // ========================================================
+      // UPDATE AUTH STATE (login/logout button)
+      // ========================================================
+      function updateAuthState() {
+        const token = localStorage.getItem('access_token');
+        const userStr = localStorage.getItem('user');
+        const authSection = document.getElementById('authSection');
+        if (!authSection) return;
+
+        // Validate: cả token VÀ user phải hợp lệ mới hiện đăng xuất
+        let isLoggedIn = false;
+        if (token && userStr) {
+          try {
+            const user = JSON.parse(userStr);
+            if (user && user.MaND) isLoggedIn = true;
+          } catch (e) {
+            // user lỗi JSON → clear hết
+            localStorage.removeItem('access_token');
+            localStorage.removeItem('refresh_token');
+            localStorage.removeItem('user');
+          }
+        }
+
+        if (isLoggedIn) {
+          const user = JSON.parse(userStr);
+          authSection.innerHTML = `
+            <div class="d-flex align-items-center gap-2">
+              <span class="text-white small">Xin chào, ${user.HoTen || user.TenDangNhap}</span>
+              <button class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#logoutConfirmModal">Đăng xuất</button>
+            </div>`;
+        } else {
+          authSection.innerHTML = `<a href="../Login/DangNhap.html" class="btn-login-link"><button type="button" class="btn-login">Đăng nhập</button></a>`;
+        }
+      }
+
+      function performLogout() {
+        const token = localStorage.getItem('access_token');
+        if (!token) return;
+
+        fetch(API_BASE + '/auth/logout', { method: 'POST' }).catch(() => {});
+        localStorage.removeItem('access_token');
+        localStorage.removeItem('refresh_token');
+        localStorage.removeItem('user');
+
+        const modalEl = document.getElementById('logoutConfirmModal');
+        if (modalEl) {
+          const m = bootstrap && bootstrap.Modal ? bootstrap.Modal.getInstance(modalEl) : null;
+          if (m) m.hide();
+          modalEl.classList.remove('show');
+          modalEl.style.display = 'none';
+          document.body.classList.remove('modal-open');
+          document.querySelectorAll('.modal-backdrop').forEach(el => el.remove());
+        }
+
+        updateAuthState();
+        updateCartBadge();
+        window.location.href = 'TrangChu.html';
+      }
+      window.performLogout = performLogout;
+
+      function logout() { performLogout(); }
+      window.logout = logout;
+
+      // ========================================================
+      // LOAD ON PAGE READY
+      // ========================================================
+      document.addEventListener('DOMContentLoaded', () => {
+        loadBanners();
+        updateCartBadge();
+        updateAuthState();
+
+        // Map the 2 deals sections on the page
+        const dealsSections = document.querySelectorAll('.deals-section');
+        renderDealsCarousel(dealsSections[0], { ban_chay: 1 });
+        if (dealsSections[1]) renderDealsCarousel(dealsSections[1], { khuyen_mai: 1 });
+
+        // Re-init all scroll controls
+        document.querySelectorAll('.deals-section').forEach(initDealsScroll);
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trang Chi Tiết</title>
+    <link rel="stylesheet" href="../CSS/all.min.css">
+    <link rel="stylesheet" href="../CSS/bootstrap.min.css">
+    <link rel="stylesheet" href="CssTrangChiTiet.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="../JS/all.min.js">
+    <script src="../JS/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <header class="site-header">
+        <div class="container header-inner">
+            <div>
+                <a href="../TrangChu/TrangChu.html" class="logoMenu"><img src="../Pic/Pic_LogoShop/logoNoiThatXin.png" alt="NoiThatXinh" style="max-width:200px;height:auto;"></a>
+            </div>
+          
+            <nav class="main-nav">
+                <a href="../TrangChu/TrangChu.html">Trang chủ</a>
+
+                <div class="dropdown">
+                    <a href="../TrangDanhMucSanPham/TrangSanPham.html" class="dropbtn">Danh mục ▾</a>
+                    <div class="dropdown-content">
+                        <ul class="menu">
+                            <li><a href="../TrangDanhMucSanPham/TrangSanPham.html?phong=phong-khach">Phòng khách</a></li>
+                            <li><a href="../TrangDanhMucSanPham/TrangSanPham.html?phong=phong-ngu">Phòng ngủ</a></li>
+                            <li><a href="../TrangDanhMucSanPham/TrangSanPham.html?phong=phong-bep">Phòng bếp</a></li>
+                            <li><a href="../TrangDanhMucSanPham/TrangSanPham.html?phong=phong-tam">Phòng tắm</a></li>
+                            <li><a href="../TrangDanhMucSanPham/TrangSanPham.html?phong=ngoai-troi">Ngoài trời</a></li>
+                            <li><a href="../TrangDanhMucSanPham/TrangSanPham.html?ma_danh_muc=sofa">Sofa</a></li>
+                            <li><a href="../TrangDanhMucSanPham/TrangSanPham.html?ma_danh_muc=giuong">Giường</a></li>
+                            <li><a href="../TrangDanhMucSanPham/TrangSanPham.html?ma_danh_muc=ban">Bàn</a></li>
+                            <li><a href="../TrangDanhMucSanPham/TrangSanPham.html?ma_danh_muc=ghe">Ghế</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="dropdown">
+                    <a href="../TrangDanhMucSanPham/TrangSanPham.html?phong=phong-khach" class="dropbtn">Phòng khách ▾</a>
+                    <div class="dropdown-content">
+                        <ul class="menu">
+                            <li><a href="../TrangDanhMucSanPham/TrangSanPham.html?phong=phong-khach">Xem tất cả</a></li>
+                            <li><a href="../TrangDanhMucSanPham/TrangSanPham.html?phong=phong-khach&ma_danh_muc=sofa">Sofa</a></li>
+                            <li><a href="../TrangDanhMucSanPham/TrangSanPham.html?phong=phong-khach&ma_danh_muc=ban">Bàn</a></li>
+                            <li><a href="../TrangDanhMucSanPham/TrangSanPham.html?phong=phong-khach&ma_danh_muc=ghe">Ghế</a></li>
+                            <li><a href="../TrangDanhMucSanPham/TrangSanPham.html?phong=phong-khach&ma_danh_muc=tu">Tủ</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="dropdown">
+                    <a href="../TrangDanhMucSanPham/TrangSanPham.html?phong=phong-ngu" class="dropbtn">Phòng ngủ ▾</a>
+                    <div class="dropdown-content">
+                        <ul class="menu">
+                            <li><a href="../TrangDanhMucSanPham/TrangSanPham.html?phong=phong-ngu">Xem tất cả</a></li>
+                            <li><a href="../TrangDanhMucSanPham/TrangSanPham.html?phong=phong-ngu&ma_danh_muc=giuong">Giường</a></li>
+                            <li><a href="../TrangDanhMucSanPham/TrangSanPham.html?phong=phong-ngu&ma_danh_muc=ban">Bàn</a></li>
+                            <li><a href="../TrangDanhMucSanPham/TrangSanPham.html?phong=phong-ngu&ma_danh_muc=ghe">Ghế</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <a href="../TrangGioiThieu/TrangGioiThieu.html">Giới thiệu</a>
+                <a href="../TrangLienHe/TrangLienHe.html">Liên hệ</a>
+            </nav>
+
+            <div class="d-flex align-items-center gap-3">
+                <a href="../TrangThanhToan/GioHang.html" class="btn border">
+                    <i class="bi bi-cart3 text-white"></i>
+                    <span class="badge" id="cartBadge">0</span>
+                </a>
+                <span id="authSection">
+                    <a href="../Login/DangNhap.html">
+                        <button type="button" class="btn btn-success">Đăng nhập</button>
+                    </a>
+                </span>
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+        <div id="product-not-found" class="alert alert-warning text-center my-5 d-none">
+            <h4>Không tìm thấy sản phẩm</h4>
+        </div>
+
+        <div id="product-error" class="alert alert-danger text-center my-5 d-none">
+            <h4>Đã xảy ra lỗi khi tải sản phẩm</h4>
+        </div>
+
+        <div id="product-content">
+            <div class="row product-title-container">
+                <h1 id="product-title" class="product-title"></h1>
+            </div>
+
+            <div class="row product g-4">
+                <div class="col-6">
+                    <div class="product-image">
+                        <img id="product-image" src="" alt="Product Image">
+                    </div>
+                    <div id="product-description" class="product-description mt-5"></div>
+
+                    <div class="product-related">
+                        <h3 class="fw-bold mb-4">CÓ THỂ BẠN THÍCH..</h3>
+                        <div class="product d-flex flex-wrap" id="related-products">
+                            <!-- Related products will be loaded here -->
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="product-price">
+                        <div class="d-flex">
+                            <h2 id="product-price" class="card-text text-danger fw-bold"></h2>
+                            <h5 id="product-old-price" class="card-text text-decoration-line-through ps-2"></h5>
+                        </div>
+                    </div>
+                    
+                    <div class="product-details mt-3">
+                        <p><strong>Thương hiệu:</strong> <span id="product-brand"></span></p>
+                        <p><strong>Xuất xứ:</strong> <span id="product-origin"></span></p>
+                        <p><strong>Chất liệu:</strong> <span id="product-material"></span></p>
+                        <p><strong>Màu sắc:</strong> <span id="product-color"></span></p>
+                        <p><strong>Kích thước:</strong> <span id="product-dimensions"></span></p>
+                        <p><strong>Trọng lượng:</strong> <span id="product-weight"></span></p>
+                        <p><strong>Bảo hành:</strong> <span id="product-warranty"></span></p>
+                    </div>
+                
+                    <div class="d-flex">
+                        <div class="product-add-to-cart">
+                            <input type="button" value="-" class="minus-button">
+                            <input type="number" id="product-quantity" class="quantity-input" step="1" min="1" max="" value="1" size="4" placeholder="" inputmode="numeric">
+                            <input type="button" value="+" class="plus-button">
+                        </div>
+                        <div class="btn-add-to-cart">
+                            <button type="button" id="btn-add-to-cart"><i class="bi bi-cart3"></i><br><span>THÊM VÀO GIỎ HÀNG</span></button>
+                        </div>
+                    </div>
+                    <div class="btn-add-to-buy">
+                        <button type="submit">
+                            <span class="main-text-add-to-buy">MUA NGAY</span>
+                            <span class="sub-text-add-to-buy">(GIAO HÀNG MIỄN PHÍ HOẶC NHẬN TẠI CỬA HÀNG)</span>
+                        </button>
+                    </div>
+                    <div class="discount-area">
+                        <div class="item-discount-name">
+                            <p class="fw-bold text-white">ƯU ĐÃI THÊM:</p>
+                        </div>
+                        <div class="item-discount-pic">
+                            <img src="../Pic/Pic_TrangChu/Pic_GiamGia/BannerUuDai.png" alt="BannerUuDai">
+                        </div>
+                        <div class="item-discount-description">
+                            <ul>
+                                <li><i class="bi bi-check-circle-fill"></i>[1] Miễn phí giao hàng nội thành cho đơn từ <span class="fw-bold">2.000.000đ</span></li>
+                                <li><i class="bi bi-check-circle-fill"></i>[2] Giảm thêm 5% khi mua từ 3 sản phẩm trở lên</li>
+                                <li><i class="bi bi-check-circle-fill"></i>[3] Bảo hành 24 tháng, đổi trả trong 30 ngày</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-7">
+                    <div class="product-comment">
+                        <div class="comment-title">
+                            <h5 id="review-title" class="fw-bold" style="font-size: medium;"></h5>
+                        </div>
+                        <div class="row comment-star">
+                            <div class="col-5 left-col-comment-star">
+                                <div class="first-line-comment ">
+                                    <i class="bi bi-star-fill "></i>
+                                    <h3 id="avg-rating" class="fw-bold">0.0</h3>
+                                    <p class="text-secondary ">/5</p>
+                                </div>
+                                <div class="second-line-comment ">
+                                    <p id="satisfied-customers" class="m-0">0 khách hàng hài lòng</p>
+                                </div>
+                                <div class="third-line-comment ">
+                                    <p id="total-reviews" class="text-secondary">0 đánh giá</p>
+                                </div>
+                            </div>
+                            <div class="col-7 p-0">
+                                <ul id="rating-breakdown" class="rate-list p-0 m-0">
+                                    <!-- Rating breakdown will be populated by JS -->
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="comment-user">
+                            <ul id="review-list" class="comment-list">
+                                <!-- Reviews will be loaded here -->
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-5">
+                </div>
+            </div>
+        </div>
+
+        <!--Phần sản phẩm liên quan (loaded dynamically by JS)-->
+        <div class="row g-3 mt-3 list-product-related" id="related-products-section" style="display:none;">
+            <h3 class="fw-bold">SẢN PHẨM LIÊN QUAN</h3>
+            <div id="related-products" class="d-flex flex-wrap gap-3"></div>
+        </div>
+    </main>
+
+    <!-- Modal xác nhận đăng xuất -->
+    <div class="modal fade" id="logoutConfirmModal" tabindex="-1" aria-labelledby="logoutConfirmLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="logoutConfirmLabel">Xác nhận đăng xuất</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Đóng"></button>
+                </div>
+                <div class="modal-body">
+                    Bạn có chắc muốn đăng xuất?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Không</button>
+                    <button type="button" class="btn btn-danger" id="confirmLogoutBtn">Có</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="row mt-5 pb-5">
+            <div class="col-4 text-center">
+                <div class="row">
+                        <h4 class="fw-bold">Thông tin liên hệ</h4>
+                        <p><span class="fw-bold">Hotline:  </span> 0909 123456  <br>
+                        <span class="fw-bold">Email: </span>noithatxinh@gmail.com <br>
+                          </p>
+                        <h5 class="fw-bold">Phương thức thanh toán</h5>
+                        <div class="row mb-3">
+                            <div >
+                                <a href="#"><img src="../Pic/Pic_PThucThanhToan/LogoMomo.jpg" id="img_DoiTac" alt="payoo"></a>
+                                <a href="#"><img src="../Pic/Pic_PThucThanhToan/LogoVisa.jpg" id="img_DoiTac" alt="momo"></a>
+                                <a href="#"><img src="../Pic/Pic_PThucThanhToan/LogoZaloPay.jpg" id="img_DoiTac" alt="zaloPay"></a>
+                                <a href="#"><img src="../Pic/Pic_PThucThanhToan/LogoVNPay.jpg" id="img_DoiTac" alt="vnPay"></a>
+                            </div>
+                        </div>
+
+                        <h5 class="fw-bold">Kết Nối Với Chúng Tôi</h5>
+                        <div class="row ">
+                            <div>
+                                <a href="#"><img src="../Pic/Pic_LogoLKetNoi/LogoFacebook.jpg" id="img_DoiTac" alt="LogoFacebook"></a>
+                                <a href="#"><img src="../Pic/Pic_LogoLKetNoi/LogoTwitter.jpg" id="img_DoiTac" alt="LogoTwitter"></a>
+                                <a href="#"><img src="../Pic/Pic_LogoLKetNoi/LogoTiktok.jpg" id="img_DoiTac" alt="LogoTiktok"></a>
+                                <a href="#"><img src="../Pic/Pic_LogoLKetNoi/LogoYoutube.jpg" id="img_DoiTac" alt="LogoYoutube"></a>
+                            </div>
+                        </div>
+                    </div>
+            </div>
+            <div class="col-4 text-center">
+                <div class="row">
+                     <h4 class="fw-bold">Thông tin và chính sách</h4>
+                    <div class=" mt-2 ThongTin">
+                        <p><a href="#" class="text-decoration-none">Hướng Dẫn Mua Hàng</a></p>
+                        <p><a href="#" class="text-decoration-none">Chính Sách Giao Hàng</a></p>
+                        <p><a href="#" class="text-decoration-none">Chính Sách Bảo Hành</a></p>
+                        <p><a href="#" class="text-decoration-none">Chính Sách Bảo Mật</a></p>
+                        <p><a href="#" class="text-decoration-none">Chính Sách Đổi Trả Hàng</a></p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-4 text-center">
+                <div class="row">
+                    <h4 class="fw-bold">Đối tác</h4>
+                    <div class="mt-2 ThongTin">
+                        <p><a href="#" class="text-decoration-none">CH1: 140 Lê Trọng Tấn, Phường Tây Thạnh, Quận Tân Phú, TP.HCM.</a></p>
+                        <p><a href="#" class="text-decoration-none">CH2: 93 Tân Kỳ Tân Quý, Phường Tân Sơn Nhì, TP.HCM.</a></p>
+                        <p><a href="#" class="text-decoration-none">CH3: 31 Chế Lan Viên, Phường Tây Thạnh, TP.HCM.</a></p>
+                    </div>
+                </div>
+               
+            </div>
+        </div>
+   
+        
+        <div id="backTop">
+            <i class="bi bi-caret-up-fill"></i>
+        </div>
+    </footer>
+
+    <!---------------------Javascript-------------------->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // API Configuration
+        const API_BASE = 'http://localhost:5000/api';
+
+        // Get product ID from URL
+        const params = new URLSearchParams(window.location.search);
+        const maSP = params.get('id');
+        let currentMaDanhMuc = null;
+
+        // Format price to Vietnamese currency
+        function formatPrice(num) {
+            if (num === null || num === undefined || isNaN(num)) return '';
+            return new Intl.NumberFormat('vi-VN').format(num) + ' đ';
+        }
+
+        // Generate star rating HTML
+        function generateStars(rating) {
+            let stars = '';
+            for (let i = 1; i <= 5; i++) {
+                if (i <= rating) {
+                    stars += '<i class="bi bi-star-fill text-warning"></i>';
+                } else {
+                    stars += '<i class="bi bi-star text-warning"></i>';
+                }
+            }
+            return stars;
+        }
+
+        // Load product details
+        async function loadProduct() {
+            const productContent = document.getElementById('product-content');
+            const notFoundMsg = document.getElementById('product-not-found');
+            const errorMsg = document.getElementById('product-error');
+
+            if (!maSP) {
+                productContent.classList.add('d-none');
+                notFoundMsg.classList.remove('d-none');
+                return;
+            }
+
+            try {
+                const response = await fetch(`${API_BASE}/products/${maSP}`);
+                
+                if (!response.ok) {
+                    if (response.status === 404) {
+                        productContent.classList.add('d-none');
+                        notFoundMsg.classList.remove('d-none');
+                    } else {
+                        throw new Error('Failed to load product');
+                    }
+                    return;
+                }
+
+                const product = await response.json();
+
+                if (!product.success || !product.data) {
+                    productContent.classList.add('d-none');
+                    notFoundMsg.classList.remove('d-none');
+                    return;
+                }
+
+                const p = product.data;
+
+                // Populate product fields
+                document.getElementById('product-title').textContent = p.TenSP || '';
+                document.title = p.TenSP || 'Trang Chi Tiết';
+
+                // Image
+                const imgEl = document.getElementById('product-image');
+                if (p.HinhAnh && p.HinhAnh !== 'null') {
+                    imgEl.src = p.HinhAnh;
+                    imgEl.alt = p.TenSP || 'Product Image';
+                }
+
+                // Price — nếu có khuyến mãi thì GiaBan nổi bật, GiaGoc gạch ngang
+                const giaBan = p.GiaBan || 0;
+                const giaGoc = p.GiaGoc || 0;
+                const khuyenMai = p.KhuyenMai || 0;
+                const priceEl = document.getElementById('product-price');
+                const oldPriceEl = document.getElementById('product-old-price');
+
+                if (khuyenMai > 0 && giaGoc > giaBan) {
+                    // Giá sau giảm nổi bật, giá gốc gạch ngang
+                    priceEl.textContent = formatPrice(giaBan);
+                    priceEl.className = 'card-text text-danger fw-bold fs-3';
+                    oldPriceEl.textContent = formatPrice(giaGoc);
+                    oldPriceEl.className = 'card-text text-muted text-decoration-line-through ps-3 fs-5';
+                } else {
+                    // Không giảm giá — chỉ hiện 1 giá
+                    priceEl.textContent = formatPrice(giaBan);
+                    priceEl.className = 'card-text text-danger fw-bold';
+                    oldPriceEl.textContent = '';
+                }
+
+                // Description
+                const moTa = p.MoTa || '';
+                const descriptionEl = document.getElementById('product-description');
+                if (moTa) {
+                    descriptionEl.innerHTML = `<ul>${moTa.split('\n').filter(line => line.trim()).map(line => `<li><i class="bi bi-check-circle-fill"></i>${line.trim()}</li>`).join('')}</ul>`;
+                }
+
+                // Product details
+                document.getElementById('product-brand').textContent = p.ThuongHieu || 'Không có thông tin';
+                document.getElementById('product-origin').textContent = p.XuatXu || 'Không có thông tin';
+                document.getElementById('product-material').textContent = p.ChatLieu || 'Không có thông tin';
+                document.getElementById('product-color').textContent = p.MauSac || 'Không có thông tin';
+                document.getElementById('product-dimensions').textContent = p.KichThuoc || 'Không có thông tin';
+                document.getElementById('product-weight').textContent = p.TrongLuong ? `${p.TrongLuong} kg` : 'Không có thông tin';
+                document.getElementById('product-warranty').textContent = p.BaoHanh || 'Không có thông tin';
+
+                // Review title
+                document.getElementById('review-title').textContent = `Đánh giá ${p.TenSP || 'sản phẩm'}`;
+                currentMaDanhMuc = p.MaDanhMuc;
+
+                // Set max quantity if available
+                if (p.SoLuongTon) {
+                    document.getElementById('product-quantity').max = p.SoLuongTon;
+                }
+
+            } catch (error) {
+                console.error('Error loading product:', error);
+                productContent.classList.add('d-none');
+                errorMsg.classList.remove('d-none');
+            }
+        }
+
+        // Load product reviews
+        async function loadReviews() {
+            if (!maSP) return;
+
+            const reviewList = document.getElementById('review-list');
+            const avgRatingEl = document.getElementById('avg-rating');
+            const totalReviewsEl = document.getElementById('total-reviews');
+            const satisfiedCustomersEl = document.getElementById('satisfied-customers');
+            const ratingBreakdown = document.getElementById('rating-breakdown');
+
+            try {
+                const response = await fetch(`${API_BASE}/reviews/product/${maSP}`);
+                
+                if (!response.ok) {
+                    throw new Error('Failed to load reviews');
+                }
+
+                const data = await response.json();
+                const reviews = data.data || [];
+                
+                // Calculate average rating
+                let avgRating = 0;
+                let totalRating = 0;
+                const ratingCounts = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 };
+
+                if (reviews.length > 0) {
+                    reviews.forEach(review => {
+                        const rating = review.SoSao || 0;
+                        totalRating += rating;
+                        if (rating >= 1 && rating <= 5) {
+                            ratingCounts[rating]++;
+                        }
+                    });
+                    avgRating = (totalRating / reviews.length).toFixed(1);
+                }
+
+                // Update rating summary
+                avgRatingEl.textContent = avgRating;
+                totalReviewsEl.textContent = `${reviews.length} đánh giá`;
+                satisfiedCustomersEl.textContent = `${(reviews.length * 1000).toLocaleString('vi-VN')} khách hàng hài lòng`;
+
+                // Render rating breakdown
+                let breakdownHTML = '';
+                for (let i = 5; i >= 1; i--) {
+                    const count = ratingCounts[i] || 0;
+                    const percent = reviews.length > 0 ? ((count / reviews.length) * 100).toFixed(1) : 0;
+                    breakdownHTML += `
+                        <li>
+                            <div class="number-star">
+                                ${i} <i class="bi bi-star-fill text-warning ps-1"></i>
+                            </div>
+                            <div class="timeline-star">
+                                <div class="timing" style="width: ${percent}%;"></div>
+                            </div>
+                            <span class="number-percent">${percent}%</span>
+                        </li>
+                    `;
+                }
+                ratingBreakdown.innerHTML = breakdownHTML;
+
+                // Render review list
+                if (reviews.length === 0) {
+                    reviewList.innerHTML = '<li class="text-center text-muted py-3">Chưa có đánh giá nào</li>';
+                } else {
+                    reviewList.innerHTML = reviews.map(review => {
+                        const rating = review.SoSao || 5;
+                        const ngay = review.NgayDanhGia;
+                        let dateStr = '';
+                        if (ngay) {
+                            const date = new Date(ngay);
+                            dateStr = date.toLocaleDateString('vi-VN');
+                        }
+                        return `
+                            <li>
+                                <div class="cmt-top">
+                                    <p>${review.HoTen || 'Khách hàng'}</p>
+                                </div>
+                                <div class="cmt-intro">
+                                    ${generateStars(rating)}
+                                </div>
+                                ${dateStr ? `<div class="cmt-date text-muted small">${dateStr}</div>` : ''}
+                                <div class="cmt-content">
+                                    <p>${review.NoiDung || ''}</p>
+                                </div>
+                            </li>
+                        `;
+                    }).join('');
+                }
+
+            } catch (error) {
+                console.error('Error loading reviews:', error);
+                reviewList.innerHTML = '<li class="text-center text-muted py-3">Không thể tải đánh giá</li>';
+            }
+        }
+
+        // Add to cart function
+        async function addToCart(maSP) {
+            const token = localStorage.getItem('access_token');
+            
+            if (!token) {
+                alert('Vui lòng đăng nhập để thêm sản phẩm vào giỏ hàng');
+                window.location.href = '../Login/DangNhap.html';
+                return;
+            }
+
+            const soLuong = parseInt(document.getElementById('product-quantity').value) || 1;
+
+            try {
+                const response = await fetch(`${API_BASE}/cart/`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: JSON.stringify({
+                        MaSP: maSP,
+                        SoLuong: soLuong
+                    })
+                });
+
+                if (response.ok) {
+                    alert('Đã thêm vào giỏ hàng');
+                } else {
+                    const error = await response.json();
+                    alert(error.message || 'Không thể thêm vào giỏ hàng');
+                }
+            } catch (error) {
+                console.error('Error adding to cart:', error);
+                alert('Đã xảy ra lỗi khi thêm vào giỏ hàng');
+            }
+        }
+
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', async function() {
+            // Load product and reviews
+            await loadProduct();
+            await loadReviews();
+
+            // Setup add to cart button
+            const addToCartBtn = document.getElementById('btn-add-to-cart');
+            if (addToCartBtn) {
+                addToCartBtn.addEventListener('click', function() {
+                    if (maSP) {
+                        addToCart(maSP);
+                    }
+                });
+            }
+
+            // Quantity controls
+            const quantityInput = document.getElementById('product-quantity');
+            const minusButton = document.querySelector('.minus-button');
+            const plusButton = document.querySelector('.plus-button');
+
+            function updateQuantity(delta) {
+                let currentValue = parseInt(quantityInput.value);
+                const min = parseInt(quantityInput.min) || 1;
+                const max = parseInt(quantityInput.max) || Infinity;
+
+                let newValue = currentValue + delta;
+
+                if (newValue < min) {
+                    newValue = min;
+                } else if (newValue > max) {
+                    newValue = max;
+                }
+
+                quantityInput.value = newValue;
+            }
+
+            if (minusButton) {
+                minusButton.addEventListener('click', function() {
+                    updateQuantity(-1);
+                });
+            }
+
+            if (plusButton) {
+                plusButton.addEventListener('click', function() {
+                    updateQuantity(1);
+                });
+            }
+
+            // Back to top button
+            $(window).scroll(function(){
+                if($(this).scrollTop() > 100){  
+                    $('#backTop').fadeIn();
+                } else {
+                    $('#backTop').fadeOut();
+                }
+            });
+  
+            $('#backTop').click(function(){
+                $('html, body').animate({
+                    scrollTop: 0
+                }, 300);
+            });
+
+            // Auth + Cart badge
+            updateAuthState();
+            updateCartBadge();
+            loadRelatedProducts();
+
+            // Nút xác nhận đăng xuất trong modal
+            document.getElementById('confirmLogoutBtn').addEventListener('click', logout);
+        });
+
+        function updateCartBadge() {
+            const cart = JSON.parse(localStorage.getItem('cart') || '[]');
+            const badge = document.getElementById('cartBadge');
+            if (badge) badge.textContent = cart.reduce((s, i) => s + (i.SoLuong || 1), 0);
+        }
+
+        function updateAuthState() {
+            const token = localStorage.getItem('access_token');
+            const userStr = localStorage.getItem('user');
+            const authSection = document.getElementById('authSection');
+            if (!authSection) return;
+            if (token && userStr) {
+                try {
+                    const user = JSON.parse(userStr);
+                    authSection.innerHTML = `
+                        <div class="d-flex align-items-center gap-2">
+                            <span class="text-white small">Xin chào, ${user.HoTen || user.TenDangNhap}</span>
+                            <button class="btn btn-outline-light btn-sm" id="btnLogoutHeader" data-bs-toggle="modal" data-bs-target="#logoutConfirmModal">Đăng xuất</button>
+                        </div>`;
+                } catch (e) {
+                    authSection.innerHTML = `<a href="../Login/DangNhap.html"><button class="btn btn-success">Đăng nhập</button></a>`;
+                }
+            } else {
+                authSection.innerHTML = `<a href="../Login/DangNhap.html"><button class="btn btn-success">Đăng nhập</button></a>`;
+            }
+        }
+
+        function logout() {
+            fetch(`${API_BASE}/auth/logout`, { method: 'POST' }).catch(() => {});
+            localStorage.removeItem('access_token');
+            localStorage.removeItem('refresh_token');
+            localStorage.removeItem('user');
+            const modal = bootstrap.Modal.getInstance(document.getElementById('logoutConfirmModal'));
+            if (modal) modal.hide();
+            updateAuthState();
+            updateCartBadge();
+        }
+        window.logout = logout;
+
+        async function loadRelatedProducts() {
+            const section = document.getElementById('related-products-section');
+            const container = document.getElementById('related-products');
+            if (!section || !container || !maSP) return;
+            try {
+                const res = await fetch(`${API_BASE}/products/?ma_danh_muc=${currentMaDanhMuc || ''}&per_page=8`);
+                if (res.ok) {
+                    const json = await res.json();
+                    const products = (json.data || []).filter(p => p.MaSP != maSP).slice(0, 8);
+                    if (products.length) {
+                        container.innerHTML = products.map(sp => `
+                            <a href="../TrangChiTiet/TrangChiTiet.html?id=${sp.MaSP}" class="text-decoration-none" style="min-width:200px;max-width:220px;">
+                                <div class="card p-0 h-100">
+                                    <div class="card-img-top" style="height:150px;overflow:hidden;">
+                                        <img src="${sp.HinhAnh || '../Pic/Pic_SanPham/default.svg'}" class="img-fluid w-100 h-100" style="object-fit:cover;" onerror="this.src='../Pic/Pic_SanPham/default.svg'" />
+                                    </div>
+                                    <div class="card-body">
+                                        <p class="card-title fw-bold small">${sp.TenSP}</p>
+                                        ${sp.KhuyenMai > 0 && sp.GiaGoc > sp.GiaBan
+                                            ? `<span class="text-danger fw-bold small">${formatPrice(sp.GiaBan)}</span>
+                                               <span class="text-muted text-decoration-line-through small ps-1">${formatPrice(sp.GiaGoc)}</span>`
+                                            : `<span class="text-danger fw-bold small">${formatPrice(sp.GiaBan)}</span>`}
+                                    </div>
+                                </div>
+                            </a>`).join('');
+                        section.style.display = 'block';
+                    }
+                }
+            } catch (e) {}
+        }
+    </script>
+</body>
+</html>

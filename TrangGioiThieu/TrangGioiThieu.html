@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Giới Thiệu - Xe Đạp Giá Rẻ</title>
+    <link rel="stylesheet" href="../CSS/bootstrap.min.css">
+    <link rel="stylesheet" href="../TrangChu/CssTrangChu2.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        .intro-section {
+            background: #fff;
+            border-radius: 15px;
+            padding: 40px;
+            margin: 30px 0;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        
+        .intro-header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+            border-bottom: 3px solid #1E4D36;
+        }
+        
+        .intro-header h1 {
+            color: #1E4D36;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+        
+        .intro-header p {
+            color: #666;
+            font-size: 18px;
+        }
+        
+        .feature-box {
+            background: #f8f9fa;
+            border-left: 4px solid #1E4D36;
+            padding: 25px;
+            margin: 20px 0;
+            border-radius: 8px;
+            transition: all 0.3s;
+        }
+        
+        .feature-box:hover {
+            transform: translateX(10px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .feature-box i {
+            font-size: 40px;
+            color: #1E4D36;
+            margin-bottom: 15px;
+        }
+        
+        .feature-box h4 {
+            color: #1E4D36;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+        
+        .stats-box {
+            text-align: center;
+            padding: 30px;
+            background: linear-gradient(135deg, #1E4D36 0%, #2a6d4f 100%);
+            color: white;
+            border-radius: 10px;
+            margin: 10px;
+        }
+        
+        .stats-box h2 {
+            font-size: 48px;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+        
+        .stats-box p {
+            font-size: 16px;
+            margin: 0;
+        }
+        
+        .timeline {
+            position: relative;
+            padding: 20px 0;
+        }
+        
+        .timeline-item {
+            padding: 20px 0;
+            border-left: 3px solid #1E4D36;
+            margin-left: 30px;
+            padding-left: 30px;
+            position: relative;
+        }
+        
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -9px;
+            top: 30px;
+            width: 15px;
+            height: 15px;
+            border-radius: 50%;
+            background: #1E4D36;
+        }
+        
+        .timeline-item h5 {
+            color: #1E4D36;
+            font-weight: 600;
+        }
+        
+        .brand-showcase {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            margin: 30px 0;
+        }
+        
+        .brand-item {
+            background: white;
+            padding: 15px 25px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            transition: all 0.3s;
+        }
+        
+        .brand-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+        }
+    </style>
+</head>
+<body>
+    <!-- Copy header từ TrangChu.html -->
+    <header class="site-header">
+        <div class="container header-inner">
+            <div>
+                <a href="../TrangChu/TrangChu.html" class="logoMenu">
+                    <img src="../Pic/Pic_LogoShop/logoNoiThatXin.png" alt="Logo" style="max-width:200px;height:auto;">
+                </a>
+            </div>
+            
+            <nav class="main-nav">
+                <a href="../TrangChu/TrangChu.html">Trang chủ</a>
+                <div class="dropdown">
+                    <a href="../TrangDanhMucSanPham/TrangSanPham.html" class="dropbtn">Danh mục ▾</a>
+                </div>
+                <a href="TrangGioiThieu.html">Giới thiệu</a>
+                <a href="../TrangLienHe/TrangLienHe.html">Liên hệ</a>
+            </nav>
+
+            <form class="search-box" action="#" method="get">
+                <input type="text" name="q" placeholder="Tìm sản phẩm...">
+                <button type="submit"><i class="bi bi-search"></i></button>
+            </form>
+            
+            <div class="navbar-nav ml-auto py-0">
+                <a href="#" class="btn border">
+                    <i class="bi bi-cart3 text-white"></i>
+                    <span class="badge">0</span>
+                </a>
+            </div>
+            
+            <form class="login" action="#" method="post">
+                <a href="../Login/DangNhap.html">
+                    <button type="button" class="btn btn-success">Đăng nhập</button>
+                </a>
+            </form>
+        </div>
+    </header>
+
+    <main class="container mt-5">
+        <!-- Header Section -->
+        <div class="intro-section">
+            <div class="intro-header">
+                <h1>VỀ CHÚNG TÔI</h1>
+                <p>Hệ thống cửa hàng xe đạp uy tín hàng đầu tại Việt Nam</p>
+            </div>
+
+            <!-- Giới thiệu chung -->
+            <div class="row mb-5">
+                <div class="col-md-6">
+                    <img src="../Pic/Pic_TrangChu/Pic_Carousel/Carousel1.jpg" 
+                         alt="Cửa hàng" 
+                         class="img-fluid rounded shadow">
+                </div>
+                <div class="col-md-6">
+                    <h2 class="text-success mb-4">Câu chuyện của chúng tôi</h2>
+                    <p style="text-align: justify; line-height: 1.8;">
+                        <strong>Xe Đạp Giá Rẻ</strong> được thành lập với sứ mệnh mang đến cho mọi gia đình Việt Nam 
+                        những sản phẩm xe đạp chất lượng cao với mức giá hợp lý nhất. Chúng tôi hiểu rằng xe đạp 
+                        không chỉ là phương tiện di chuyển, mà còn là người bạn đồng hành trong việc rèn luyện sức khỏe 
+                        và khám phá cuộc sống.
+                    </p>
+                    <p style="text-align: justify; line-height: 1.8;">
+                        Với hơn <strong>10 năm kinh nghiệm</strong> trong ngành, chúng tôi tự hào là đại lý chính thức 
+                        của các thương hiệu xe đạp hàng đầu thế giới như Giant, Fascino, Raccoon, và nhiều thương hiệu 
+                        uy tín khác. Đội ngũ nhân viên nhiệt tình, chuyên nghiệp luôn sẵn sàng tư vấn và hỗ trợ khách 
+                        hàng tìm được chiếc xe đạp phù hợp nhất.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Thống kê nổi bật -->
+            <div class="row mb-5">
+                <div class="col-md-3">
+                    <div class="stats-box">
+                        <h2>10+</h2>
+                        <p>Năm kinh nghiệm</p>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="stats-box">
+                        <h2>50K+</h2>
+                        <p>Khách hàng tin tựơng</p>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="stats-box">
+                        <h2>3</h2>
+                        <p>Chi nhánh tại TP.HCM</p>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="stats-box">
+                        <h2>500+</h2>
+                        <p>Mẫu xe đa dạng</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Giá trị cốt lõi -->
+            <div class="row mb-5">
+                <div class="col-12">
+                    <h2 class="text-success text-center mb-4">GIÁ TRỊ CỐT LÕI</h2>
+                </div>
+                <div class="col-md-4">
+                    <div class="feature-box text-center">
+                        <i class="bi bi-shield-check"></i>
+                        <h4>Chất Lượng Đảm Bảo</h4>
+                        <p>100% sản phẩm chính hãng, có tem phụ bảo hành rõ ràng</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="feature-box text-center">
+                        <i class="bi bi-currency-dollar"></i>
+                        <h4>Giá Cả Hợp Lý</h4>
+                        <p>Cam kết giá tốt nhất thị trường, nhiều chương trình ưu đãi</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="feature-box text-center">
+                        <i class="bi bi-headset"></i>
+                        <h4>Hỗ Trợ Tận Tâm</h4>
+                        <p>Tư vấn chuyên nghiệp, bảo hành chu đáo, sửa chữa trọn đời</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Các dòng xe -->
+            <div class="row mb-5">
+                <div class="col-12">
+                    <h2 class="text-success text-center mb-4">CÁC DÒNG XE CỦA CHÚNG TÔI</h2>
+                </div>
+                <div class="col-md-6">
+                    <div class="feature-box">
+                        <i class="bi bi-people"></i>
+                        <h4>Xe Đạp Trẻ Em</h4>
+                        <p>Đa dạng mẫu mã, màu sắc, phù hợp từ 2-15 tuổi. An toàn, bền đẹp, 
+                           giúp bé phát triển toàn diện.</p>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="feature-box">
+                        <i class="bi bi-bicycle"></i>
+                        <h4>Xe Đạp Thể Thao</h4>
+                        <p>Dòng xe cho người yêu tốc độ, thiết kế thể thao, khung nhẹ, 
+                           phù hợp tập luyện và thi đấu.</p>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="feature-box">
+                        <i class="bi bi-mountains"></i>
+                        <h4>Xe Đạp Địa Hình</h4>
+                        <p>Chinh phục mọi địa hình, giảm sốc tốt, độ bền cao, 
+                           thích hợp cho những chuyến phiêu lưu.</p>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="feature-box">
+                        <i class="bi bi-compass"></i>
+                        <h4>Xe Đạp Touring</h4>
+                        <p>Dành cho du lịch đường dài, thiết kế thoải mái, 
+                           khả năng chở đồ tốt.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Thương hiệu -->
+            <div class="mb-5">
+                <h2 class="text-success text-center mb-4">THƯƠNG HIỆU ĐỐI TÁC</h2>
+                <div class="brand-showcase">
+                    <div class="brand-item">
+                        <img src="../Pic/Pic_LogoThuongHieu/LogoGiant.jpg" alt="Giant" style="height: 40px;">
+                    </div>
+                    <div class="brand-item">
+                        <img src="../Pic/Pic_LogoThuongHieu/LogoFascino.jpg" alt="Fascino" style="height: 40px;">
+                    </div>
+                    <div class="brand-item">
+                        <img src="../Pic/Pic_LogoThuongHieu/LogoRaccoon.jpg" alt="Raccoon" style="height: 40px;">
+                    </div>
+                    <div class="brand-item">
+                        <img src="../Pic/Pic_LogoThuongHieu/LogoHector.jpg" alt="Hector" style="height: 40px;">
+                    </div>
+                    <div class="brand-item">
+                        <img src="../Pic/Pic_LogoThuongHieu/LogoThongNhat.jpg" alt="Thống Nhất" style="height: 40px;">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Cam kết -->
+            <div class="row">
+                <div class="col-12">
+                    <h2 class="text-success text-center mb-4">CAM KẾT CỦA CHÚNG TÔI</h2>
+                </div>
+                <div class="col-md-12">
+                    <div class="timeline">
+                        <div class="timeline-item">
+                            <h5><i class="bi bi-check-circle-fill text-success"></i> Sản phẩm chính hãng 100%</h5>
+                            <p>Nhập khẩu trực tiếp từ nhà sản xuất, có đầy đủ giấy tờ xuất xứ</p>
+                        </div>
+                        <div class="timeline-item">
+                            <h5><i class="bi bi-check-circle-fill text-success"></i> Bảo hành toàn diện</h5>
+                            <p>Bảo hành 12-24 tháng tùy sản phẩm, sửa chữa miễn phí trọn đời</p>
+                        </div>
+                        <div class="timeline-item">
+                            <h5><i class="bi bi-check-circle-fill text-success"></i> Giao hàng miễn phí</h5>
+                            <p>Giao hàng miễn phí toàn quốc cho đơn hàng trên 2 triệu đồng</p>
+                        </div>
+                        <div class="timeline-item">
+                            <h5><i class="bi bi-check-circle-fill text-success"></i> Đổi trả linh hoạt</h5>
+                            <p>Đổi trả trong vòng 7 ngày nếu sản phẩm có lỗi từ nhà sản xuất</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Copy footer từ TrangChu.html -->
+    <footer>
+        <div class="row mt-5 pb-5">
+            <div class="col-4 text-center">
+                <div class="row">
+                    <h4 class="fw-bold">Thông tin liên hệ</h4>
+                    <p><span class="fw-bold">Hotline: </span> 028 6270 6275<br>
+                    <span class="fw-bold">Email: </span>noithatxinh@gmail.com</p>
+                    <h5 class="fw-bold">Phương thức thanh toán</h5>
+                    <div class="row mb-3">
+                        <div>
+                            <a href="#"><img src="../Pic/Pic_PThucThanhToan/LogoMomo.jpg" id="img_DoiTac" alt="Momo"></a>
+                            <a href="#"><img src="../Pic/Pic_PThucThanhToan/LogoVisa.jpg" id="img_DoiTac" alt="Visa"></a>
+                            <a href="#"><img src="../Pic/Pic_PThucThanhToan/LogoZaloPay.jpg" id="img_DoiTac" alt="ZaloPay"></a>
+                            <a href="#"><img src="../Pic/Pic_PThucThanhToan/LogoVNPay.jpg" id="img_DoiTac" alt="VNPay"></a>
+                        </div>
+                    </div>
+                    <h5 class="fw-bold">Kết Nối Với Chúng Tôi</h5>
+                    <div class="row">
+                        <div>
+                            <a href="#"><img src="../Pic/Pic_LogoLKetNoi/LogoFacebook.jpg" id="img_DoiTac" alt="Facebook"></a>
+                            <a href="#"><img src="../Pic/Pic_LogoLKetNoi/LogoTwitter.jpg" id="img_DoiTac" alt="Twitter"></a>
+                            <a href="#"><img src="../Pic/Pic_LogoLKetNoi/LogoTiktok.jpg" id="img_DoiTac" alt="Tiktok"></a>
+                            <a href="#"><img src="../Pic/Pic_LogoLKetNoi/LogoYoutube.jpg" id="img_DoiTac" alt="Youtube"></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-4 text-center">
+                <div class="row">
+                    <h4 class="fw-bold">Thông tin và chính sách</h4>
+                    <div class="mt-2 ThongTin">
+                        <p><a href="#" class="text-decoration-none">Hướng Dẫn Mua Hàng</a></p>
+                        <p><a href="#" class="text-decoration-none">Chính Sách Giao Hàng</a></p>
+                        <p><a href="#" class="text-decoration-none">Chính Sách Bảo Hành</a></p>
+                        <p><a href="#" class="text-decoration-none">Chính Sách Bảo Mật</a></p>
+                        <p><a href="#" class="text-decoration-none">Chính Sách Đổi Trả Hàng</a></p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-4 text-center">
+                <div class="row">
+                    <h4 class="fw-bold">Hệ thống cửa hàng</h4>
+                    <div class="mt-2 ThongTin">
+                        <p><a href="#" class="text-decoration-none">CH1: 140 Lê Trọng Tấn, Phường Tây Thạnh, Quận Tân Phú, TP.HCM.</a></p>
+                        <p><a href="#" class="text-decoration-none">CH2: 93 Tân Kỳ Tân Quý, Phường Tân Sơn Nhì, TP.HCM.</a></p>
+                        <p><a href="#" class="text-decoration-none">CH3: 31 Chế Lan Viên, Phường Tây Thạnh, TP.HCM.</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div id="backTop">
+            <i class="bi bi-caret-up-fill"></i>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            $(window).scroll(function(){
+                if($(this).scrollTop() > 100){  
+                    $('#backTop').fadeIn();
+                } else {
+                    $('#backTop').fadeOut();
+                }
+            });
+  
+            $('#backTop').click(function(){
+                $('html, body').animate({
+                    scrollTop: 0
+                }, 300);  
+            });
+        });
+    </script>
+</body>
+</html>

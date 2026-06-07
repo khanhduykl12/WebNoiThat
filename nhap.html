@@ -1,0 +1,564 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Trang Chủ</title>
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="/CSS/bootstrap.min.css" />
+    <link rel="stylesheet" href="/CSS/all.min.css" />
+    <link rel="stylesheet" href="CssTrangChu2.css" />
+
+    <!-- Bootstrap Icons -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+    />
+
+    <style>
+        * {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background: #f5f7f9;
+  font-family: Arial, sans-serif;
+}
+
+/* HEADER */
+
+.site-header {
+  background: #fff;
+  border-bottom: 1px solid #ddd;
+}
+
+.header-top,
+.header-bottom {
+  background: #2b2b2b;
+  color: #fff;
+  padding: 10px 40px;
+}
+
+.header-top {
+  display: flex;
+  justify-content: flex-end;
+  gap: 20px;
+}
+
+.header-main {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 40px;
+}
+
+.search-box {
+  display: flex;
+  align-items: center;
+  border: 1px solid #ccc;
+  width: 300px;
+  padding: 8px 12px;
+  border-radius: 5px;
+}
+
+.search-box input {
+  flex: 1;
+  border: none;
+  outline: none;
+}
+
+.search-box button {
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+
+.logoMenu img {
+  width: 180px;
+  object-fit: contain;
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.btn-login {
+  border: none;
+  background: none;
+}
+
+.btn-cart {
+  color: #000;
+  position: relative;
+  font-size: 22px;
+}
+
+.badge {
+  position: absolute;
+  top: -8px;
+  right: -10px;
+  background: red;
+  border-radius: 50%;
+}
+
+.main-nav {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  padding: 15px;
+}
+
+.main-nav a {
+  text-decoration: none;
+  color: #333;
+  font-weight: bold;
+}
+
+/* MODAL */
+
+.modal-search-tabs {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.tab-btn {
+  border: none;
+  padding: 10px 20px;
+  background: #eee;
+  cursor: pointer;
+}
+
+.tab-btn.active {
+  background: #000;
+  color: #fff;
+}
+
+.search-tab-panel {
+  display: none;
+}
+
+.search-tab-panel.active {
+  display: block;
+}
+
+.image-preview,
+#cameraSnapshot,
+#cameraPreview {
+  width: 100%;
+  margin-top: 15px;
+  border-radius: 10px;
+}
+
+.image-preview,
+#cameraSnapshot {
+  display: none;
+}
+
+.camera-actions {
+  display: flex;
+  gap: 10px;
+}
+
+/* BACK TOP */
+
+#backTop {
+  width: 50px;
+  height: 50px;
+  background: tomato;
+  color: white;
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  border-radius: 50%;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+    </style>
+  </head>
+
+  <body>
+    <header class="site-header">
+      <div class="header-top">
+        <p><i class="bi bi-shop"></i> Địa điểm</p>
+        <p><i class="bi bi-truck"></i> Giao hàng</p>
+      </div>
+
+      <div class="header-main">
+        <div class="search-box">
+          <input
+            type="text"
+            id="mainSearchInput"
+            placeholder="Nhập tên sản phẩm..."
+          />
+
+          <button id="mainSearchBtn">
+            <i class="bi bi-search"></i>
+          </button>
+
+          <button
+            class="search-modal-toggle"
+            data-bs-toggle="modal"
+            data-bs-target="#advancedSearchModal"
+          >
+            <i class="bi bi-sliders"></i>
+          </button>
+        </div>
+
+        <div class="logo-wrapper">
+          <a href="#" class="logoMenu">
+            <img
+              src="/Pic/Pic_LogoShop/logoNoiThatXin.png"
+              alt="Logo"
+            />
+          </a>
+        </div>
+
+        <div class="header-actions">
+          <a href="/Login/DangNhap.html" class="btn-login-link">
+            <button class="btn-login">Đăng nhập</button>
+          </a>
+
+          <a href="#" class="btn-cart">
+            <i class="bi bi-cart3"></i>
+            <span class="badge">0</span>
+          </a>
+        </div>
+      </div>
+
+      <nav class="main-nav">
+        <a href="/TrangChu/TrangChu.html">Trang chủ</a>
+        <a href="/TrangDanhMucSanPham/TrangSanPham.html">Danh mục</a>
+        <a href="#">Giới thiệu</a>
+        <a href="#">Liên hệ</a>
+      </nav>
+
+      <div class="header-bottom">
+        <p class="fw-bold">
+          Ưu đãi trả góp đặc biệt trong 24 tháng
+        </p>
+      </div>
+    </header>
+
+    <!-- MODAL -->
+    <div
+      class="modal fade"
+      id="advancedSearchModal"
+      tabindex="-1"
+    >
+      <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+
+          <div class="modal-header">
+            <div>
+              <h5 class="modal-title">Tìm kiếm sản phẩm</h5>
+              <p class="modal-subtitle">
+                Nhập tên, upload ảnh hoặc mở camera.
+              </p>
+            </div>
+
+            <button
+              class="btn-close"
+              data-bs-dismiss="modal"
+            ></button>
+          </div>
+
+          <div class="modal-body">
+
+            <!-- TAB -->
+            <div class="modal-search-tabs">
+              <button class="tab-btn active" data-tab="tab-text">
+                Từ khóa
+              </button>
+
+              <button class="tab-btn" data-tab="tab-upload">
+                Upload ảnh
+              </button>
+
+              <button class="tab-btn" data-tab="tab-camera">
+                Camera
+              </button>
+            </div>
+
+            <!-- TEXT SEARCH -->
+            <div class="search-tab-panel active" id="tab-text">
+              <input
+                id="modalSearchInput"
+                class="form-control"
+                placeholder="Nhập tên sản phẩm..."
+              />
+
+              <button
+                id="modalSearchBtn"
+                class="btn btn-primary mt-3"
+              >
+                Tìm kiếm
+              </button>
+
+              <div id="searchResult" class="search-result-note mt-2">
+                Nhập từ khóa để tìm kiếm.
+              </div>
+            </div>
+
+            <!-- UPLOAD -->
+            <div class="search-tab-panel" id="tab-upload">
+
+              <input
+                type="file"
+                id="imageUploadInput"
+                accept="image/*"
+                class="form-control"
+              />
+
+              <img id="imagePreview" class="image-preview" />
+
+              <button
+                id="btnUploadSearch"
+                class="btn btn-primary mt-3"
+              >
+                Tìm bằng ảnh
+              </button>
+
+              <div id="imageSearchResult" class="search-result-note mt-2">
+                Chưa có ảnh.
+              </div>
+            </div>
+
+            <!-- CAMERA -->
+            <div class="search-tab-panel" id="tab-camera">
+
+              <div class="camera-actions">
+                <button
+                  id="startCameraBtn"
+                  class="btn btn-secondary"
+                >
+                  Bật camera
+                </button>
+
+                <button
+                  id="captureCameraBtn"
+                  class="btn btn-primary"
+                  disabled
+                >
+                  Chụp ảnh
+                </button>
+              </div>
+
+              <video
+                id="cameraPreview"
+                autoplay
+                muted
+                playsinline
+              ></video>
+
+              <canvas id="cameraSnapshot"></canvas>
+
+              <div id="cameraStatus" class="search-result-note mt-2">
+                Camera đang tắt.
+              </div>
+
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- BACK TOP -->
+    <div id="backTop">
+      <i class="bi bi-caret-up-fill"></i>
+    </div>
+
+    <!-- JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+
+        /* ================= BACK TO TOP ================= */
+
+        const backTop = document.getElementById("backTop");
+
+        window.addEventListener("scroll", () => {
+          backTop.style.display =
+            window.scrollY > 100 ? "flex" : "none";
+        });
+
+        backTop.addEventListener("click", () => {
+          window.scrollTo({
+            top: 0,
+            behavior: "smooth",
+          });
+        });
+
+        /* ================= TAB ================= */
+
+        const tabButtons = document.querySelectorAll(".tab-btn");
+        const tabPanels = document.querySelectorAll(".search-tab-panel");
+
+        tabButtons.forEach((btn) => {
+          btn.addEventListener("click", () => {
+
+            tabButtons.forEach((b) =>
+              b.classList.remove("active")
+            );
+
+            tabPanels.forEach((p) =>
+              p.classList.remove("active")
+            );
+
+            btn.classList.add("active");
+
+            document
+              .getElementById(btn.dataset.tab)
+              .classList.add("active");
+          });
+        });
+
+        /* ================= SEARCH ================= */
+
+        const modalSearchBtn =
+          document.getElementById("modalSearchBtn");
+
+        const modalSearchInput =
+          document.getElementById("modalSearchInput");
+
+        const searchResult =
+          document.getElementById("searchResult");
+
+        modalSearchBtn.addEventListener("click", () => {
+
+          const query = modalSearchInput.value.trim();
+
+          if (!query) {
+            searchResult.textContent =
+              "Vui lòng nhập tên sản phẩm.";
+            return;
+          }
+
+          searchResult.innerHTML =
+            `Đã tìm thấy kết quả cho:
+            <strong>${query}</strong>`;
+        });
+
+        /* ================= UPLOAD IMAGE ================= */
+
+        const imageUploadInput =
+          document.getElementById("imageUploadInput");
+
+        const imagePreview =
+          document.getElementById("imagePreview");
+
+        const imageSearchResult =
+          document.getElementById("imageSearchResult");
+
+        imageUploadInput.addEventListener("change", () => {
+
+          const file = imageUploadInput.files[0];
+
+          if (!file) return;
+
+          imagePreview.src = URL.createObjectURL(file);
+
+          imagePreview.style.display = "block";
+
+          imageSearchResult.textContent =
+            `Đã chọn ảnh: ${file.name}`;
+        });
+
+        /* ================= CAMERA ================= */
+
+        const startCameraBtn =
+          document.getElementById("startCameraBtn");
+
+        const captureCameraBtn =
+          document.getElementById("captureCameraBtn");
+
+        const cameraPreview =
+          document.getElementById("cameraPreview");
+
+        const cameraSnapshot =
+          document.getElementById("cameraSnapshot");
+
+        const cameraStatus =
+          document.getElementById("cameraStatus");
+
+        let stream = null;
+
+        startCameraBtn.addEventListener("click", async () => {
+
+          try {
+
+            stream =
+              await navigator.mediaDevices.getUserMedia({
+                video: true,
+              });
+
+            cameraPreview.srcObject = stream;
+
+            captureCameraBtn.disabled = false;
+
+            cameraStatus.textContent =
+              "Camera đang bật.";
+
+          } catch {
+            cameraStatus.textContent =
+              "Không thể mở camera.";
+          }
+        });
+
+        captureCameraBtn.addEventListener("click", () => {
+
+          const ctx =
+            cameraSnapshot.getContext("2d");
+
+          cameraSnapshot.width =
+            cameraPreview.videoWidth;
+
+          cameraSnapshot.height =
+            cameraPreview.videoHeight;
+
+          ctx.drawImage(
+            cameraPreview,
+            0,
+            0,
+            cameraSnapshot.width,
+            cameraSnapshot.height
+          );
+
+          cameraSnapshot.style.display = "block";
+
+          cameraStatus.textContent =
+            "Đã chụp ảnh.";
+        });
+
+        document
+          .getElementById("advancedSearchModal")
+          .addEventListener("hidden.bs.modal", () => {
+
+            if (stream) {
+              stream.getTracks().forEach((track) =>
+                track.stop()
+              );
+            }
+
+            cameraPreview.srcObject = null;
+
+            captureCameraBtn.disabled = true;
+
+            cameraStatus.textContent =
+              "Camera đã tắt.";
+          });
+
+      });
+    </script>
+  </body>
+</html>
