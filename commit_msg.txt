@@ -1,9 +1,0 @@
-feat: premium UI overhaul — typography, animations, icons, polish
-
-- index.css: Playfair Display serif + Nunito font stack. Premium dark ticker with shimmer. Hero gradient overlay. Pill indicators that morph width on active. Caption fade-up animations. Dark deals section with rounded cards and shadow lift on hover. Gold price badge. Skeleton shimmer. Animated hero footer bar. Value cards with top-border gradient reveal + stagger animation. Premium dark footer with newsletter, social buttons (custom SVG), certifications.
-- HomePage: Replace emoji with Lucide icons. Multi-line OutdoorBanner titles. ArrowRight icons on buttons.
-- HeroBanner: Playfair Display headline, gold subtitle, rounded shop button with gradient. 5s auto-advance.
-- DealsCarousel: Rounded card containers, shadow lift, shimmer skeleton.
-- ProductCard: Remove target=_blank, AI score badge label.
-- Header: Sticky, underline nav animation, dropdown with smooth reveal, gold cart badge pop-in.
-- Footer: Complete redesign — brand logo, newsletter subscribe, contact icons, policy ChevronRight links, social SVG buttons, payment logos, certifications, bottom links bar.
