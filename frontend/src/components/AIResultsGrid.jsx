@@ -1,7 +1,50 @@
+const COLOR_HEX = {
+  'Đỏ': '#e74c3c',
+  'Cam': '#e67e22',
+  'Vàng': '#f1c40f',
+  'Xanh lá': '#27ae60',
+  'Xanh dương': '#2980b9',
+  'Tím': '#8e44ad',
+  'Hồng': '#fd79a8',
+  'Nâu': '#a0522d',
+  'Đen': '#2c2c2c',
+  'Trắng': '#ecf0f1',
+  'Xám': '#95a5a6',
+};
+
+function ColorDot({ color }) {
+  const hex = COLOR_HEX[color] || '#999';
+  return (
+    <span style={{
+      display: 'inline-flex',
+      alignItems: 'center',
+      gap: '5px',
+      background: '#f5f5f5',
+      border: '1px solid #e0e0e0',
+      borderRadius: '50px',
+      padding: '3px 10px 3px 6px',
+      fontSize: '12px',
+      fontWeight: 600,
+      color: '#333',
+    }}>
+      <span style={{
+        width: '12px',
+        height: '12px',
+        borderRadius: '50%',
+        background: hex,
+        border: '1px solid rgba(0,0,0,0.15)',
+        flexShrink: 0,
+      }} />
+      {color}
+    </span>
+  );
+}
+
 export default function AIResultsGrid({ results, meta, loading, error }) {
   const hasResults = results && results.length > 0;
   const hasDetections = meta?.detections?.length > 0;
   const pt = meta?.processingTime;
+  const vf = meta?.visualFeatures;
 
   if (!loading && !error && !hasResults) return null;
 
@@ -26,6 +69,48 @@ export default function AIResultsGrid({ results, meta, loading, error }) {
           </small>
         )}
       </div>
+
+      {/* Visual Features Panel */}
+      {vf && !loading && (
+        <div className="ai-vit-panel mb-3">
+          <div className="ai-vit-panel-header">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" style={{ color: '#fff' }}>
+              <path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/>
+            </svg>
+            ViT nhận diện từ ảnh
+          </div>
+          <div className="ai-vit-panel-body">
+            {vf.dominateColors?.length > 0 && (
+              <div className="ai-vit-row">
+                <span className="ai-vit-label">Màu sắc:</span>
+                <div className="ai-vit-tags">
+                  {vf.dominateColors.map((c) => (
+                    <ColorDot key={c} color={c} />
+                  ))}
+                </div>
+              </div>
+            )}
+            {vf.materialEstimate && vf.materialEstimate !== 'Không xác định' && (
+              <div className="ai-vit-row">
+                <span className="ai-vit-label">Chất liệu:</span>
+                <span className="ai-vit-tag">{vf.materialEstimate}</span>
+              </div>
+            )}
+            {vf.styleEstimate && vf.styleEstimate !== 'Không xác định' && (
+              <div className="ai-vit-row">
+                <span className="ai-vit-label">Kiểu dáng:</span>
+                <span className="ai-vit-tag">{vf.styleEstimate}</span>
+              </div>
+            )}
+            {vf.toneEstimate && vf.toneEstimate !== 'Không xác định' && (
+              <div className="ai-vit-row">
+                <span className="ai-vit-label">Tông màu:</span>
+                <span className="ai-vit-tag">{vf.toneEstimate}</span>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
 
       {/* Detections */}
       {hasDetections && (
@@ -60,7 +145,7 @@ export default function AIResultsGrid({ results, meta, loading, error }) {
             <span className="visually-hidden">Loading...</span>
           </div>
           <p className="fw-semibold text-success mb-1">Đang xử lý AI...</p>
-          <p className="text-muted small">YOLO đang phát hiện đồ nội thất và ViT đang trích xuất đặc trưng.</p>
+          <p className="text-muted small">YOLO phát hiện đồ nội thất và ViT trích xuất đặc trưng thị giác.</p>
         </div>
       )}
 

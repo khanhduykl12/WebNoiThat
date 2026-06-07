@@ -227,6 +227,179 @@ class AIService:
             logger.error(f"Failed to load ViT via timm: {e}")
             self.vit = None
 
+    # ─── Color / Material / Style Extraction ─────────────────────────────────
+
+    def _rgb_to_hsv(self, r, g, b):
+        """Convert RGB [0-255] → HSV [0-1]"""
+        rf, gf, bf = r / 255.0, g / 255.0, b / 255.0
+        mx = max(rf, gf, bf)
+        mn = min(rf, gf, bf)
+        delta = mx - mn
+        if delta == 0:
+            h = 0.0
+        elif mx == rf:
+            h = 60 * (((gf - bf) / delta) % 6)
+        elif mx == gf:
+            h = 60 * (((bf - rf) / delta) + 2)
+        else:
+            h = 60 * (((rf - gf) / delta) + 4)
+        s = 0.0 if mx == 0 else delta / mx
+        v = mx
+        return h / 360.0, s, v
+
+    def _dominate_color_name(self, h, s, v) -> str:
+        """Map HSV → tên màu tiếng Việt thân thiện"""
+        # Đen / Trắng / Xám
+        if v < 0.18:
+            return "Đen"
+        if s < 0.12:
+            if v > 0.85:
+                return "Trắng"
+            if v > 0.55:
+                return "Xám"
+            return "Đen"
+        # Màu rực
+        if h < 0.04 or h >= 0.97:
+            return "Đỏ"
+        if h < 0.16:
+            return "Cam"
+        if h < 0.22:
+            return "Vàng"
+        if h < 0.36:
+            return "Xanh lá"
+        if h < 0.58:
+            return "Xanh dương"
+        if h < 0.70:
+            return "Tím"
+        if h < 0.80:
+            return "Hồng"
+        if h < 0.97:
+            return "Cam"
+        return "Nâu"
+
+    def extract_visual_features(self, image_bytes: bytes, bbox: list = None) -> dict:
+        """
+        Phân tích đặc trưng thị giác từ ảnh (hoặc vùng crop):
+        - Màu sắc trung dominant
+        - Chất liệu ước lượng (warm/cool/neutral tones → wood/fabric/metal/leather)
+        - Kiểu dáng (mềm mại vs góc cạnh)
+        - Tông màu chủ đạo (sáng / trung bình / tối)
+        Returns dict với keys: dominateColors, materialEstimate, styleEstimate, toneEstimate
+        """
+        try:
+            normalized = self._normalize_image_bytes(image_bytes)
+            img = Image.open(io.BytesIO(normalized)).convert('RGB')
+            w, h_img = img.size
+
+            # Crop vùng bbox nếu có
+            if bbox and len(bbox) == 4:
+                x1, y1, x2, y2 = map(int, bbox)
+                x1, y1 = max(0, x1), max(0, y1)
+                x2, y2 = min(w, x2), min(h_img, y2)
+                img = img.crop((x1, y1, x2, y2))
+                w, h_img = img.size
+
+            # Resize nhỏ để phân tích nhanh
+            small = img.resize((64, 64))
+            pixels = np.array(small).reshape(-1, 3)
+
+            # ── 1. Màu sắc dominant ──
+            # K-means đơn giản: lấy top-3 màu chiếm nhiều pixel nhất
+            r_mean = pixels[:, 0].mean()
+            g_mean = pixels[:, 1].mean()
+            b_mean = pixels[:, 2].mean()
+            overall_h, overall_s, overall_v = self._rgb_to_hsv(r_mean, g_mean, b_mean)
+            overall_color = self._dominate_color_name(overall_h, overall_s, overall_v)
+
+            # Thêm màu secondary bằng spatial split
+            mid_x = w // 2
+            left = pixels[pixels[:, 0] < mid_x]
+            right = pixels[pixels[:, 0] >= mid_x]
+            lr_mean = left.mean(axis=0) if len(left) > 0 else pixels.mean(axis=0)
+            rr_mean = right.mean(axis=0) if len(right) > 0 else pixels.mean(axis=0)
+            lh, ls, lv = self._rgb_to_hsv(lr_mean[0], lr_mean[1], lr_mean[2])
+            rh, rs, rv = self._rgb_to_hsv(rr_mean[0], rr_mean[1], rr_mean[2])
+            left_color = self._dominate_color_name(lh, ls, lv)
+            right_color = self._dominate_color_name(rh, rs, rv)
+
+            colors = [overall_color]
+            if right_color != overall_color and right_color not in colors:
+                colors.append(right_color)
+            if left_color != overall_color and left_color not in colors:
+                colors.append(left_color)
+            if len(colors) > 3:
+                colors = colors[:3]
+
+            # ── 2. Ước lượng chất liệu ──
+            # Dựa trên tổng hợp: saturation + warmth + texture approximation
+            sat_mean = pixels[:, 0].std()  # proxy cho texture variation
+            warm_pixels = pixels[(pixels[:, 0] > pixels[:, 2])]  # reddish > bluish
+            warm_ratio = len(warm_pixels) / len(pixels) if len(pixels) > 0 else 0.5
+
+            mat_score = warm_ratio  # 0=cool(metal/glass), 1=warm(wood/leather)
+            sat_score = (pixels.std(axis=0).mean()) / 80.0  # 0=smooth, 1=textured
+
+            if mat_score > 0.52:
+                if sat_score > 0.4:
+                    material = "Da bọc hoặc nỉ"
+                else:
+                    material = "Gỗ tự nhiên"
+            elif mat_score < 0.40:
+                if sat_score < 0.3:
+                    material = "Kim loại / Kính"
+                else:
+                    material = "Nhựa / Acrylic"
+            else:
+                if sat_score > 0.45:
+                    material = "Vải nhung / Nỉ bọc"
+                else:
+                    material = "Gỗ công nghiệp"
+
+            # ── 3. Kiểu dáng (shape/texture) ──
+            # Variance cạnh → mềm vs góc cạnh
+            gray = np.mean(pixels, axis=1)
+            edge_proxy = np.abs(np.diff(gray)).mean()
+            shape_score = min(edge_proxy / 40.0, 1.0)
+            if shape_score > 0.55:
+                style = "Hiện đại / Tối giản"
+            elif shape_score > 0.35:
+                style = "Cổ điển / Tân cổ điển"
+            else:
+                style = "Mềm mại / Đồng bộ"
+
+            # ── 4. Tông màu ──
+            if overall_v > 0.65:
+                tone = "Sáng"
+            elif overall_v < 0.35:
+                tone = "Tối"
+            else:
+                tone = "Trung bình"
+            if overall_s > 0.45:
+                tone = "Rực rỡ" if overall_v > 0.5 else "Đậm"
+            elif overall_s < 0.2:
+                tone = "Trung tính"
+
+            return {
+                "dominateColors": colors,
+                "materialEstimate": material,
+                "styleEstimate": style,
+                "toneEstimate": tone,
+                "dominantHSV": {
+                    "h": round(overall_h, 3),
+                    "s": round(overall_s, 3),
+                    "v": round(overall_v, 3),
+                },
+            }
+        except Exception as e:
+            logger.error(f"extract_visual_features error: {e}")
+            return {
+                "dominateColors": [],
+                "materialEstimate": "Không xác định",
+                "styleEstimate": "Không xác định",
+                "toneEstimate": "Không xác định",
+                "dominantHSV": {},
+            }
+
     def extract_embedding(self, image_bytes: bytes) -> list:
         """
         Trích xuất vector đặc trưng (embedding) từ Vision Transformer.
@@ -458,11 +631,14 @@ class AIService:
         )
         t_faiss_ms = round((time.time() - t_faiss) * 1000, 1)
 
+        visual_feats = self.extract_visual_features(image_bytes, best['bbox'] if detections else None)
+
         return {
             'detections': detections,
             'query_vector': query_vector,
             'similar_products': similar,
             'top_label': top_label,
+            'visual_features': visual_feats,
             'processing_time': {
                 'yolo_ms': t_yolo_ms,
                 'vit_ms': t_vit_ms,

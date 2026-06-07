@@ -713,6 +713,7 @@ def _do_ai_search(image_bytes, image_path=None, request=None):
             'topLabel': result.get('top_label'),
             'results': formatted_results,
             'totalResults': len(formatted_results),
+            'visualFeatures': result.get('visual_features'),
             'processingTime': proc_time,
         }
     })

@@ -23,6 +23,7 @@ export function useAISearch() {
           processingTime: data.data.processingTime || null,
           queryImage: data.data.queryImage || '',
           searchId: data.data.searchId || '',
+          visualFeatures: data.data.visualFeatures || null,
         });
       } else {
         setResults([]);
@@ -52,6 +53,7 @@ export function useAISearch() {
           processingTime: data.data.processingTime || null,
           queryImage: data.data.queryImage || '',
           searchId: data.data.searchId || '',
+          visualFeatures: data.data.visualFeatures || null,
         });
       } else {
         setResults([]);
