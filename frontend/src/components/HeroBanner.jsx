@@ -26,15 +26,13 @@ const DEFAULT_BANNERS = [
 export default function HeroBanner() {
   const [banners, setBanners] = useState(DEFAULT_BANNERS);
   const [activeIndex, setActiveIndex] = useState(0);
-  const intervalRef = useRef(null);
   const [isHovered, setIsHovered] = useState(false);
+  const intervalRef = useRef(null);
 
   useEffect(() => {
     bannerAPI.list('carousel')
       .then((data) => {
-        if (data.success && data.data?.length) {
-          setBanners(data.data);
-        }
+        if (data.success && data.data?.length) setBanners(data.data);
       })
       .catch(() => {});
   }, []);
@@ -43,7 +41,7 @@ export default function HeroBanner() {
     if (banners.length <= 1) return;
     intervalRef.current = setInterval(() => {
       setActiveIndex((i) => (i + 1) % banners.length);
-    }, 3000);
+    }, 5000);
     return () => clearInterval(intervalRef.current);
   }, [banners.length]);
 
@@ -53,7 +51,7 @@ export default function HeroBanner() {
     if (banners.length > 1) {
       intervalRef.current = setInterval(() => {
         setActiveIndex((i) => (i + 1) % banners.length);
-      }, 3000);
+      }, 5000);
     }
   };
 
@@ -62,17 +60,17 @@ export default function HeroBanner() {
 
   return (
     <section className="hero-banner-section">
-      {/* Red ticker */}
+      {/* Ticker */}
       <div className="banner-ticker-top">
         <div className="ticker-track">
-          <span>GOING ON NOW &bull; GOING ON NOW &bull; GOING ON NOW &bull; GOING ON NOW &bull; GOING ON NOW &bull; GOING ON NOW &nbsp;</span>
-          <span>GOING ON NOW &bull; GOING ON NOW &bull; GOING ON NOW &bull; GOING ON NOW &bull; GOING ON NOW &bull; GOING ON NOW &nbsp;</span>
+          <span>✦ &nbsp; GOING ON NOW &nbsp; ✦ &nbsp; GOING ON NOW &nbsp; ✦ &nbsp; GOING ON NOW &nbsp; ✦ &nbsp; GOING ON NOW &nbsp; ✦ &nbsp; GOING ON NOW &nbsp; ✦ &nbsp; GOING ON NOW &nbsp; &nbsp;&nbsp;&nbsp;</span>
+          <span>✦ &nbsp; GOING ON NOW &nbsp; ✦ &nbsp; GOING ON NOW &nbsp; ✦ &nbsp; GOING ON NOW &nbsp; ✦ &nbsp; GOING ON NOW &nbsp; ✦ &nbsp; GOING ON NOW &nbsp; ✦ &nbsp; GOING ON NOW &nbsp; &nbsp;&nbsp;&nbsp;</span>
         </div>
       </div>
 
       {/* Carousel */}
       <div
-        className="relative"
+        className="hero-carousel-wrapper relative"
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
       >
@@ -86,40 +84,37 @@ export default function HeroBanner() {
                 src={banner.DuongDanAnh}
                 alt={banner.TenBanner || ''}
                 className="hero-bg-img"
-                onError={(e) => {
-                  e.target.src = 'http://localhost:5000/Pic/Pic_TrangChu/Pic_Carousel/Carousel5.jpg';
-                }}
+                onError={(e) => { e.target.src = 'http://localhost:5000/Pic/Pic_TrangChu/Pic_Carousel/Carousel5.jpg'; }}
               />
             </a>
 
-            {/* Caption overlay */}
+            {/* Caption */}
             <div className="hero-caption-overlay">
-              <p className="hero-sub-title">MEMORIAL DAY SALE</p>
+              <p className="hero-sub-title">✦ &nbsp; Memorial Day Sale &nbsp; ✦</p>
               <h1 className="hero-main-title">
-                Up to 60% off**
-                <br />
-                <span className="thin-text">select items</span>
+                Up to 60% Off
+                <span className="thin-text">select items online</span>
               </h1>
-              <div className="mt-6">
+              <div style={{ marginTop: '28px' }}>
                 <a
                   href={banner.LinkDen || '../TrangDanhMucSanPham/TrangSanPham.html'}
                   className="btn-shop-now"
                 >
-                  SHOP THE SALE
+                  Shop the Sale
                 </a>
               </div>
             </div>
           </div>
         ))}
 
-        {/* Arrow buttons — show on hover */}
+        {/* Arrows */}
         {banners.length > 1 && (
           <>
-            <button onClick={prev} className={`carousel-arrow prev ${isHovered ? '' : '!opacity-0'}`} aria-label="Previous">
-              <ChevronLeft size={24} />
+            <button onClick={prev} className={`carousel-arrow prev ${isHovered ? '' : ''}`} style={{ opacity: isHovered ? 1 : 0 }} aria-label="Previous">
+              <ChevronLeft size={22} strokeWidth={2.5} />
             </button>
-            <button onClick={next} className={`carousel-arrow next ${isHovered ? '' : '!opacity-0'}`} aria-label="Next">
-              <ChevronRight size={24} />
+            <button onClick={next} className={`carousel-arrow next ${isHovered ? '' : ''}`} style={{ opacity: isHovered ? 1 : 0 }} aria-label="Next">
+              <ChevronRight size={22} strokeWidth={2.5} />
             </button>
           </>
         )}
@@ -139,11 +134,11 @@ export default function HeroBanner() {
         </div>
       )}
 
-      {/* Footer bar — red */}
+      {/* Footer bar */}
       <div className="hero-footer-bar">
-        <span className="font-bold text-base">NoiThatXin</span>
-        <span className="accent">&nbsp;advantage</span>
-        <span>&nbsp;— Trả góp ưu đãi đặc biệt trong 24 tháng‡*</span>
+        <span className="brand">NoiThatXin</span>
+        <span className="accent">Advantage</span>
+        <span>— Miễn phí giao hàng &amp; lắp đặt tại nhà ‡*</span>
       </div>
     </section>
   );

@@ -128,8 +128,8 @@ export default function DealsCarousel({ title, apiParams = {}, icon }) {
         {loading ? (
           <div className="flex gap-1 overflow-hidden">
             {[...Array(4)].map((_, i) => (
-              <div key={i} className="flex-shrink-0 w-[calc(25%-3px)] min-w-[300px]">
-                <div className="bg-gray-700 animate-pulse" style={{ height: '550px' }}></div>
+              <div key={i} className="deals-skeleton">
+                <div className="deals-skeleton-inner"></div>
               </div>
             ))}
           </div>

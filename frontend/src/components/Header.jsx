@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 import { Search, SlidersHorizontal, ShoppingCart, User, LogOut, Menu, X } from 'lucide-react';
-import { formatPrice } from '../services/api';
 
 const ROOMS = [
   { label: 'Phòng khách', param: 'phong-khach' },
@@ -37,14 +36,14 @@ export default function Header({ onOpenSearch, cartCount = 0, user = null, onLog
   };
 
   return (
-    <header className="site-header sticky top-0 z-50 shadow-md">
+    <header className="site-header sticky-top">
       {/* Top dark bar */}
       <div className="header-top-bar">
-        <span className="flex items-center gap-1.5">
+        <span>
           <svg width="14" height="14" fill="currentColor" viewBox="0 0 16 16"><path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2z"/></svg>
           Địa điểm
         </span>
-        <span className="flex items-center gap-1.5">
+        <span>
           <svg width="14" height="14" fill="currentColor" viewBox="0 0 16 16"><path d="M8 16.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z"/><path d="M3 4h10.5l-2.25 3H5.25L3 4z"/></svg>
           Miễn phí giao hàng cho đơn từ 2.000.000đ
         </span>
@@ -54,73 +53,73 @@ export default function Header({ onOpenSearch, cartCount = 0, user = null, onLog
       <div className="header-main-bar">
         {/* Mobile menu */}
         <button
-          className="lg:hidden text-gray-700 p-2 -ml-2"
+          className="lg:hidden p-2 -ml-2 rounded-lg hover:bg-gray-100 transition-colors"
           onClick={() => setMenuOpen(!menuOpen)}
           aria-label="Menu"
+          style={{ color: '#1a1a1a' }}
         >
-          {menuOpen ? <X size={24} /> : <Menu size={24} />}
+          {menuOpen ? <X size={22} /> : <Menu size={22} />}
         </button>
 
-        {/* Search box — left side */}
+        {/* Search box */}
         <div className="search-input-wrap">
           <input
             type="text"
             id="searchProductInput"
-            placeholder="Nhập tên sản phẩm..."
-            className="flex-1 outline-none text-sm text-gray-800"
+            placeholder="Tìm kiếm sản phẩm..."
+            className="outline-none"
             onKeyDown={handleSearchKeyDown}
+            aria-label="Tìm kiếm sản phẩm"
           />
           <button
-            className="p-1 text-gray-500 hover:text-primary transition-colors"
             onClick={() => onOpenSearch?.('text')}
             aria-label="Tìm kiếm"
           >
-            <Search size={18} />
+            <Search size={17} />
           </button>
           <button
-            className="p-1 text-gray-500 hover:text-primary transition-colors border-l border-gray-300 pl-2"
             onClick={() => onOpenSearch?.()}
             aria-label="Tìm kiếm nâng cao"
+            style={{ borderLeft: '1px solid rgba(0,0,0,0.1)', paddingLeft: '10px', marginLeft: '2px' }}
           >
-            <SlidersHorizontal size={18} />
+            <SlidersHorizontal size={17} />
           </button>
         </div>
 
         {/* Logo — center */}
         <div className="header-logo-center">
-          <a href="../TrangChu/TrangChu.html" className="flex items-center justify-center">
+          <a href="../TrangChu/TrangChu.html">
             <img
               src="http://localhost:5000/Pic/Pic_LogoShop/logoNoiThatXin.png"
-              alt="NoiThatXin Logo"
-              className="h-16 object-contain"
+              alt="NoiThatXin"
               onError={(e) => { e.target.src = 'http://localhost:5000/Pic/Pic_LogoShop/logoNoiThatXin.png'; e.onError = null; }}
             />
           </a>
         </div>
 
-        {/* Actions — right side */}
+        {/* Actions */}
         <div className="header-actions-right">
           {user ? (
-            <div className="flex items-center gap-3">
-              <span className="text-gray-700 text-sm hidden sm:block font-medium">
-                Xin chào, {user.HoTen || user.TenDangNhap}
+            <>
+              <span className="greeting">
+                Xin chào, <strong>{user.HoTen || user.TenDangNhap}</strong>
               </span>
-              <button
-                onClick={handleLogout}
-                className="flex items-center gap-1.5 bg-gray-800 hover:bg-gray-700 text-white px-4 py-2 text-sm transition-colors"
-              >
-                <LogOut size={15} />
+              <button onClick={handleLogout} className="btn-logout">
+                <LogOut size={14} />
                 Đăng xuất
               </button>
-            </div>
+            </>
           ) : (
             <a href="../Login/DangNhap.html" className="btn-login-link">
-              <button type="button" className="btn-login-text">Đăng nhập</button>
+              <button type="button" className="btn-login-text">
+                <User size={14} style={{ display: 'inline', marginRight: '4px', verticalAlign: 'middle' }} />
+                Đăng nhập
+              </button>
             </a>
           )}
 
           <a href="../TrangThanhToan/GioHang.html" className="btn-cart-icon" aria-label="Giỏ hàng">
-            <ShoppingCart size={24} />
+            <ShoppingCart size={23} />
             {cartCount > 0 && (
               <span className="badge">{cartCount > 99 ? '99+' : cartCount}</span>
             )}
@@ -129,23 +128,19 @@ export default function Header({ onOpenSearch, cartCount = 0, user = null, onLog
       </div>
 
       {/* Nav bar */}
-      <nav className={`main-nav-bar ${menuOpen ? 'flex flex-col' : 'hidden'} lg:flex`}>
-        <a href="../TrangChu/TrangChu.html" className="nav-link-item">
-          Trang chủ
-        </a>
+      <nav className={`main-nav-bar ${menuOpen ? 'flex flex-col !items-start !gap-0 !px-4' : 'hidden'} lg:flex`}>
+        <a href="../TrangChu/TrangChu.html" className="nav-link-item">Trang chủ</a>
 
-        {/* Danh mục dropdown */}
+        {/* Danh mục */}
         <div
           className="nav-dropdown"
           onMouseEnter={() => setOpenDropdown('danh-muc')}
           onMouseLeave={() => setOpenDropdown(null)}
         >
-          <a href="../TrangDanhMucSanPham/TrangSanPham.html" className="nav-link-item">
-            Danh mục ▾
-          </a>
+          <a href="../TrangDanhMucSanPham/TrangSanPham.html" className="nav-link-item">Danh mục ▾</a>
           {openDropdown === 'danh-muc' && (
             <div className="nav-dropdown-content">
-              <ul className="p-0 m-0" style={{ listStyle: 'none' }}>
+              <ul style={{ listStyle: 'none', padding: '6px 0', margin: 0 }}>
                 {ROOMS.map((room) => (
                   <li key={room.param}>
                     <a href={`../TrangDanhMucSanPham/TrangSanPham.html?phong=${room.param}`}>
@@ -164,15 +159,13 @@ export default function Header({ onOpenSearch, cartCount = 0, user = null, onLog
           onMouseEnter={() => setOpenDropdown('phong-khach')}
           onMouseLeave={() => setOpenDropdown(null)}
         >
-          <a href="../TrangDanhMucSanPham/TrangSanPham.html" className="nav-link-item">
-            Phòng khách ▾
-          </a>
+          <a href="../TrangDanhMucSanPham/TrangSanPham.html" className="nav-link-item">Phòng khách ▾</a>
           {openDropdown === 'phong-khach' && (
             <div className="nav-dropdown-content">
-              <ul className="p-0 m-0" style={{ listStyle: 'none' }}>
+              <ul style={{ listStyle: 'none', padding: '6px 0', margin: 0 }}>
                 <li><a href="../TrangDanhMucSanPham/TrangSanPham.html?phong=phong-khach">Xem tất cả</a></li>
-                <li><a href="../TrangDanhMucSanPham/TrangSanPham.html?phong=phong-khach&noi_bat=1">Bộ sưu tập phòng khách mới</a></li>
-                <li><a href="../TrangDanhMucSanPham/TrangSanPham.html?phong=phong-khach">Đồ nội thất trang trí</a></li>
+                <li><a href="../TrangDanhMucSanPham/TrangSanPham.html?phong=phong-khach&noi_bat=1">Bộ sưu tập mới</a></li>
+                <li><a href="../TrangDanhMucSanPham/TrangSanPham.html?phong=phong-khach">Đồ trang trí</a></li>
               </ul>
             </div>
           )}
@@ -184,15 +177,13 @@ export default function Header({ onOpenSearch, cartCount = 0, user = null, onLog
           onMouseEnter={() => setOpenDropdown('phong-ngu')}
           onMouseLeave={() => setOpenDropdown(null)}
         >
-          <a href="../TrangDanhMucSanPham/TrangSanPham.html" className="nav-link-item">
-            Phòng ngủ ▾
-          </a>
+          <a href="../TrangDanhMucSanPham/TrangSanPham.html" className="nav-link-item">Phòng ngủ ▾</a>
           {openDropdown === 'phong-ngu' && (
             <div className="nav-dropdown-content">
-              <ul className="p-0 m-0" style={{ listStyle: 'none' }}>
+              <ul style={{ listStyle: 'none', padding: '6px 0', margin: 0 }}>
                 <li><a href="../TrangDanhMucSanPham/TrangSanPham.html?phong=phong-ngu">Xem tất cả</a></li>
-                <li><a href="../TrangDanhMucSanPham/TrangSanPham.html?phong=phong-ngu&noi_bat=1">Bộ sưu tập phòng ngủ mới</a></li>
-                <li><a href="../TrangDanhMucSanPham/TrangSanPham.html?phong=phong-ngu">Đồ nội thất trang trí</a></li>
+                <li><a href="../TrangDanhMucSanPham/TrangSanPham.html?phong=phong-ngu&noi_bat=1">Bộ sưu tập mới</a></li>
+                <li><a href="../TrangDanhMucSanPham/TrangSanPham.html?phong=phong-ngu">Đồ trang trí</a></li>
               </ul>
             </div>
           )}
@@ -204,15 +195,13 @@ export default function Header({ onOpenSearch, cartCount = 0, user = null, onLog
           onMouseEnter={() => setOpenDropdown('phong-bep')}
           onMouseLeave={() => setOpenDropdown(null)}
         >
-          <a href="../TrangDanhMucSanPham/TrangSanPham.html" className="nav-link-item">
-            Phòng bếp ▾
-          </a>
+          <a href="../TrangDanhMucSanPham/TrangSanPham.html" className="nav-link-item">Phòng bếp ▾</a>
           {openDropdown === 'phong-bep' && (
             <div className="nav-dropdown-content">
-              <ul className="p-0 m-0" style={{ listStyle: 'none' }}>
+              <ul style={{ listStyle: 'none', padding: '6px 0', margin: 0 }}>
                 <li><a href="../TrangDanhMucSanPham/TrangSanPham.html?phong=phong-bep">Xem tất cả</a></li>
-                <li><a href="../TrangDanhMucSanPham/TrangSanPham.html?phong=phong-bep&noi_bat=1">Bộ sưu tập phòng bếp mới</a></li>
-                <li><a href="../TrangDanhMucSanPham/TrangSanPham.html?phong=phong-bep">Đồ nội thất trang trí</a></li>
+                <li><a href="../TrangDanhMucSanPham/TrangSanPham.html?phong=phong-bep&noi_bat=1">Bộ sưu tập mới</a></li>
+                <li><a href="../TrangDanhMucSanPham/TrangSanPham.html?phong=phong-bep">Đồ trang trí</a></li>
               </ul>
             </div>
           )}
@@ -224,15 +213,13 @@ export default function Header({ onOpenSearch, cartCount = 0, user = null, onLog
           onMouseEnter={() => setOpenDropdown('phong-tam')}
           onMouseLeave={() => setOpenDropdown(null)}
         >
-          <a href="../TrangDanhMucSanPham/TrangSanPham.html" className="nav-link-item">
-            Phòng tắm ▾
-          </a>
+          <a href="../TrangDanhMucSanPham/TrangSanPham.html" className="nav-link-item">Phòng tắm ▾</a>
           {openDropdown === 'phong-tam' && (
             <div className="nav-dropdown-content">
-              <ul className="p-0 m-0" style={{ listStyle: 'none' }}>
+              <ul style={{ listStyle: 'none', padding: '6px 0', margin: 0 }}>
                 <li><a href="../TrangDanhMucSanPham/TrangSanPham.html?phong=phong-tam">Xem tất cả</a></li>
-                <li><a href="../TrangDanhMucSanPham/TrangSanPham.html?phong=phong-tam&noi_bat=1">Bộ sưu tập phòng tắm mới</a></li>
-                <li><a href="../TrangDanhMucSanPham/TrangSanPham.html?phong=phong-tam">Đồ nội thất trang trí</a></li>
+                <li><a href="../TrangDanhMucSanPham/TrangSanPham.html?phong=phong-tam&noi_bat=1">Bộ sưu tập mới</a></li>
+                <li><a href="../TrangDanhMucSanPham/TrangSanPham.html?phong=phong-tam">Đồ trang trí</a></li>
               </ul>
             </div>
           )}
@@ -242,7 +229,7 @@ export default function Header({ onOpenSearch, cartCount = 0, user = null, onLog
         <a href="../TrangLienHe/TrangLienHe.html" className="nav-link-item">Liên hệ</a>
       </nav>
 
-      {/* Bottom dark strip */}
+      {/* Bottom strip */}
       <div className="header-bottom-strip">
         Miễn phí vận chuyển cho đơn hàng từ 2.000.000đ ‡*
       </div>

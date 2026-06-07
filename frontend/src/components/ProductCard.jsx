@@ -24,21 +24,30 @@ export default function ProductCard({ product }) {
   return (
     <div className="ai-product-card flex flex-column h-100">
       <div className="ai-img-wrap">
-        <a href={link} target="_blank" rel="noopener noreferrer">
+        <a href={link}>
           <img src={img} alt={name} onError={(e) => { e.target.src = FALLBACK_IMG; }} />
         </a>
-        {disc > 0 && <span className="ai-discount-badge">-{disc}%</span>}
+        {disc > 0 && (
+          <span className="ai-discount-badge">-{disc}%</span>
+        )}
         {simScore > 0 && (
-          <span className="ai-sim-score">{simPct}%</span>
+          <span className="ai-sim-score">
+            <span style={{ fontSize: '9px' }}>AI</span>
+            {simPct}%
+          </span>
         )}
       </div>
       <div className="ai-product-info flex-fill">
-        <a href={link} target="_blank" rel="noopener noreferrer" className="ai-product-name">
+        <a href={link} className="ai-product-name">
           {name}
         </a>
-        <div className="mt-2">
-          {salePrice > 0 && <span className="ai-price-sale">{formatPrice(salePrice)}</span>}
-          {originalPrice > salePrice && <span className="ai-price-original">{formatPrice(originalPrice)}</span>}
+        <div style={{ marginTop: '8px' }}>
+          {salePrice > 0 && (
+            <span className="ai-price-sale">{formatPrice(salePrice)}</span>
+          )}
+          {originalPrice > salePrice && (
+            <span className="ai-price-original">{formatPrice(originalPrice)}</span>
+          )}
         </div>
       </div>
     </div>
