@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import { X, Loader2, Camera, CameraOff } from 'lucide-react';
 import { useAISearch } from '../hooks/useAISearch';
 import AIResultsGrid from './AIResultsGrid';
@@ -24,6 +24,7 @@ export default function SearchModal({ isOpen, onClose, initialTab = 'text' }) {
   const videoRef = useRef(null);
   const canvasRef = useRef(null);
   const streamRef = useRef(null);
+  const stopCameraRef = useRef(null);
 
   const {
     results: aiResults,
@@ -35,9 +36,31 @@ export default function SearchModal({ isOpen, onClose, initialTab = 'text' }) {
     reset: resetAI,
   } = useAISearch();
 
-  if (!isOpen) return null;
+  // Keyboard: Escape to close
+  useEffect(() => {
+    const handler = (e) => { if (e.key === 'Escape' && isOpen) onClose(); };
+    document.addEventListener('keydown', handler);
+    return () => document.removeEventListener('keydown', handler);
+  }, [isOpen, onClose]);
 
-  // ── Tab 1 ────────────────────────────────────────────────────────
+  // Scroll lock
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => { document.body.style.overflow = ''; };
+  }, [isOpen]);
+
+  // Stop camera when tab switches away
+  useEffect(() => {
+    if (activeTab !== 'camera') {
+      stopCameraRef.current?.();
+    }
+  }, [activeTab]);
+
+  // ── Tab 1: Text search ──────────────────────────────────────────
   const handleTextSearch = async () => {
     if (!textQuery.trim()) return;
     setTextLoading(true);
@@ -58,7 +81,7 @@ export default function SearchModal({ isOpen, onClose, initialTab = 'text' }) {
     }
   };
 
-  // ── Tab 2 ────────────────────────────────────────────────────────
+  // ── Tab 2: File upload ─────────────────────────────────────────
   const handleFileChange = (e) => {
     const file = e.target.files[0];
     if (!file) return;
@@ -79,7 +102,19 @@ export default function SearchModal({ isOpen, onClose, initialTab = 'text' }) {
     if (fileInputRef.current) fileInputRef.current.value = '';
   };
 
-  // ── Tab 3 ────────────────────────────────────────────────────────
+  // ── Tab 3: Camera ───────────────────────────────────────────────
+  const stopCamera = useCallback(() => {
+    if (streamRef.current) {
+      streamRef.current.getTracks().forEach((t) => t.stop());
+      streamRef.current = null;
+    }
+    setCameraActive(false);
+    if (videoRef.current) videoRef.current.srcObject = null;
+  }, []);
+
+  // expose stopCamera to the ref for cleanup
+  useEffect(() => { stopCameraRef.current = stopCamera; }, [stopCamera]);
+
   const startCamera = async () => {
     setCameraError('');
     try {
@@ -90,15 +125,6 @@ export default function SearchModal({ isOpen, onClose, initialTab = 'text' }) {
     } catch {
       setCameraError('Không thể mở camera. Kiểm tra quyền truy cập thiết bị.');
     }
-  };
-
-  const stopCamera = () => {
-    if (streamRef.current) {
-      streamRef.current.getTracks().forEach((t) => t.stop());
-      streamRef.current = null;
-    }
-    setCameraActive(false);
-    if (videoRef.current) videoRef.current.srcObject = null;
   };
 
   const capturePhoto = () => {
@@ -114,6 +140,7 @@ export default function SearchModal({ isOpen, onClose, initialTab = 'text' }) {
     searchByBase64(dataUrl);
   };
 
+  // ── Close & reset ──────────────────────────────────────────────
   const handleClose = () => {
     stopCamera();
     setSelectedFile(null);
@@ -124,27 +151,34 @@ export default function SearchModal({ isOpen, onClose, initialTab = 'text' }) {
     onClose();
   };
 
+  if (!isOpen) return null;
+
   return (
-    <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/50 backdrop-blur-sm">
-      <div
-        className="bg-white rounded-none shadow-2xl w-full max-w-3xl mx-4 max-h-[90vh] flex flex-col overflow-hidden"
-        style={{ maxWidth: '800px' }}
-      >
+    <div
+      className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/50 backdrop-blur-sm"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="search-modal-title"
+    >
+      <div className="bg-white w-full max-w-3xl mx-4 max-h-[90vh] flex flex-col overflow-hidden shadow-2xl">
+
         {/* Header */}
-        <div className="flex items-center justify-between px-6 py-4 border-b border-gray-200 bg-white">
+        <div className="flex items-center justify-between px-6 py-4 border-bottom border-gray-200 bg-white flex-shrink-0">
           <div>
-            <h3 className="font-bold text-lg text-gray-900">Tìm kiếm sản phẩm</h3>
-            <p className="text-xs text-gray-500 mt-0.5">
+            <h3 id="search-modal-title" className="fw-bold fs-5 mb-0 text-dark">Tìm kiếm sản phẩm</h3>
+            <p className="text-secondary small mb-0 mt-1">
               Chọn cách tìm kiếm: nhập tên, upload ảnh, hoặc mở camera.
             </p>
           </div>
-          <button onClick={handleClose} className="p-2 hover:bg-gray-100 rounded-full transition-colors text-gray-500" aria-label="Đóng">
-            <X size={20} />
-          </button>
+          <button
+            onClick={handleClose}
+            className="btn btn-close"
+            aria-label="Đóng"
+          />
         </div>
 
         {/* Tabs */}
-        <div className="modal-search-tabs px-6 pt-4">
+        <div className="modal-search-tabs px-6 pt-4 flex-shrink-0">
           {[
             { id: 'text', label: 'Nhập từ khóa' },
             { id: 'upload', label: 'Upload ảnh' },
@@ -163,7 +197,7 @@ export default function SearchModal({ isOpen, onClose, initialTab = 'text' }) {
         {/* Content */}
         <div className="flex-1 overflow-y-auto px-6 pb-6">
 
-          {/* TAB 1: Text */}
+          {/* ── TAB: Text ── */}
           {activeTab === 'text' && (
             <div className="search-panel-row">
               <div>
@@ -176,13 +210,14 @@ export default function SearchModal({ isOpen, onClose, initialTab = 'text' }) {
                     onKeyDown={(e) => e.key === 'Enter' && handleTextSearch()}
                     placeholder="Nhập tên sản phẩm..."
                     className="form-control"
+                    aria-label="Tìm kiếm sản phẩm"
                   />
                   <button
                     onClick={handleTextSearch}
                     disabled={textLoading || !textQuery.trim()}
-                    className="btn btn-dark px-4"
+                    className="btn btn-dark px-4 d-flex align-items-center gap-2"
                   >
-                    {textLoading ? <Loader2 size={16} className="animate-spin" /> : null}
+                    {textLoading && <Loader2 size={16} className="spinner-border spinner-border-sm" />}
                     Tìm kiếm
                   </button>
                 </div>
@@ -190,37 +225,43 @@ export default function SearchModal({ isOpen, onClose, initialTab = 'text' }) {
 
               {textResults.length > 0 && (
                 <div>
-                  <p className="text-sm text-gray-600 mb-3">{textNote}</p>
-                  <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
+                  <p className="small text-secondary mb-3">{textNote}</p>
+                  <div className="row g-2">
                     {textResults.map((p, i) => (
-                      <a
-                        key={p.id || p.MaSP || i}
-                        href={`../TrangChiTiet/TrangChiTiet.html?id=${p.id || p.MaSP}`}
-                        className="border rounded overflow-hidden hover:shadow-lg transition-shadow block"
-                      >
-                        <img
-                          src={p.HinhAnh || p.hinhAnh || 'http://localhost:5000/Pic/Pic_SanPham/default.svg'}
-                          alt={p.TenSP || p.tenSP}
-                          className="w-full h-32 object-cover"
-                          onError={(e) => { e.target.src = 'http://localhost:5000/Pic/Pic_SanPham/default.svg'; }}
-                        />
-                        <div className="p-2">
-                          <p className="text-xs font-semibold line-clamp-2">{p.TenSP || p.tenSP}</p>
-                          <p className="text-sm font-bold text-[#1E4D36] mt-1">
-                            {new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND', maximumFractionDigits: 0 }).format(p.giaSauGiam || p.GiaBan || p.giaBan || 0)}
-                          </p>
-                        </div>
-                      </a>
+                      <div key={p.id || p.MaSP || i} className="col-6 col-sm-4 col-md-3">
+                        <a
+                          href={`../TrangChiTiet/TrangChiTiet.html?id=${p.id || p.MaSP}`}
+                          className="d-block border rounded overflow-hidden text-decoration-none hover-shadow transition-shadow"
+                        >
+                          <img
+                            src={p.HinhAnh || p.hinhAnh || 'http://localhost:5000/Pic/Pic_SanPham/default.svg'}
+                            alt={p.TenSP || p.tenSP}
+                            className="w-100"
+                            style={{ height: '120px', objectFit: 'contain', background: '#f8f9fa' }}
+                            onError={(e) => { e.target.src = 'http://localhost:5000/Pic/Pic_SanPham/default.svg'; }}
+                          />
+                          <div className="p-2">
+                            <p className="small mb-1 text-dark line-clamp-2" style={{ minHeight: '2.5rem' }}>
+                              {p.TenSP || p.tenSP}
+                            </p>
+                            <p className="fw-bold text-success mb-0 small">
+                              {new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND', maximumFractionDigits: 0 }).format(
+                                p.giaSauGiam || p.GiaBan || p.giaBan || 0
+                              )}
+                            </p>
+                          </div>
+                        </a>
+                      </div>
                     ))}
                   </div>
                 </div>
               )}
 
-              <div className="text-sm text-gray-500">{textNote}</div>
+              <div className="small text-secondary">{textNote}</div>
             </div>
           )}
 
-          {/* TAB 2: Upload */}
+          {/* ── TAB: Upload ── */}
           {activeTab === 'upload' && (
             <div className="search-panel-row">
               <div>
@@ -238,21 +279,21 @@ export default function SearchModal({ isOpen, onClose, initialTab = 'text' }) {
                 {previewUrl ? (
                   <img src={previewUrl} alt="Preview" className="image-preview" />
                 ) : (
-                  <span className="text-gray-400 text-sm">Chưa có ảnh được chọn.</span>
+                  <span className="text-secondary small">Chưa có ảnh được chọn.</span>
                 )}
               </div>
 
               {selectedFile && (
-                <p className="text-xs text-gray-500">Đã chọn: {selectedFile.name}</p>
+                <p className="small text-secondary mb-0">Đã chọn: {selectedFile.name}</p>
               )}
 
               <div className="d-flex gap-3">
                 <button
                   onClick={handleImageSearch}
                   disabled={!selectedFile || aiLoading}
-                  className="btn btn-dark px-5 flex-1 d-flex align-items-center justify-content-center gap-2"
+                  className="btn btn-dark px-5 flex-fill d-flex align-items-center justify-content-center gap-2"
                 >
-                  {aiLoading ? <Loader2 size={16} className="animate-spin" /> : null}
+                  {aiLoading && <Loader2 size={16} className="spinner-border spinner-border-sm" />}
                   {aiLoading ? 'Đang xử lý AI...' : 'Tìm sản phẩm bằng ảnh'}
                 </button>
                 {selectedFile && (
@@ -266,7 +307,7 @@ export default function SearchModal({ isOpen, onClose, initialTab = 'text' }) {
             </div>
           )}
 
-          {/* TAB 3: Camera */}
+          {/* ── TAB: Camera ── */}
           {activeTab === 'camera' && (
             <div className="search-panel-row">
               <div>
@@ -279,13 +320,13 @@ export default function SearchModal({ isOpen, onClose, initialTab = 'text' }) {
                     </button>
                   ) : (
                     <>
-                      <button onClick={stopCamera} className="btn btn-danger d-flex align-items-center gap-2">
+                      <button onClick={stopCamera} className="btn btn-outline-secondary d-flex align-items-center gap-2">
                         <CameraOff size={16} />
                         Tắt camera
                       </button>
-                      <button onClick={capturePhoto} className="btn btn-dark flex-1 d-flex align-items-center justify-content-center gap-2">
+                      <button onClick={capturePhoto} className="btn btn-dark flex-fill d-flex align-items-center justify-content-center gap-2">
                         <Camera size={16} />
-                        Chụp ảnh & Tìm kiếm
+                        Chụp ảnh &amp; Tìm kiếm
                       </button>
                     </>
                   )}
@@ -296,10 +337,10 @@ export default function SearchModal({ isOpen, onClose, initialTab = 'text' }) {
                 {cameraActive ? (
                   <video ref={videoRef} autoPlay muted playsInline className="w-100" />
                 ) : (
-                  <div className="d-flex flex-column align-items-center justify-content-center py-5 text-gray-400">
-                    <Camera size={48} className="mb-3 opacity-30" />
-                    <p className="text-sm">Nhấn "Bật camera" để mở camera.</p>
-                    <p className="text-xs mt-1 opacity-60">Trình duyệt cần cho phép truy cập thiết bị.</p>
+                  <div className="d-flex flex-column align-items-center justify-content-center py-5 text-secondary">
+                    <Camera size={48} className="mb-3 opacity-25" />
+                    <p className="small mb-1">Nhấn "Bật camera" để mở camera.</p>
+                    <p className="small opacity-50 mb-0">Trình duyệt cần cho phép truy cập thiết bị.</p>
                   </div>
                 )}
               </div>
@@ -307,7 +348,7 @@ export default function SearchModal({ isOpen, onClose, initialTab = 'text' }) {
               <canvas ref={canvasRef} className="d-none" />
 
               {cameraError && (
-                <div className="alert alert-danger py-2 text-sm">{cameraError}</div>
+                <div className="alert alert-danger py-2 small mb-0">{cameraError}</div>
               )}
 
               <AIResultsGrid results={aiResults} meta={aiMeta} loading={aiLoading} error={aiError} />

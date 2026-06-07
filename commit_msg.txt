@@ -1,0 +1,11 @@
+fix: accessibility, footer styling, and modal UX improvements
+
+- Add lang="vi" to index.html for screen reader language
+- Add preconnect for Google Fonts and localhost CDN
+- Fix Footer: green branded background (#1E4D36), white text, hover effects, Back-to-Top button
+- Fix SearchModal: Escape key to close, body scroll lock when open, camera cleanup on tab switch
+- Fix SearchModal: aria-modal, role="dialog", aria-labelledby for accessibility
+- Fix SearchModal: useRef for stopCameraRef with proper useCallback pattern
+- Fix Header: prevent infinite loop in logo onError fallback
+- Fix ProductCard: remove target="_blank" from links
+- Replace lucide icons with Bootstrap button styles for camera controls

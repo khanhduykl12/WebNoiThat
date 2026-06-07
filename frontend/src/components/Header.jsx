@@ -93,7 +93,7 @@ export default function Header({ onOpenSearch, cartCount = 0, user = null, onLog
               src="http://localhost:5000/Pic/Pic_LogoShop/logoNoiThatXin.png"
               alt="NoiThatXin Logo"
               className="h-16 object-contain"
-              onError={(e) => { e.target.src = 'http://localhost:5000/Pic/Pic_LogoShop/logoNoiThatXin.png'; }}
+              onError={(e) => { e.target.src = 'http://localhost:5000/Pic/Pic_LogoShop/logoNoiThatXin.png'; e.onError = null; }}
             />
           </a>
         </div>
