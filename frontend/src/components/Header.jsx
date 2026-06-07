@@ -30,244 +30,220 @@ export default function Header({ onOpenSearch, cartCount = 0, user = null, onLog
     window.location.href = '../Login/DangNhap.html';
   };
 
+  const handleSearchKeyDown = (e) => {
+    if (e.key === 'Enter' && e.target.value.trim()) {
+      onOpenSearch?.('text');
+    }
+  };
+
   return (
-    <header className="site-header sticky top-0 z-50 shadow-lg">
-      {/* Top strip */}
-      <div className="bg-primary-dark text-white text-xs py-1 px-4 flex items-center justify-center gap-4">
-        <span className="flex items-center gap-1">
+    <header className="site-header sticky top-0 z-50 shadow-md">
+      {/* Top dark bar */}
+      <div className="header-top-bar">
+        <span className="flex items-center gap-1.5">
           <svg width="14" height="14" fill="currentColor" viewBox="0 0 16 16"><path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2z"/></svg>
           Địa điểm
         </span>
-        <span className="flex items-center gap-1">
+        <span className="flex items-center gap-1.5">
           <svg width="14" height="14" fill="currentColor" viewBox="0 0 16 16"><path d="M8 16.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z"/><path d="M3 4h10.5l-2.25 3H5.25L3 4z"/></svg>
           Miễn phí giao hàng cho đơn từ 2.000.000đ
         </span>
       </div>
 
-      {/* Main header */}
-      <div className="px-4 py-3">
-        <div className="flex items-center gap-4">
-          {/* Mobile menu toggle */}
+      {/* Main header bar */}
+      <div className="header-main-bar">
+        {/* Mobile menu */}
+        <button
+          className="lg:hidden text-gray-700 p-2 -ml-2"
+          onClick={() => setMenuOpen(!menuOpen)}
+          aria-label="Menu"
+        >
+          {menuOpen ? <X size={24} /> : <Menu size={24} />}
+        </button>
+
+        {/* Search box — left side */}
+        <div className="search-input-wrap">
+          <input
+            type="text"
+            id="searchProductInput"
+            placeholder="Nhập tên sản phẩm..."
+            className="flex-1 outline-none text-sm text-gray-800"
+            onKeyDown={handleSearchKeyDown}
+          />
           <button
-            className="lg:hidden text-white p-2"
-            onClick={() => setMenuOpen(!menuOpen)}
-            aria-label="Menu"
+            className="p-1 text-gray-500 hover:text-primary transition-colors"
+            onClick={() => onOpenSearch?.('text')}
+            aria-label="Tìm kiếm"
           >
-            {menuOpen ? <X size={24} /> : <Menu size={24} />}
+            <Search size={18} />
           </button>
+          <button
+            className="p-1 text-gray-500 hover:text-primary transition-colors border-l border-gray-300 pl-2"
+            onClick={() => onOpenSearch?.()}
+            aria-label="Tìm kiếm nâng cao"
+          >
+            <SlidersHorizontal size={18} />
+          </button>
+        </div>
 
-          {/* Search box */}
-          <div className="flex-1 max-w-xl flex items-center bg-white rounded-full overflow-hidden px-4 py-2">
-            <input
-              type="text"
-              placeholder="Nhập tên sản phẩm..."
-              className="flex-1 outline-none text-sm text-gray-800"
-              onKeyDown={(e) => {
-                if (e.key === 'Enter' && onOpenSearch) {
-                  onOpenSearch('text');
-                }
-              }}
-            />
-            <button
-              className="p-1 text-primary hover:text-primary-light"
-              onClick={() => onOpenSearch?.('text')}
-              aria-label="Search"
-            >
-              <Search size={18} />
-            </button>
-            <button
-              className="p-1 text-primary hover:text-primary-light border-l border-gray-300 pl-3"
-              onClick={() => onOpenSearch?.()}
-              aria-label="Advanced search"
-            >
-              <SlidersHorizontal size={18} />
-            </button>
-          </div>
-
-          {/* Logo */}
-          <a href="../TrangChu/TrangChu.html" className="flex-shrink-0">
+        {/* Logo — center */}
+        <div className="header-logo-center">
+          <a href="../TrangChu/TrangChu.html" className="flex items-center justify-center">
             <img
               src="http://localhost:5000/Pic/Pic_LogoShop/logoNoiThatXin.png"
               alt="NoiThatXin Logo"
-              className="h-12 object-contain"
+              className="h-16 object-contain"
               onError={(e) => { e.target.src = 'http://localhost:5000/Pic/Pic_LogoShop/logoNoiThatXin.png'; }}
             />
           </a>
+        </div>
 
-          {/* Actions */}
-          <div className="flex items-center gap-3">
-            {user ? (
-              <div className="flex items-center gap-2">
-                <span className="text-white text-sm hidden sm:block">
-                  Xin chào, {user.HoTen || user.TenDangNhap}
-                </span>
-                <button
-                  onClick={handleLogout}
-                  className="flex items-center gap-1 bg-red-600 hover:bg-red-700 text-white px-3 py-2 rounded-full text-sm transition-colors"
-                >
-                  <LogOut size={16} />
-                  <span className="hidden sm:inline">Đăng xuất</span>
-                </button>
-              </div>
-            ) : (
-              <a
-                href="../Login/DangNhap.html"
-                className="bg-accent hover:bg-amber-600 text-white px-5 py-2 rounded-full font-bold text-sm transition-colors"
+        {/* Actions — right side */}
+        <div className="header-actions-right">
+          {user ? (
+            <div className="flex items-center gap-3">
+              <span className="text-gray-700 text-sm hidden sm:block font-medium">
+                Xin chào, {user.HoTen || user.TenDangNhap}
+              </span>
+              <button
+                onClick={handleLogout}
+                className="flex items-center gap-1.5 bg-gray-800 hover:bg-gray-700 text-white px-4 py-2 text-sm transition-colors"
               >
-                Đăng nhập
-              </a>
-            )}
-
-            {/* Cart */}
-            <a
-              href="../TrangThanhToan/GioHang.html"
-              className="relative p-2 text-white hover:text-accent transition-colors"
-              aria-label="Cart"
-            >
-              <ShoppingCart size={24} />
-              {cartCount > 0 && (
-                <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">
-                  {cartCount > 99 ? '99+' : cartCount}
-                </span>
-              )}
+                <LogOut size={15} />
+                Đăng xuất
+              </button>
+            </div>
+          ) : (
+            <a href="../Login/DangNhap.html" className="btn-login-link">
+              <button type="button" className="btn-login-text">Đăng nhập</button>
             </a>
-          </div>
+          )}
+
+          <a href="../TrangThanhToan/GioHang.html" className="btn-cart-icon" aria-label="Giỏ hàng">
+            <ShoppingCart size={24} />
+            {cartCount > 0 && (
+              <span className="badge">{cartCount > 99 ? '99+' : cartCount}</span>
+            )}
+          </a>
         </div>
       </div>
 
-      {/* Nav */}
-      <nav className={`bg-primary-light ${menuOpen ? 'block' : 'hidden'} lg:block`}>
-        <div className="px-4">
-          <ul className="flex flex-col lg:flex-row lg:items-center gap-1 py-2">
-            <li>
-              <a href="../TrangChu/TrangChu.html" className="block px-4 py-2 text-white hover:bg-primary-dark rounded-lg transition-colors font-semibold">
-                Trang chủ
-              </a>
-            </li>
+      {/* Nav bar */}
+      <nav className={`main-nav-bar ${menuOpen ? 'flex flex-col' : 'hidden'} lg:flex`}>
+        <a href="../TrangChu/TrangChu.html" className="nav-link-item">
+          Trang chủ
+        </a>
 
-            {/* Danh mục dropdown */}
-            <li
-              className="relative"
-              onMouseEnter={() => setOpenDropdown('danh-muc')}
-              onMouseLeave={() => setOpenDropdown(null)}
-            >
-              <a href="../TrangDanhMucSanPham/TrangSanPham.html" className="flex items-center gap-1 px-4 py-2 text-white hover:bg-primary-dark rounded-lg transition-colors font-semibold cursor-pointer">
-                Danh mục ▾
-              </a>
-              {openDropdown === 'danh-muc' && (
-                <div className="lg:absolute left-0 top-full mt-1 bg-white rounded-xl shadow-2xl py-3 min-w-[220px] z-50">
-                  <ul className="divide-y divide-gray-100">
-                    {ROOMS.map((room) => (
-                      <li key={room.param}>
-                        <a
-                          href={`../TrangDanhMucSanPham/TrangSanPham.html?phong=${room.param}`}
-                          className="block px-5 py-2.5 text-gray-700 hover:bg-primary hover:text-white rounded-lg mx-2 transition-colors text-sm"
-                        >
-                          {room.label}
-                        </a>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              )}
-            </li>
-
-            {/* Phòng khách */}
-            <li
-              className="relative"
-              onMouseEnter={() => setOpenDropdown('phong-khach')}
-              onMouseLeave={() => setOpenDropdown(null)}
-            >
-              <a className="flex items-center gap-1 px-4 py-2 text-white hover:bg-primary-dark rounded-lg transition-colors font-semibold cursor-pointer">
-                Phòng khách ▾
-              </a>
-              {openDropdown === 'phong-khach' && (
-                <div className="lg:absolute left-0 top-full mt-1 bg-white rounded-xl shadow-2xl py-3 min-w-[240px] z-50">
-                  <ul className="divide-y divide-gray-100">
-                    <li><a href="../TrangDanhMucSanPham/TrangSanPham.html?phong=phong-khach" className="block px-5 py-2.5 text-gray-700 hover:bg-primary hover:text-white rounded-lg mx-2 transition-colors text-sm">Xem tất cả</a></li>
-                    <li><a href="../TrangDanhMucSanPham/TrangSanPham.html?phong=phong-khach&noi_bat=1" className="block px-5 py-2.5 text-gray-700 hover:bg-primary hover:text-white rounded-lg mx-2 transition-colors text-sm">Bộ sưu tập mới</a></li>
-                    <li><a href="../TrangDanhMucSanPham/TrangSanPham.html?phong=phong-khach" className="block px-5 py-2.5 text-gray-700 hover:bg-primary hover:text-white rounded-lg mx-2 transition-colors text-sm">Đồ nội thất trang trí</a></li>
-                  </ul>
-                </div>
-              )}
-            </li>
-
-            {/* Phòng ngủ */}
-            <li
-              className="relative"
-              onMouseEnter={() => setOpenDropdown('phong-ngu')}
-              onMouseLeave={() => setOpenDropdown(null)}
-            >
-              <a className="flex items-center gap-1 px-4 py-2 text-white hover:bg-primary-dark rounded-lg transition-colors font-semibold cursor-pointer">
-                Phòng ngủ ▾
-              </a>
-              {openDropdown === 'phong-ngu' && (
-                <div className="lg:absolute left-0 top-full mt-1 bg-white rounded-xl shadow-2xl py-3 min-w-[240px] z-50">
-                  <ul className="divide-y divide-gray-100">
-                    <li><a href="../TrangDanhMucSanPham/TrangSanPham.html?phong=phong-ngu" className="block px-5 py-2.5 text-gray-700 hover:bg-primary hover:text-white rounded-lg mx-2 transition-colors text-sm">Xem tất cả</a></li>
-                    <li><a href="../TrangDanhMucSanPham/TrangSanPham.html?phong=phong-ngu&noi_bat=1" className="block px-5 py-2.5 text-gray-700 hover:bg-primary hover:text-white rounded-lg mx-2 transition-colors text-sm">Bộ sưu tập mới</a></li>
-                    <li><a href="../TrangDanhMucSanPham/TrangSanPham.html?phong=phong-ngu" className="block px-5 py-2.5 text-gray-700 hover:bg-primary hover:text-white rounded-lg mx-2 transition-colors text-sm">Đồ nội thất trang trí</a></li>
-                  </ul>
-                </div>
-              )}
-            </li>
-
-            {/* Phòng bếp */}
-            <li
-              className="relative"
-              onMouseEnter={() => setOpenDropdown('phong-bep')}
-              onMouseLeave={() => setOpenDropdown(null)}
-            >
-              <a className="flex items-center gap-1 px-4 py-2 text-white hover:bg-primary-dark rounded-lg transition-colors font-semibold cursor-pointer">
-                Phòng bếp ▾
-              </a>
-              {openDropdown === 'phong-bep' && (
-                <div className="lg:absolute left-0 top-full mt-1 bg-white rounded-xl shadow-2xl py-3 min-w-[240px] z-50">
-                  <ul className="divide-y divide-gray-100">
-                    <li><a href="../TrangDanhMucSanPham/TrangSanPham.html?phong=phong-bep" className="block px-5 py-2.5 text-gray-700 hover:bg-primary hover:text-white rounded-lg mx-2 transition-colors text-sm">Xem tất cả</a></li>
-                    <li><a href="../TrangDanhMucSanPham/TrangSanPham.html?phong=phong-bep&noi_bat=1" className="block px-5 py-2.5 text-gray-700 hover:bg-primary hover:text-white rounded-lg mx-2 transition-colors text-sm">Bộ sưu tập mới</a></li>
-                    <li><a href="../TrangDanhMucSanPham/TrangSanPham.html?phong=phong-bep" className="block px-5 py-2.5 text-gray-700 hover:bg-primary hover:text-white rounded-lg mx-2 transition-colors text-sm">Đồ nội thất trang trí</a></li>
-                  </ul>
-                </div>
-              )}
-            </li>
-
-            {/* Phòng tắm */}
-            <li
-              className="relative"
-              onMouseEnter={() => setOpenDropdown('phong-tam')}
-              onMouseLeave={() => setOpenDropdown(null)}
-            >
-              <a className="flex items-center gap-1 px-4 py-2 text-white hover:bg-primary-dark rounded-lg transition-colors font-semibold cursor-pointer">
-                Phòng tắm ▾
-              </a>
-              {openDropdown === 'phong-tam' && (
-                <div className="lg:absolute left-0 top-full mt-1 bg-white rounded-xl shadow-2xl py-3 min-w-[240px] z-50">
-                  <ul className="divide-y divide-gray-100">
-                    <li><a href="../TrangDanhMucSanPham/TrangSanPham.html?phong=phong-tam" className="block px-5 py-2.5 text-gray-700 hover:bg-primary hover:text-white rounded-lg mx-2 transition-colors text-sm">Xem tất cả</a></li>
-                    <li><a href="../TrangDanhMucSanPham/TrangSanPham.html?phong=phong-tam&noi_bat=1" className="block px-5 py-2.5 text-gray-700 hover:bg-primary hover:text-white rounded-lg mx-2 transition-colors text-sm">Bộ sưu tập mới</a></li>
-                    <li><a href="../TrangDanhMucSanPham/TrangSanPham.html?phong=phong-tam" className="block px-5 py-2.5 text-gray-700 hover:bg-primary hover:text-white rounded-lg mx-2 transition-colors text-sm">Đồ nội thất trang trí</a></li>
-                  </ul>
-                </div>
-              )}
-            </li>
-
-            <li>
-              <a href="../TrangGioiThieu/TrangGioiThieu.html" className="block px-4 py-2 text-white hover:bg-primary-dark rounded-lg transition-colors font-semibold">
-                Giới thiệu
-              </a>
-            </li>
-            <li>
-              <a href="../TrangLienHe/TrangLienHe.html" className="block px-4 py-2 text-white hover:bg-primary-dark rounded-lg transition-colors font-semibold">
-                Liên hệ
-              </a>
-            </li>
-          </ul>
+        {/* Danh mục dropdown */}
+        <div
+          className="nav-dropdown"
+          onMouseEnter={() => setOpenDropdown('danh-muc')}
+          onMouseLeave={() => setOpenDropdown(null)}
+        >
+          <a href="../TrangDanhMucSanPham/TrangSanPham.html" className="nav-link-item">
+            Danh mục ▾
+          </a>
+          {openDropdown === 'danh-muc' && (
+            <div className="nav-dropdown-content">
+              <ul className="p-0 m-0" style={{ listStyle: 'none' }}>
+                {ROOMS.map((room) => (
+                  <li key={room.param}>
+                    <a href={`../TrangDanhMucSanPham/TrangSanPham.html?phong=${room.param}`}>
+                      {room.label}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
         </div>
+
+        {/* Phòng khách */}
+        <div
+          className="nav-dropdown"
+          onMouseEnter={() => setOpenDropdown('phong-khach')}
+          onMouseLeave={() => setOpenDropdown(null)}
+        >
+          <a href="../TrangDanhMucSanPham/TrangSanPham.html" className="nav-link-item">
+            Phòng khách ▾
+          </a>
+          {openDropdown === 'phong-khach' && (
+            <div className="nav-dropdown-content">
+              <ul className="p-0 m-0" style={{ listStyle: 'none' }}>
+                <li><a href="../TrangDanhMucSanPham/TrangSanPham.html?phong=phong-khach">Xem tất cả</a></li>
+                <li><a href="../TrangDanhMucSanPham/TrangSanPham.html?phong=phong-khach&noi_bat=1">Bộ sưu tập phòng khách mới</a></li>
+                <li><a href="../TrangDanhMucSanPham/TrangSanPham.html?phong=phong-khach">Đồ nội thất trang trí</a></li>
+              </ul>
+            </div>
+          )}
+        </div>
+
+        {/* Phòng ngủ */}
+        <div
+          className="nav-dropdown"
+          onMouseEnter={() => setOpenDropdown('phong-ngu')}
+          onMouseLeave={() => setOpenDropdown(null)}
+        >
+          <a href="../TrangDanhMucSanPham/TrangSanPham.html" className="nav-link-item">
+            Phòng ngủ ▾
+          </a>
+          {openDropdown === 'phong-ngu' && (
+            <div className="nav-dropdown-content">
+              <ul className="p-0 m-0" style={{ listStyle: 'none' }}>
+                <li><a href="../TrangDanhMucSanPham/TrangSanPham.html?phong=phong-ngu">Xem tất cả</a></li>
+                <li><a href="../TrangDanhMucSanPham/TrangSanPham.html?phong=phong-ngu&noi_bat=1">Bộ sưu tập phòng ngủ mới</a></li>
+                <li><a href="../TrangDanhMucSanPham/TrangSanPham.html?phong=phong-ngu">Đồ nội thất trang trí</a></li>
+              </ul>
+            </div>
+          )}
+        </div>
+
+        {/* Phòng bếp */}
+        <div
+          className="nav-dropdown"
+          onMouseEnter={() => setOpenDropdown('phong-bep')}
+          onMouseLeave={() => setOpenDropdown(null)}
+        >
+          <a href="../TrangDanhMucSanPham/TrangSanPham.html" className="nav-link-item">
+            Phòng bếp ▾
+          </a>
+          {openDropdown === 'phong-bep' && (
+            <div className="nav-dropdown-content">
+              <ul className="p-0 m-0" style={{ listStyle: 'none' }}>
+                <li><a href="../TrangDanhMucSanPham/TrangSanPham.html?phong=phong-bep">Xem tất cả</a></li>
+                <li><a href="../TrangDanhMucSanPham/TrangSanPham.html?phong=phong-bep&noi_bat=1">Bộ sưu tập phòng bếp mới</a></li>
+                <li><a href="../TrangDanhMucSanPham/TrangSanPham.html?phong=phong-bep">Đồ nội thất trang trí</a></li>
+              </ul>
+            </div>
+          )}
+        </div>
+
+        {/* Phòng tắm */}
+        <div
+          className="nav-dropdown"
+          onMouseEnter={() => setOpenDropdown('phong-tam')}
+          onMouseLeave={() => setOpenDropdown(null)}
+        >
+          <a href="../TrangDanhMucSanPham/TrangSanPham.html" className="nav-link-item">
+            Phòng tắm ▾
+          </a>
+          {openDropdown === 'phong-tam' && (
+            <div className="nav-dropdown-content">
+              <ul className="p-0 m-0" style={{ listStyle: 'none' }}>
+                <li><a href="../TrangDanhMucSanPham/TrangSanPham.html?phong=phong-tam">Xem tất cả</a></li>
+                <li><a href="../TrangDanhMucSanPham/TrangSanPham.html?phong=phong-tam&noi_bat=1">Bộ sưu tập phòng tắm mới</a></li>
+                <li><a href="../TrangDanhMucSanPham/TrangSanPham.html?phong=phong-tam">Đồ nội thất trang trí</a></li>
+              </ul>
+            </div>
+          )}
+        </div>
+
+        <a href="../TrangGioiThieu/TrangGioiThieu.html" className="nav-link-item">Giới thiệu</a>
+        <a href="../TrangLienHe/TrangLienHe.html" className="nav-link-item">Liên hệ</a>
       </nav>
 
-      {/* Bottom strip */}
-      <div className="bg-primary-dark text-white text-xs py-1.5 text-center font-bold">
+      {/* Bottom dark strip */}
+      <div className="header-bottom-strip">
         Miễn phí vận chuyển cho đơn hàng từ 2.000.000đ ‡*
       </div>
     </header>

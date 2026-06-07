@@ -13,34 +13,25 @@ export default function HomePage() {
   const [cartCount, setCartCount] = useState(0);
 
   useEffect(() => {
-    // Load user from localStorage
     const token = localStorage.getItem('access_token');
     const userStr = localStorage.getItem('user');
     if (token && userStr) {
-      try {
-        const u = JSON.parse(userStr);
-        if (u?.MaND) setUser(u);
-      } catch {}
+      try { setUser(JSON.parse(userStr)); } catch {}
     }
-
-    // Load cart count from localStorage
     try {
       const cart = JSON.parse(localStorage.getItem('cart') || '[]');
-      const total = cart.reduce((s, i) => s + (i.SoLuong || 1), 0);
-      setCartCount(total);
+      setCartCount(cart.reduce((s, i) => s + (i.SoLuong || 1), 0));
     } catch {}
   }, []);
 
   const handleLogout = (u) => setUser(u);
-  const handleCartUpdate = (count) => setCartCount(count);
-
   const openSearch = (tab = 'text') => {
     setSearchTab(tab);
     setIsSearchOpen(true);
   };
 
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-vh-100 d-flex flex-column">
       <Header
         onOpenSearch={openSearch}
         cartCount={cartCount}
@@ -48,8 +39,7 @@ export default function HomePage() {
         onLogout={handleLogout}
       />
 
-      <main className="flex-1 p-0">
-        {/* Hero Banner */}
+      <main className="flex-grow-1 p-0">
         <HeroBanner />
 
         {/* Outdoor Banner 1 */}
@@ -63,7 +53,7 @@ export default function HomePage() {
         {/* Hot deals */}
         <DealsCarousel
           title="Sản Phẩm Hot"
-          icon={<Flame className="text-red-500" size={24} />}
+          icon={<Flame size={22} />}
           apiParams={{ ban_chay: 1 }}
         />
 
@@ -73,13 +63,12 @@ export default function HomePage() {
           title="Living room up to 30% off**"
           link="../TrangDanhMucSanPham/TrangSanPham.html?phong=phong-khach"
           caption="Relaxation Sofa"
-          light
         />
 
         {/* Khuyến mãi */}
         <DealsCarousel
           title="Khuyến Mãi Hot"
-          icon={<Tag className="text-orange-500" size={24} />}
+          icon={<Tag size={22} />}
           apiParams={{ khuyen_mai: 1 }}
         />
 
@@ -89,33 +78,14 @@ export default function HomePage() {
           title="OUR NEWEST COLLECTION"
           link="../TrangDanhMucSanPham/TrangSanPham.html"
           caption="NoiThatXin"
-          light
         />
 
         {/* Values section */}
-        <section className="max-w-7xl mx-auto px-4 py-16">
-          <h2 className="text-center text-3xl font-bold text-primary mb-10">Our Values</h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {VALUES.map((v) => (
-              <a
-                key={v.title}
-                href="#"
-                className="group p-6 bg-white border border-gray-100 rounded-2xl hover:shadow-xl hover:-translate-y-1 transition-all text-center"
-              >
-                <div className="text-4xl mb-4">{v.icon}</div>
-                <h3 className="font-bold text-lg text-gray-800 group-hover:text-primary transition-colors">
-                  {v.title}
-                </h3>
-                <p className="text-sm text-gray-500 mt-2">{v.desc}</p>
-              </a>
-            ))}
-          </div>
-        </section>
+        <ValuesSection />
       </main>
 
       <Footer />
 
-      {/* Search Modal */}
       <SearchModal
         isOpen={isSearchOpen}
         onClose={() => setIsSearchOpen(false)}
@@ -125,53 +95,70 @@ export default function HomePage() {
   );
 }
 
-function OutdoorBanner({ img, title, link, caption, light }) {
+function OutdoorBanner({ img, title, link, caption }) {
   return (
-    <div className="relative w-full overflow-hidden" style={{ maxHeight: '400px' }}>
+    <div className="outdoor-banner-container">
       <img
         src={img}
         alt={title}
-        className="w-full object-cover"
-        style={{ height: '400px' }}
-        onError={(e) => {
-          e.target.src = 'http://localhost:5000/Pic/Pic_TrangChu/Pic_GiamGia/BannerGiamGia4.jpg';
-        }}
+        className="outdoor-bg-img"
+        onError={(e) => { e.target.src = 'http://localhost:5000/Pic/Pic_TrangChu/Pic_GiamGia/BannerGiamGia4.jpg'; }}
       />
-      <div className="absolute inset-0 bg-black/40 flex flex-col items-center justify-center text-center px-4">
-        <h1 className={`text-3xl md:text-5xl font-extrabold mb-4 ${light ? 'text-white' : 'text-white'}`}>
-          {title}
-        </h1>
-        <a
-          href={link}
-          className={`px-10 py-3.5 rounded-full font-bold tracking-widest text-sm transition-transform hover:scale-105 ${light ? 'bg-white text-gray-900' : 'bg-accent text-white hover:bg-amber-600'}`}
-        >
-          SHOP OUTDOOR
-        </a>
-        <p className="mt-4 text-white/70 text-sm">{caption}</p>
+      <div className="outdoor-overlay-content">
+        <h2 className="outdoor-title">{title}</h2>
+        <a href={link} className="outdoor-btn-shop">SHOP OUTDOOR</a>
       </div>
+      {caption && <p className="outdoor-caption-text">{caption}</p>}
     </div>
   );
 }
 
-const VALUES = [
-  {
-    icon: '🏠',
-    title: 'About NoiThatXin',
-    desc: 'Who we are, our legacy, and the purpose that drives us every day.',
-  },
-  {
-    icon: '🌍',
-    title: 'Beyond Home Promise',
-    desc: "Learn about our retail commitment to the people, planet and organizations we're most passionate about.",
-  },
-  {
-    icon: '🏢',
-    title: 'Corporate Social Responsibility',
-    desc: 'Get the whole picture on what the NoiThatXin family of companies is doing to help our employees, environment and community.',
-  },
-  {
-    icon: '👥',
-    title: 'Refer a friend',
-    desc: 'Share with a friend, save with a friend.',
-  },
-];
+function ValuesSection() {
+  const VALUES = [
+    {
+      icon: '🏠',
+      title: 'About NoiThatXin',
+      desc: 'Who we are, our legacy, and the purpose that drives us every day.',
+      href: '../TrangGioiThieu/TrangGioiThieu.html',
+    },
+    {
+      icon: '🌍',
+      title: 'Beyond Home Promise',
+      desc: "Learn about our retail commitment to the people, planet and organizations we're most passionate about.",
+      href: '#',
+    },
+    {
+      icon: '🏢',
+      title: 'Corporate Social Responsibility',
+      desc: "Get the whole picture on what the NoiThatXin family of companies is doing to help our employees, environment and community.",
+      href: '#',
+    },
+    {
+      icon: '👥',
+      title: 'Refer a friend',
+      desc: 'Share with a friend, save with a friend.',
+      href: '#',
+    },
+  ];
+
+  return (
+    <section className="values-section">
+      <h2 className="values-main-heading">Our Values</h2>
+      <div className="container">
+        <div className="values-grid">
+          {VALUES.map((v, i) => (
+            <a key={i} href={v.href} className="text-decoration-none">
+              <div className="value-card">
+                <div className="value-icon">{v.icon}</div>
+                <h3 className="value-title">
+                  <a href={v.href}>{v.title}</a>
+                </h3>
+                <p className="value-desc">{v.desc}</p>
+              </div>
+            </a>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}

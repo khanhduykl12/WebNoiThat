@@ -1,71 +1,44 @@
-import { formatPrice, getProductImage, FALLBACK_LOGO } from '../services/api';
+import { getProductImage, formatPrice, FALLBACK_IMG } from '../services/api';
 
 export default function ProductCard({ product }) {
   const {
-    id,
-    MaSP,
-    tenSP,
-    TenSP,
-    giaSauGiam,
-    giaBan,
-    giaGoc,
-    khuyenMai,
-    KhuyenMai,
-    hinhAnh,
-    HinhAnh,
-    similarityScore,
-    similarity,
+    id, MaSP,
+    TenSP, tenSP,
+    GiaBan, giaBan, giaSauGiam,
+    GiaGoc, giaGoc,
+    KhuyenMai, khuyenMai,
+    HinhAnh, hinhAnh,
+    similarityScore, similarity,
   } = product;
 
-  const salePrice = giaSauGiam || giaBan || 0;
-  const originalPrice = giaGoc || giaBan || 0;
-  const discount = khuyenMai || KhuyenMai || 0;
+  const salePrice = giaSauGiam || GiaBan || giaBan || 0;
+  const originalPrice = GiaGoc || giaGoc || GiaBan || giaBan || 0;
+  const disc = KhuyenMai || khuyenMai || 0;
   const simScore = similarityScore || similarity || 0;
   const simPct = (simScore * 100).toFixed(1);
-  const name = tenSP || TenSP || '';
-  const imgSrc = getProductImage(hinhAnh || HinhAnh);
-  const productId = id || MaSP;
-  const link = `../TrangChiTiet/TrangChiTiet.html?id=${productId}`;
+  const name = TenSP || tenSP || '';
+  const img = getProductImage(HinhAnh || hinhAnh);
+  const pid = id || MaSP;
+  const link = `../TrangChiTiet/TrangChiTiet.html?id=${pid}`;
 
   return (
-    <div className="ai-product-card flex flex-col h-full">
+    <div className="ai-product-card flex flex-column h-100">
       <div className="ai-img-wrap">
         <a href={link} target="_blank" rel="noopener noreferrer">
-          <img
-            src={imgSrc}
-            alt={name}
-            className="ai-product-img"
-            onError={(e) => { e.target.src = FALLBACK_LOGO; }}
-          />
+          <img src={img} alt={name} onError={(e) => { e.target.src = FALLBACK_IMG; }} />
         </a>
-        {discount > 0 && (
-          <span className="ai-discount-badge">-{discount}%</span>
-        )}
+        {disc > 0 && <span className="ai-discount-badge">-{disc}%</span>}
         {simScore > 0 && (
-          <div className="ai-sim-score">
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" className="inline mr-1">
-              <path d="M13 3L4 14h7l-2 7 9-11h-7l2-7z"/>
-            </svg>
-            {simPct}%
-          </div>
+          <span className="ai-sim-score">{simPct}%</span>
         )}
       </div>
-      <div className="ai-product-info flex flex-col flex-1 p-3">
-        <a
-          href={link}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="ai-product-name text-sm font-semibold text-gray-800 hover:text-primary transition-colors line-clamp-2 flex-1"
-        >
+      <div className="ai-product-info flex-fill">
+        <a href={link} target="_blank" rel="noopener noreferrer" className="ai-product-name">
           {name}
         </a>
-        <div className="ai-product-price mt-2">
-          {salePrice > 0 && (
-            <span className="ai-price-sale">{formatPrice(salePrice)}</span>
-          )}
-          {originalPrice > salePrice && (
-            <span className="ai-price-original">{formatPrice(originalPrice)}</span>
-          )}
+        <div className="mt-2">
+          {salePrice > 0 && <span className="ai-price-sale">{formatPrice(salePrice)}</span>}
+          {originalPrice > salePrice && <span className="ai-price-original">{formatPrice(originalPrice)}</span>}
         </div>
       </div>
     </div>
