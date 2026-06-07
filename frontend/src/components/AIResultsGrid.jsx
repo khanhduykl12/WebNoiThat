@@ -70,6 +70,28 @@ export default function AIResultsGrid({ results, meta, loading, error }) {
         )}
       </div>
 
+      {/* YOLO Detections Panel */}
+      {hasDetections && (
+        <div className="ai-vit-panel mb-3">
+          <div className="ai-vit-panel-header">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" style={{ color: '#fff' }}>
+              <path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 6.5 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/>
+            </svg>
+            YOLO nhận diện
+          </div>
+          <div className="ai-vit-panel-body">
+            <div className="d-flex flex-wrap gap-2">
+              {meta.detections.map((d, i) => (
+                <span key={i} className="ai-vit-tag">
+                  {d.label}
+                  <span className="ai-vit-conf ms-1">({(d.confidence * 100).toFixed(0)}%)</span>
+                </span>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Visual Features Panel */}
       {vf && !loading && (
         <div className="ai-vit-panel mb-3">
@@ -102,27 +124,6 @@ export default function AIResultsGrid({ results, meta, loading, error }) {
                 <span className="ai-vit-tag">{vf.styleEstimate}</span>
               </div>
             )}
-            {vf.toneEstimate && vf.toneEstimate !== 'Không xác định' && (
-              <div className="ai-vit-row">
-                <span className="ai-vit-label">Tông màu:</span>
-                <span className="ai-vit-tag">{vf.toneEstimate}</span>
-              </div>
-            )}
-          </div>
-        </div>
-      )}
-
-      {/* Detections */}
-      {hasDetections && (
-        <div className="mb-3 p-3 bg-success bg-opacity-10 border border-success rounded">
-          <p className="text-xs fw-bold text-success mb-2">Phát hiện đồ nội thất:</p>
-          <div className="d-flex flex-wrap gap-2">
-            {meta.detections.map((d, i) => (
-              <span key={i} className="badge bg-dark">
-                {d.label}
-                <span className="opacity-75 ms-1">({(d.confidence * 100).toFixed(0)}%)</span>
-              </span>
-            ))}
           </div>
         </div>
       )}
@@ -145,7 +146,7 @@ export default function AIResultsGrid({ results, meta, loading, error }) {
             <span className="visually-hidden">Loading...</span>
           </div>
           <p className="fw-semibold text-success mb-1">Đang xử lý AI...</p>
-          <p className="text-muted small">YOLO phát hiện đồ nội thất và ViT trích xuất đặc trưng thị giác.</p>
+          <p className="text-muted small">YOLO nhận diện đồ nội thất và ViT trích xuất đặc trưng thị giác.</p>
         </div>
       )}
 
