@@ -1,9 +1,6 @@
 import { useState, useEffect } from 'react';
-import {
-  Home, Globe, Building2, Users, ArrowRight, Flame, Tag, Sofa, Bed, ChefHat, Bath, TreePine
-} from 'lucide-react';
-import Header from '../components/Header';
-import Footer from '../components/Footer';
+import { Flame, Tag, ArrowRight, Home, Globe, Building2, Users } from 'lucide-react';
+import Layout from '../components/Layout';
 import HeroBanner from '../components/HeroBanner';
 import DealsCarousel from '../components/DealsCarousel';
 import SearchModal from '../components/SearchModal';
@@ -12,37 +9,29 @@ const OUTDOOR_BANNERS = [
   {
     img: 'http://localhost:5000/Pic/Pic_TrangChu/Pic_GiamGia/BannerGiamGia4.jpg',
     title: 'Outdoor Living\nUp to 40% Off',
-    link: '../TrangDanhMucSanPham/TrangSanPham.html?phong=ngoai-troi',
+    link: '/SanPham?phong=ngoai-troi',
     caption: 'Outdoor Dining Collection',
   },
   {
     img: 'http://localhost:5000/Pic/Pic_TrangChu/Pic_GiamGia/BannerGiamGia6.jpg',
     title: 'Living Room\nUp to 30% Off',
-    link: '../TrangDanhMucSanPham/TrangSanPham.html?phong=phong-khach',
+    link: '/SanPham?phong=phong-khach',
     caption: 'Premium Sofa & Lounge Seating',
   },
   {
     img: 'http://localhost:5000/Pic/Pic_TrangChu/Pic_GiamGia/BannerGiamGia7.jpg',
     title: 'Newest\nCollection',
-    link: '../TrangDanhMucSanPham/TrangSanPham.html',
+    link: '/SanPham',
     caption: 'Discover NoiThatXin',
   },
 ];
-
-const ROOM_ICONS = {
-  'phong-khach': <Sofa size={28} />,
-  'phong-ngu': <Bed size={28} />,
-  'phong-bep': <ChefHat size={28} />,
-  'phong-tam': <Bath size={28} />,
-  'ngoai-troi': <TreePine size={28} />,
-};
 
 const VALUES = [
   {
     icon: <Home size={26} />,
     title: 'Về NoiThatXin',
     desc: 'Hơn 15 năm kiến tạo không gian sống. Cam kết chất lượng, dịch vụ tận tâm.',
-    href: '../TrangGioiThieu/TrangGioiThieu.html',
+    href: '/GioiThieu',
   },
   {
     icon: <Globe size={26} />,
@@ -63,78 +52,6 @@ const VALUES = [
     href: '#',
   },
 ];
-
-export default function HomePage() {
-  const [isSearchOpen, setIsSearchOpen] = useState(false);
-  const [searchTab, setSearchTab] = useState('text');
-  const [user, setUser] = useState(null);
-  const [cartCount, setCartCount] = useState(0);
-
-  useEffect(() => {
-    const token = localStorage.getItem('access_token');
-    const userStr = localStorage.getItem('user');
-    if (token && userStr) {
-      try { setUser(JSON.parse(userStr)); } catch {}
-    }
-    try {
-      const cart = JSON.parse(localStorage.getItem('cart') || '[]');
-      setCartCount(cart.reduce((s, i) => s + (i.SoLuong || 1), 0));
-    } catch {}
-  }, []);
-
-  const handleLogout = (u) => setUser(u);
-  const openSearch = (tab = 'text') => {
-    setSearchTab(tab);
-    setIsSearchOpen(true);
-  };
-
-  return (
-    <div className="min-vh-100 d-flex flex-column">
-      <Header
-        onOpenSearch={openSearch}
-        cartCount={cartCount}
-        user={user}
-        onLogout={handleLogout}
-      />
-
-      <main className="flex-grow-1 p-0">
-
-        <HeroBanner />
-
-        {/* Outdoor Banners */}
-        {OUTDOOR_BANNERS.map((b, i) => (
-          <OutdoorBanner key={i} {...b} />
-        ))}
-
-        {/* Hot deals */}
-        <DealsCarousel
-          title="Sản Phẩm Hot"
-          icon={<Flame size={22} />}
-          apiParams={{ ban_chay: 1 }}
-        />
-
-        {/* Khuyến mãi */}
-        <DealsCarousel
-          title="Khuyến Mãi Hot"
-          icon={<Tag size={22} />}
-          apiParams={{ khuyen_mai: 1 }}
-        />
-
-        {/* Values */}
-        <ValuesSection />
-
-      </main>
-
-      <Footer />
-
-      <SearchModal
-        isOpen={isSearchOpen}
-        onClose={() => setIsSearchOpen(false)}
-        initialTab={searchTab}
-      />
-    </div>
-  );
-}
 
 function OutdoorBanner({ img, title, link, caption }) {
   const lines = title.split('\n');
@@ -197,5 +114,19 @@ function ValuesSection() {
         </div>
       </div>
     </section>
+  );
+}
+
+export default function HomePage() {
+  return (
+    <Layout>
+      <HeroBanner />
+      {OUTDOOR_BANNERS.map((b, i) => (
+        <OutdoorBanner key={i} {...b} />
+      ))}
+      <DealsCarousel title="Sản Phẩm Hot" icon={<Flame size={22} />} apiParams={{ ban_chay: 1 }} />
+      <DealsCarousel title="Khuyến Mãi Hot" icon={<Tag size={22} />} apiParams={{ khuyen_mai: 1 }} />
+      <ValuesSection />
+    </Layout>
   );
 }

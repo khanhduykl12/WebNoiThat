@@ -1,5 +1,5 @@
-const API_BASE = 'http://127.0.0.1:5000/api';
-const STATIC_BASE = 'http://127.0.0.1:5000';
+const API_BASE = 'http://localhost:5000/api';
+const STATIC_BASE = 'http://localhost:5000';
 
 export const api = {
   base: API_BASE,
@@ -21,7 +21,10 @@ export const api = {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(body),
     });
-    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    if (!res.ok) {
+      const err = await res.json().catch(() => ({}));
+      throw new Error(err.message || `HTTP ${res.status}`);
+    }
     return res.json();
   },
 
@@ -36,9 +39,7 @@ export const api = {
 };
 
 export const aiSearchAPI = {
-  byBase64: (base64Image) =>
-    api.post('/ai/search-base64', { image: base64Image }),
-
+  byBase64: (base64Image) => api.post('/ai/search-base64', { image: base64Image }),
   byFile: (file) => {
     const form = new FormData();
     form.append('image', file);
@@ -48,8 +49,8 @@ export const aiSearchAPI = {
 
 export const productAPI = {
   list: (params = {}) => api.get('/products/', params),
-  search: (q) => api.get('/products/', { q }),
   getById: (id) => api.get(`/products/${id}`),
+  search: (q) => api.get('/products/', { q }),
 };
 
 export const bannerAPI = {
@@ -59,8 +60,12 @@ export const bannerAPI = {
 export const cartAPI = {
   get: () => api.get('/cart/'),
   add: (data) => api.post('/cart/', data),
-  update: (id, data) => api.post(`/cart/${id}`, data),
-  remove: (id) => api.post(`/cart/${id}/delete`, {}),
+  update: (data) => api.post('/cart/', data),
+  remove: (data) => api.post('/cart/delete', data),
+};
+
+export const orderAPI = {
+  create: (data) => api.post('/orders/', data),
 };
 
 export const authAPI = {
@@ -89,5 +94,5 @@ export function getProductImage(hinhAnh) {
 }
 
 export function getProductLink(id) {
-  return `../TrangChiTiet/TrangChiTiet.html?id=${id}`;
+  return `/ChiTiet?id=${id}`;
 }
